@@ -23,6 +23,10 @@
 		"start": "serve public/"
 	},
 	"devDependencies": {
-		"dotenv": "^8.2.0"
+		"@types/node": "^12.12.7",
+		"@types/react": "^16.9.11",
+		"@types/react-dom": "^16.9.4",
+		"dotenv": "^8.2.0",
+		"gatsby-plugin-typescript": "^2.1.17"
 	}
 }
