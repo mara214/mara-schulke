@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export default styled('button')`
+export default styled.button`
 	padding: 1rem;
 	outline: none;
 	border: none;
