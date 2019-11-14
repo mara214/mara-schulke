@@ -1,0 +1,10 @@
+{
+  "name": "maximilian-schulke",
+  "version": "1.0.0",
+  "description": "My personal blog build with gatsby and prismic.",
+  "main": "index.js",
+  "repository": "git@github.com:schulke-214/maximilian-schulke",
+  "author": "schulke-214 <schulkemaximilian@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
