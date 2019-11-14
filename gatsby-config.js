@@ -2,6 +2,20 @@ require('dotenv').config();
 
 module.exports = {
 	plugins: [
+		{
+			resolve: `gatsby-plugin-alias-imports`,
+			options: {
+				alias: {
+					src: 'src',
+					components: 'src/components',
+					fonts: 'src/fonts',
+					lib: 'src/lib',
+					layouts: 'src/layouts',
+					pages: 'src/pages',
+					templates: 'src/templates'
+				}
+			}
+		},
 		'gatsby-plugin-styled-components',
 		`gatsby-plugin-typescript`,
 		{
