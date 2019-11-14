@@ -1,10 +1,28 @@
 {
-  "name": "maximilian-schulke",
-  "version": "1.0.0",
-  "description": "My personal blog build with gatsby and prismic.",
-  "main": "index.js",
-  "repository": "git@github.com:schulke-214/maximilian-schulke",
-  "author": "schulke-214 <schulkemaximilian@gmail.com>",
-  "license": "MIT",
-  "private": true
+	"name": "maximilian-schulke",
+	"version": "1.0.0",
+	"description": "My personal blog build with gatsby and prismic.",
+	"main": "index.js",
+	"repository": "git@github.com:schulke-214/maximilian-schulke",
+	"author": "schulke-214 <schulkemaximilian@gmail.com>",
+	"license": "MIT",
+	"private": true,
+	"dependencies": {
+		"babel-plugin-styled-components": "^1.10.6",
+		"gatsby": "^2.17.13",
+		"gatsby-plugin-styled-components": "^3.1.12",
+		"gatsby-source-prismic-graphql": "^3.3.1",
+		"react": "^16.11.0",
+		"react-dom": "^16.11.0",
+		"styled-components": "^4.4.1",
+		"typography": "^0.16.19"
+	},
+	"scripts": {
+		"build": "gatsby build",
+		"dev": "gatsby develop",
+		"start": "serve public/"
+	},
+	"devDependencies": {
+		"dotenv": "^8.2.0"
+	}
 }
