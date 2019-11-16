@@ -1,9 +1,13 @@
 import React from 'react';
 
-import Button from '../components/Button';
+import { Layout } from 'src/layouts';
 
 export default () => (
-	<h1>
-		test <Button>Lol</Button>
-	</h1>
+	<Layout>
+		<h1>This is a headline</h1>
+		<h2>This is another headline</h2>
+		<h3>This is a sub headline</h3>
+		<h4>Boom another headline</h4>
+		<a href='test'>test</a>
+	</Layout>
 );
