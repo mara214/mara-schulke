@@ -1,5 +1,4 @@
 import Typography from 'typography';
-import '../fonts/fonts.css';
 
 export const fonts = {
 	regular: 'Inter UI Regular',

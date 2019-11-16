@@ -1,25 +1,32 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
+import PrismicRichText from 'prismic-richtext';
 
 import { Layout } from 'layouts/default';
 import { graphql } from 'gatsby';
 
+interface HomePageProps {
+	data: any;
+}
+
+const HomePage: FunctionComponent<HomePageProps> = ({ data }) => (
+	<Layout>
+		<pre>{JSON.stringify(data, null, 4)}</pre>
+	</Layout>
+);
+
 export const query = graphql`
-	query HomePage($uid: String!, $lang: String!) {
+	{
 		prismic {
-			homePage(uid: $uid, lang: $lang) {
-				title
-				intoduction
+			allHomePages(uid: null) {
+				edges {
+					node {
+						title
+						intoduction
+					}
+				}
 			}
 		}
 	}
 `;
 
-export default () => (
-	<Layout>
-		<h1>This is a headline</h1>
-		<h2>This is another headline</h2>
-		<h3>This is a sub headline</h3>
-		<h4>Boom another headline</h4>
-		<a href='test'>test</a>
-	</Layout>
-);
+export default HomePage;

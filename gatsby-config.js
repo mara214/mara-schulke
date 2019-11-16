@@ -9,6 +9,7 @@ module.exports = {
 					components: './src/components',
 					fonts: './src/fonts',
 					lib: './src/lib',
+					utils: './src/utils',
 					layouts: './src/layouts',
 					pages: './src/pages',
 					templates: './src/templates'
