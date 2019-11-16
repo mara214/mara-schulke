@@ -15,6 +15,6 @@ declare module 'prismic-reactjs' {
 	}
 
 	export const RichText: React.FunctionComponent<RichTextProps> & {
-		asText(): string;
+		asText(richText: object): string;
 	};
 }
