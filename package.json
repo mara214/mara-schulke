@@ -6,6 +6,11 @@
 	"author": "schulke-214 <schulkemaximilian@gmail.com>",
 	"license": "MIT",
 	"private": true,
+	"scripts": {
+		"build": "gatsby build",
+		"dev": "gatsby develop",
+		"start": "serve public/"
+	},
 	"dependencies": {
 		"@babel/core": "^7.7.2",
 		"babel-plugin-styled-components": "^1.10.6",
@@ -19,11 +24,6 @@
 		"react-dom": "^16.11.0",
 		"styled-components": "^4.4.1",
 		"typography": "^0.16.19"
-	},
-	"scripts": {
-		"build": "gatsby build",
-		"dev": "gatsby develop",
-		"start": "serve public/"
 	},
 	"devDependencies": {
 		"@types/node": "^12.12.7",

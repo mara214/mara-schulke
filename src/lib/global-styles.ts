@@ -2,11 +2,13 @@ import { createGlobalStyle, GlobalStyleComponent, DefaultTheme } from 'styled-co
 import { normalize } from 'polished';
 
 import typography from 'lib/typography';
-import 'fonts/fonts.css';
+import fonts from 'lib/fonts';
 
 export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobalStyle`
+	${fonts}
 	${typography.toString()}
 	${normalize()}
+	
 	* {
 		color: ${props => props.theme.colors.foreground};
 	}
