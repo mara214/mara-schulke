@@ -6,13 +6,12 @@ module.exports = {
 			resolve: `gatsby-plugin-alias-imports`,
 			options: {
 				alias: {
-					src: 'src',
-					components: 'src/components',
-					fonts: 'src/fonts',
-					lib: 'src/lib',
-					layouts: 'src/layouts',
-					pages: 'src/pages',
-					templates: 'src/templates'
+					components: './src/components',
+					fonts: './src/fonts',
+					lib: './src/lib',
+					layouts: './src/layouts',
+					pages: './src/pages',
+					templates: './src/templates'
 				}
 			}
 		},
@@ -22,7 +21,9 @@ module.exports = {
 			resolve: 'gatsby-source-prismic-graphql',
 			options: {
 				repositoryName: 'maximilian-schulke',
-				accessToken: process.env.PRISMIC_API_KEY
+				accessToken: process.env.PRISMIC_API_KEY,
+				path: '/preview',
+				previews: true
 			}
 		}
 	]
