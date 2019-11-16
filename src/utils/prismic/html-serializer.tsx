@@ -23,13 +23,13 @@ const tranform: Transformer = {
 			return <a {...props}>{children}</a>;
 		}
 
-		const targetAttr = element.data.target ? { target: element.data.target } : {};
-		const relAttr = element.data.target ? { rel: 'noopener' } : {};
+		const target = element.data.target ? { target: element.data.target } : {};
+		const rel = element.data.target ? { rel: 'noopener' } : {};
 
 		const props = {
 			href: element.data.url || link(element.data),
-			targetAttr,
-			relAttr,
+			target,
+			rel,
 			key
 		};
 

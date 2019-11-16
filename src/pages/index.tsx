@@ -1,18 +1,26 @@
 import React, { FunctionComponent } from 'react';
-import PrismicRichText from 'prismic-richtext';
+import { graphql } from 'gatsby';
 
 import { Layout } from 'layouts/default';
-import { graphql } from 'gatsby';
+import { RichText, asText } from 'components/core/RichText';
+import SEO from 'components/layout/SEO';
 
 interface HomePageProps {
 	data: any;
 }
 
-const HomePage: FunctionComponent<HomePageProps> = ({ data }) => (
-	<Layout>
-		<pre>{JSON.stringify(data, null, 4)}</pre>
-	</Layout>
-);
+const HomePage: FunctionComponent<HomePageProps> = ({ data }) => {
+	const document = data.prismic.allHomePages.edges[0].node;
+
+	return (
+		<Layout>
+			<SEO lang='en' title={asText(document.title)} />
+
+			<RichText render={document.title} />
+			<RichText render={document.introduction} />
+		</Layout>
+	);
+};
 
 export const query = graphql`
 	{
@@ -21,7 +29,7 @@ export const query = graphql`
 				edges {
 					node {
 						title
-						intoduction
+						introduction
 					}
 				}
 			}

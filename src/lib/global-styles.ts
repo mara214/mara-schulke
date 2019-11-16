@@ -11,6 +11,8 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 	
 	* {
 		color: ${props => props.theme.colors.foreground};
+		text-align: left;
+		line-height: 1.7;
 	}
 
 	html {
