@@ -1,6 +1,18 @@
 import React from 'react';
 
-import { Layout } from 'src/layouts';
+import { Layout } from 'layouts/default';
+import { graphql } from 'gatsby';
+
+export const query = graphql`
+	query HomePage($uid: String!, $lang: String!) {
+		prismic {
+			homePage(uid: $uid, lang: $lang) {
+				title
+				intoduction
+			}
+		}
+	}
+`;
 
 export default () => (
 	<Layout>

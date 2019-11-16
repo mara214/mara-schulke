@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { tablet } from 'src/lib/media';
+import { tablet } from 'lib/media';
 
 interface ContainerProps {
 	maxWidth: number;
