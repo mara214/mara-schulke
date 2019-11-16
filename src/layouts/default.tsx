@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from 'lib/global-styles';
 import { light } from 'lib/themes';
 
-import Container from 'components/ui/Container';
+import Container from 'components/layout/Container';
 
 export const Layout: FunctionComponent<{}> = ({ children }) => (
 	<ThemeProvider theme={light}>
