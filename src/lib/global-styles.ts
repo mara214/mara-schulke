@@ -13,6 +13,11 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 		color: ${props => props.theme.colors.foreground};
 		text-align: left;
 		line-height: 1.7;
+
+		::selection {
+			background-color: ${props => props.theme.colors.highlight};
+			color: ${props => props.theme.colors.background};
+		}
 	}
 
 	html {
@@ -22,5 +27,9 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 	a {
 		color: ${props => props.theme.colors.highlight};
 		text-decoration: none;
+	}
+
+	ul {
+		margin-left: 0;
 	}
 `;

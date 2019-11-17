@@ -1,14 +1,16 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { rem } from 'polished';
 
 import { mobile } from 'lib/media';
 
 interface ContainerProps {
 	slim?: boolean;
+	flex?: boolean;
 }
 
 export default styled.div<ContainerProps>`
+	display: ${props => (props.flex ? 'flex' : 'block')};
 	width: 100%;
 	margin: 0 auto;
 	max-width: ${props => rem(props.theme.layout.maxWidth)};
