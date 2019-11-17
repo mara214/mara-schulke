@@ -1,19 +1,5 @@
-import { css } from 'styled-components';
+import { rem } from 'polished';
 
-export const desktop = inner => css`
-	@media (min-width: ${992 / 16}em) {
-		${inner};
-	}
-`;
-
-export const tablet = inner => css`
-	@media (max-width: ${992 / 16}em) {
-		${inner};
-	}
-`;
-
-export const mobile = inner => css`
-	@media (max-width: ${576 / 16}em) {
-		${inner};
-	}
-`;
+export const desktop = `@media (min-width: ${rem(992)})`;
+export const tablet = `@media (max-width: ${rem(992)})`;
+export const mobile = `@media (max-width: ${rem(576)})`;

@@ -14,7 +14,7 @@ const HomePage: FunctionComponent<HomePageProps> = ({ data }) => {
 
 	return (
 		<Layout>
-			<SEO lang='en' title={asText(document.title)} />
+			<SEO lang='en' title='test' />
 
 			<RichText render={document.title} />
 			<RichText render={document.introduction} />

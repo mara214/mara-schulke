@@ -1,19 +1,20 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { rem } from 'polished';
 
-import { tablet } from 'lib/media';
+import { mobile } from 'lib/media';
 
 interface ContainerProps {
-	maxWidth: number;
+	slim?: boolean;
 }
 
 export default styled.div<ContainerProps>`
 	width: 100%;
 	margin: 0 auto;
-	max-width: ${props => props.maxWidth + 80}px;
-	padding: 40px;
+	max-width: ${props => rem(props.theme.layout.maxWidth)};
+	padding: ${props => (props.slim ? `0 ${rem(props.theme.spacings.large)}` : rem(props.theme.spacings.large))};
 
-	${tablet(`
-		padding: 20px;
-	`)}
+	${mobile} {
+		padding: ${props => (props.slim ? `0 ${rem(props.theme.spacings.medium)}` : rem(props.theme.spacings.medium))};
+	}
 `;
