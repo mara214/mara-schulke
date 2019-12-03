@@ -8,12 +8,27 @@ declare module 'styled-components' {
 		colors: {
 			foreground: string;
 			background: string;
+
 			highlight: string;
+			highlightDark: string;
+			highlightLight: string;
+
+			muted: string;
 		};
 		spacings: {
 			large: number;
 			medium: number;
 			small: number;
+		};
+		border: {
+			radius: {
+				rounded: number;
+			};
+		};
+		animation: {
+			duration: {
+				fast: number;
+			};
 		};
 		typography: {};
 	}
