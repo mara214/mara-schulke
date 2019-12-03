@@ -1,5 +1,5 @@
 import { createGlobalStyle, GlobalStyleComponent, DefaultTheme } from 'styled-components';
-import { normalize } from 'polished';
+import { normalize, rem } from 'polished';
 
 import typography from 'lib/typography';
 import fonts from 'lib/fonts';
@@ -22,6 +22,9 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 
 	html {
 		background-color: ${props => props.theme.colors.background};
+		min-width: 100vw;
+		max-width: 100vw;
+		overflow-x: hidden;
 	}
 
 	a {
@@ -31,5 +34,27 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 
 	ul {
 		margin-left: 0;
+		list-style-position: inside;
+	}
+
+	hr {
+		margin: ${props => rem(props.theme.spacings.large)} 0px;
+		border-color: ${props => props.theme.colors.muted} currentcolor currentcolor;
+		border-style: solid none none;
+		border-width: 1px medium medium;
+		border-image: none 100% / 1 / 0 stretch;
+		background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;
+	}
+
+	button {
+		border: 0;
+		outline: none;
+		text-decoration: none;
+	}
+
+	pre {
+		font-size: 0.85rem;
+		padding: ${props => rem(props.theme.spacings.small)};
+		overflow: auto;
 	}
 `;
