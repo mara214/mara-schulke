@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { rem } from 'polished';
 
-import { mobile } from 'lib/media';
+import { mobile, landscape } from 'lib/media';
 
 interface ContainerProps {
 	slim?: boolean;
@@ -16,7 +16,34 @@ export default styled.div<ContainerProps>`
 	max-width: ${props => rem(props.theme.layout.maxWidth)};
 	padding: ${props => (props.slim ? `0 ${rem(props.theme.spacings.large)}` : rem(props.theme.spacings.large))};
 
+	.mobile-fullscreen-image {
+		display: block;
+		margin: 0 auto ${props => rem(props.theme.spacings.medium)} auto;
+
+		img {
+			display: block;
+			margin: 0 auto;
+		}
+	}
+
+	${landscape} {
+		.mobile-fullscreen-image {
+			margin-left: ${props => rem(-props.theme.spacings.large)};
+			margin-right: ${props => rem(-props.theme.spacings.large)};
+		}
+
+		.mobile-fullscreen-image img {
+			width: 100%;
+		}
+	}
+
 	${mobile} {
 		padding: ${props => (props.slim ? `0 ${rem(props.theme.spacings.medium)}` : rem(props.theme.spacings.medium))};
+
+		.mobile-fullscreen-image {
+			margin-left: ${props => rem(-props.theme.spacings.medium)};
+			margin-right: ${props => rem(-props.theme.spacings.medium)};
+			width: 100vw;
+		}
 	}
 `;
