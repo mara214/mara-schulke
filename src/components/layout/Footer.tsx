@@ -13,11 +13,17 @@ interface FooterProps {}
 
 const StyledSocialIcon = styled(SocialIcon)`
 	.social-container .social-svg-mask {
-		fill: ${props => props.theme.colors.foreground} !important;
-		transition: none !important;
+		display: none !important;
 	}
 
-	&:hover .social-container .social-svg-mask {
+	.social-container .social-svg-icon {
+		fill: ${props => props.theme.colors.foreground} !important;
+		transition: none !important;
+		transform-origin: center;
+		transform: scale(1.5);
+	}
+
+	&:hover .social-container .social-svg-icon {
 		fill: ${props => props.theme.colors.highlight} !important;
 	}
 `;
@@ -26,7 +32,6 @@ const FooterContent = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: ${cols(10)};
-	margin-top: ${props => rem(props.theme.spacings.large)};
 
 	h2 {
 		margin-top: 0;
@@ -34,14 +39,6 @@ const FooterContent = styled.div`
 
 	${desktop} {
 		padding-right: ${props => rem(props.theme.spacings.medium)};
-	}
-`;
-
-const FooterCTAImage = styled.div`
-	width: ${cols(2)};
-
-	${mobile} {
-		display: none;
 	}
 `;
 
@@ -62,7 +59,7 @@ const FooterEnding = styled.div`
 
 		li {
 			margin: 0;
-			margin-right: ${props => rem(props.theme.spacings.medium)};
+			margin-right: ${props => rem(props.theme.spacings.small)};
 			list-style: none;
 
 			&:last-child {
@@ -120,7 +117,6 @@ const Footer: FunctionComponent<FooterProps> = props => {
 					<RichText render={content.title} />
 					<RichText render={content.description} />
 				</FooterContent>
-				<FooterCTAImage></FooterCTAImage>
 			</div>
 			<FooterEnding>
 				<RichText render={content.trademark} />
