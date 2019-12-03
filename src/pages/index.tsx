@@ -1,9 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import { graphql } from 'gatsby';
+import { Link } from 'gatsby';
 import styled from 'styled-components';
 
 import { Layout } from 'layouts/default';
 import { RichText } from 'components/core/RichText';
+
+import Button from 'components/core/Button';
+import Banner from 'components/core/Banner';
 import SEO from 'components/layout/SEO';
 
 interface HomePageProps {
@@ -22,10 +26,16 @@ const HomePage: FunctionComponent<HomePageProps> = ({ data }) => {
 	return (
 		<Layout>
 			<HomePageContainer>
-				<SEO lang='en' title='test' />
-
-				<RichText render={document.title} />
+				<SEO lang='en' title='Home' />
+				<Banner banner={document.banner} />
 				<RichText render={document.introduction} />
+
+				<Link to='/blog'>
+					<Button muted slim>
+						Browse all articles
+					</Button>
+				</Link>
+				<hr />
 			</HomePageContainer>
 		</Layout>
 	);
@@ -37,8 +47,8 @@ export const query = graphql`
 			allHomePages(uid: null) {
 				edges {
 					node {
-						title
 						introduction
+						banner
 					}
 				}
 			}
