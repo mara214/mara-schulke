@@ -5,6 +5,10 @@ import Container from 'components/layout/Container';
 
 interface HeaderProps {}
 
-const Header: FunctionComponent<HeaderProps> = props => <Container slim>Test</Container>;
+const Header: FunctionComponent<HeaderProps> = props => (
+	<Container>
+		<span>test</span>
+	</Container>
+);
 
 export default Header;
