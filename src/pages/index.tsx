@@ -7,7 +7,6 @@ import { Layout } from 'layouts/default';
 import { RichText } from 'components/core/RichText';
 
 import Button from 'components/core/Button';
-import Banner from 'components/core/Banner';
 import SEO from 'components/layout/SEO';
 
 interface HomePageProps {
@@ -27,7 +26,6 @@ const HomePage: FunctionComponent<HomePageProps> = ({ data }) => {
 		<Layout>
 			<HomePageContainer>
 				<SEO lang='en' title='Home' />
-				<Banner banner={document.banner} />
 				<RichText render={document.introduction} />
 
 				<Link to='/blog'>
@@ -48,7 +46,6 @@ export const query = graphql`
 				edges {
 					node {
 						introduction
-						banner
 					}
 				}
 			}
