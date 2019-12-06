@@ -7,6 +7,5 @@ export const colors = {
 	violet: '#5e31dc',
 
 	// added later
-	green: '#39cc9f',
-	darkred: '#39cc9f'
+	green: '#39cc9f'
 };

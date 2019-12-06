@@ -1,5 +1,5 @@
 import { createGlobalStyle, GlobalStyleComponent, DefaultTheme } from 'styled-components';
-import { normalize, rem } from 'polished';
+import { normalize, rem } from 'lib/polished';
 
 import typography from 'lib/typography';
 import fonts from 'lib/fonts';
@@ -30,6 +30,10 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 	a {
 		color: ${props => props.theme.colors.highlight};
 		text-decoration: none;
+
+		h1,h2,h3,h4,h5,h6 {
+			color: ${props => props.theme.colors.foreground};
+		}
 	}
 
 	ul {
@@ -38,7 +42,7 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 	}
 
 	hr {
-		margin: ${props => rem(props.theme.spacings.large)} 0px;
+		margin: ${props => rem(props.theme.spacings.xlarge)} 0px;
 		border-color: ${props => props.theme.colors.muted} currentcolor currentcolor;
 		border-style: solid none none;
 		border-width: 1px medium medium;

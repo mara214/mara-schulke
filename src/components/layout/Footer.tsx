@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { graphql, useStaticQuery } from 'gatsby';
 import { SocialIcon } from 'react-social-icons';
-import { rem } from 'polished';
+import { rem } from 'lib/polished';
 
 import Container from 'components/layout/Container';
 import { RichText } from 'components/core/RichText';
@@ -29,16 +29,14 @@ const StyledSocialIcon = styled(SocialIcon)`
 `;
 
 const FooterContent = styled.div`
-	display: flex;
-	flex-direction: column;
-	width: ${cols(10)};
+	div {
+		display: flex;
+		flex-direction: column;
+		width: ${cols(10)};
 
-	h2 {
-		margin-top: 0;
-	}
-
-	${desktop} {
-		padding-right: ${props => rem(props.theme.spacings.medium)};
+		h2 {
+			margin-top: 0;
+		}
 	}
 `;
 
@@ -46,7 +44,6 @@ const FooterEnding = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: ${props => rem(props.theme.spacings.large)};
 
 	p {
 		font-size: ${rem(12)};
@@ -111,13 +108,13 @@ const Footer: FunctionComponent<FooterProps> = props => {
 	);
 
 	return (
-		<Container slim>
-			<div style={{ display: 'flex' }}>
-				<FooterContent>
+		<Container style={{ paddingTop: 0 }}>
+			<FooterContent>
+				<div style={{ display: 'flex' }}>
 					<RichText render={content.title} />
 					<RichText render={content.description} />
-				</FooterContent>
-			</div>
+				</div>
+			</FooterContent>
 			<FooterEnding>
 				<RichText render={content.trademark} />
 				{renderSocialMediaIconList()}

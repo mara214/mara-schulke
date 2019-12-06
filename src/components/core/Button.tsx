@@ -1,8 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { rem, transparentize } from 'polished';
-
-import { mobile } from 'lib/media';
+import { rem } from 'lib/polished';
 
 interface ButtonProps {
 	muted?: boolean;
