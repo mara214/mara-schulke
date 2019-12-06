@@ -1,4 +1,4 @@
-import { rem } from 'polished';
+import { rem } from 'lib/polished';
 
 export const desktop = `@media (min-width: ${rem(992)})`;
 export const tablet = `@media (max-width: ${rem(992)})`;

@@ -16,9 +16,11 @@ declare module 'styled-components' {
 			muted: string;
 		};
 		spacings: {
+			xlarge: number;
 			large: number;
 			medium: number;
 			small: number;
+			xsmall: number;
 		};
 		border: {
 			radius: {

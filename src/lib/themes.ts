@@ -1,24 +1,26 @@
 import { DefaultTheme } from 'styled-components';
 
 import { colors } from 'lib/colors';
-import { darken, transparentize } from 'polished';
+import { darken, transparentize } from 'lib/polished';
 
 export const light: DefaultTheme = {
 	layout: {
-		maxWidth: 800
+		maxWidth: 880
 	},
 	colors: {
 		foreground: colors.black,
 		background: colors.white,
-		highlight: colors.darkred,
-		highlightDark: darken(0.075, colors.darkred),
-		highlightLight: transparentize(0.75, colors.darkred),
+		highlight: colors.green,
+		highlightDark: darken(0.075, colors.green),
+		highlightLight: transparentize(0.75, colors.green),
 		muted: colors.gray
 	},
 	spacings: {
+		xlarge: 60,
 		large: 40,
 		medium: 20,
-		small: 10
+		small: 10,
+		xsmall: 5
 	},
 	border: {
 		radius: {
