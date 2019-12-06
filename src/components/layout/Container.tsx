@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { rem } from 'polished';
+import { rem } from 'lib/polished';
 
 import { mobile, landscape } from 'lib/media';
 
@@ -16,14 +16,9 @@ export default styled.div<ContainerProps>`
 	max-width: ${props => rem(props.theme.layout.maxWidth)};
 	padding: ${props => (props.slim ? `0 ${rem(props.theme.spacings.large)}` : rem(props.theme.spacings.large))};
 
-	.mobile-fullscreen-image {
+	.mobile-fullscreen-image img {
 		display: block;
-		margin: 0 auto ${props => rem(props.theme.spacings.medium)} auto;
-
-		img {
-			display: block;
-			margin: 0 auto;
-		}
+		margin: 0 auto;
 	}
 
 	${landscape} {
