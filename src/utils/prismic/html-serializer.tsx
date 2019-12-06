@@ -23,8 +23,8 @@ const tranform: Transformer = {
 			return <a {...props}>{children}</a>;
 		}
 
-		const target = element.data.target ? { target: element.data.target } : {};
-		const rel = element.data.target ? { rel: 'noopener' } : {};
+		const target = element.data.target ? element.data.target : '_blank';
+		const rel = element.data.target ? 'noopener' : '';
 
 		const props = {
 			href: element.data.url || link(element.data),
@@ -37,7 +37,7 @@ const tranform: Transformer = {
 	},
 	image: (element, content, children, key) => {
 		const props: any = {
-			className: [element.label || ''].join(' '),
+			className: ['mobile-fullscreen-image', element.label || ''].join(' ').trim(),
 			key
 		};
 

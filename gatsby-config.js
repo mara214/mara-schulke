@@ -8,6 +8,13 @@ module.exports = {
 	},
 	plugins: [
 		{
+			resolve: `gatsby-source-filesystem`,
+			options: {
+				name: `static`,
+				path: `${__dirname}/static`
+			}
+		},
+		{
 			resolve: `gatsby-plugin-alias-imports`,
 			options: {
 				alias: {
@@ -29,7 +36,15 @@ module.exports = {
 				repositoryName: 'maximilian-schulke',
 				accessToken: process.env.PRISMIC_API_KEY,
 				defaultLang: 'en-us',
-				previews: false
+				previews: false,
+				pages: [
+					{
+						type: 'BlogPost',
+						match: '/post/:uid',
+						path: '/post',
+						component: require.resolve('./src/templates/blog-post.tsx')
+					}
+				]
 			}
 		},
 		{

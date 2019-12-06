@@ -1,19 +1,17 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import { tablet } from 'src/lib/media';
+import Container from 'components/layout/Container';
+import { Link } from 'gatsby';
 
-interface HeaderProps {
-	maxWidth: number;
-}
+interface HeaderProps {}
 
-export default styled.div<HeaderProps>`
-	width: 100%;
-	margin: 0 auto;
-	max-width: ${props => props.maxWidth + 80}px;
-	padding: 40px;
+const Header: FunctionComponent<HeaderProps> = props => (
+	<Container>
+		<Link to='/'>home</Link>
+		<span> </span>
+		<Link to='/blog'>blog</Link>
+	</Container>
+);
 
-	${tablet(`
-		padding: 20px;
-	`)}
-`;
+export default Header;

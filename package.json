@@ -6,6 +6,10 @@
 	"author": "schulke-214 <schulkemaximilian@gmail.com>",
 	"license": "MIT",
 	"private": true,
+	"browserslist": [
+		">0.25%",
+		"not dead"
+	],
 	"scripts": {
 		"build": "gatsby build",
 		"dev": "gatsby develop",
@@ -13,13 +17,14 @@
 		"clear:cache": "rm -rf ./node_modules/.cache && rm -rf ./.cache"
 	},
 	"dependencies": {
-		"@types/react-helmet": "^5.0.14",
+		"core-js": "^3.4.1",
 		"gatsby": "^2.17.13",
 		"gatsby-plugin-alias-imports": "^1.0.5",
 		"gatsby-plugin-manifest": "^2.2.28",
 		"gatsby-plugin-offline": "^3.0.21",
 		"gatsby-plugin-react-helmet": "^3.1.15",
 		"gatsby-plugin-styled-components": "^3.1.12",
+		"gatsby-source-filesystem": "^2.1.37",
 		"gatsby-source-prismic-graphql": "^3.3.1",
 		"graphql": "^14.5.8",
 		"polished": "^3.4.2",
@@ -28,6 +33,7 @@
 		"react": "^16.11.0",
 		"react-dom": "^16.11.0",
 		"react-helmet": "^5.2.1",
+		"react-social-icons": "^4.1.0",
 		"styled-components": "^4.4.1",
 		"typography": "^0.16.19"
 	},
@@ -36,6 +42,7 @@
 		"@types/node": "^12.12.7",
 		"@types/react": "^16.9.11",
 		"@types/react-dom": "^16.9.4",
+		"@types/react-helmet": "^5.0.14",
 		"@types/styled-components": "^4.4.0",
 		"@types/typography": "^0.16.3",
 		"babel-plugin-styled-components": "^1.10.6",
