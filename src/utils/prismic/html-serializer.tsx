@@ -23,7 +23,7 @@ const tranform: Transformer = {
 			return <a {...props}>{children}</a>;
 		}
 
-		const target = element.data.target ? element.data.target : '';
+		const target = element.data.target ? element.data.target : '_blank';
 		const rel = element.data.target ? 'noopener' : '';
 
 		const props = {
