@@ -30,6 +30,7 @@ const Blog: FunctionComponent<BlogProps> = ({ data }) => {
 				{posts.map((post: any) => (
 					<BlogPostListItem key={post._meta.uid} post={post} />
 				))}
+				<hr />
 			</BlogContainer>
 		</Layout>
 	);
@@ -38,13 +39,14 @@ const Blog: FunctionComponent<BlogProps> = ({ data }) => {
 export const query = graphql`
 	{
 		prismic {
-			allBlogPosts(last: 10) {
+			allBlogPosts(last: 50) {
 				edges {
 					node {
 						_meta {
 							uid
 						}
 						date
+						image
 						title
 						description
 					}
