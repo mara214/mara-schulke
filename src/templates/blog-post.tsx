@@ -70,13 +70,7 @@ const StyledBlogPostHeader = styled(BlogPostHeader)`
 
 const BlogPost: FunctionComponent<BlogPostProps> = ({ data }) => {
 	if (!data.prismic.allBlogPosts.edges[0]) {
-		throw JSON.stringify(data, null, 4);
-		return (
-			<div>
-				<h2>something went wrong </h2>
-				<pre>{JSON.stringify(data, null, 4)}</pre>
-			</div>
-		);
+		return <p>e</p>;
 	}
 
 	const post = data.prismic.allBlogPosts.edges[0].node;
