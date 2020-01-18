@@ -1,4 +1,5 @@
 import 'styled-components';
+import {colors} from "lib/colors";
 
 declare module 'styled-components' {
 	export interface DefaultTheme {
@@ -10,6 +11,7 @@ declare module 'styled-components' {
 			background: string;
 
 			highlight: string;
+			highlightForeground: string,
 			highlightDark: string;
 			highlightLight: string;
 

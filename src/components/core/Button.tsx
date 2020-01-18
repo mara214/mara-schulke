@@ -24,7 +24,7 @@ export default styled.button<ButtonProps>`
 	cursor: pointer;
 
 	&:hover {
-		color: ${props => props.theme.colors.background};
+		color: ${props => props.theme.colors.highlightForeground};
 		background: ${props => props.theme.colors.highlightDark};
 	}
 

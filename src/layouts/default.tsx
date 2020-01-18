@@ -1,39 +1,31 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
-import { ThemeProvider } from 'styled-components';
+import React, {FunctionComponent, useEffect, useState} from 'react';
+import Cookies from 'js-cookie';
+import {ThemeProvider} from 'styled-components';
 
-import { GlobalStyles } from 'lib/global-styles';
+import {GlobalStyles} from 'lib/global-styles';
 import * as themes from 'lib/themes';
+import {ThemeType} from 'lib/themes';
 
 import Header from 'components/layout/Header';
 import Footer from 'components/layout/Footer';
 import Container from 'components/layout/Container';
 
-const initializeTheme = () => {
-	if (typeof window !== 'undefined') {
-		return localStorage.getItem('theme') || 'light';
-	}
-
-	return 'light';
-};
+const initializeTheme = (): ThemeType => Cookies.get('theme') as ThemeType || ThemeType.Light;
 
 export const Layout: FunctionComponent<{}> = ({ children }) => {
-	const [themeName, setThemeName] = useState(initializeTheme);
+	const [themeName, setThemeName] = useState<ThemeType>(initializeTheme);
 
 	useEffect(() => {
-		localStorage.setItem('theme', themeName);
+		Cookies.set('theme', themeName);
 	}, [themeName]);
 
 	const toggleTheme = () => {
-		if (themeName === 'light') {
-			setThemeName('dark');
-			return;
-		} else {
-			setThemeName('light');
-			return;
-		}
+		if (themeName === ThemeType.Light)
+			return setThemeName(ThemeType.Dark);
+		else
+			return setThemeName(ThemeType.Light);
 	};
 
-	// @ts-ignore-next-line
 	const theme = themes[themeName];
 
 	return (

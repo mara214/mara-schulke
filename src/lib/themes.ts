@@ -33,6 +33,7 @@ export const light: DefaultTheme = {
 		foreground: colors.black,
 		background: colors.white,
 		highlight: colors.pink,
+        highlightForeground: colors.white,
 		highlightDark: darken(0.075, colors.pink),
 		highlightLight: transparentize(0.75, colors.pink),
 		muted: colors.gray
@@ -45,8 +46,14 @@ export const dark: DefaultTheme = {
 		foreground: colors.white,
 		background: colors.black,
 		highlight: colors.pink,
+		highlightForeground: colors.white,
 		highlightDark: darken(0.075, colors.pink),
 		highlightLight: transparentize(0.75, colors.pink),
 		muted: colors.gray
 	}
 };
+
+export enum ThemeType {
+	Light = "light",
+	Dark = "dark"
+}
