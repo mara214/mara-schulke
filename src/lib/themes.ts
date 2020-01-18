@@ -3,17 +3,9 @@ import { DefaultTheme } from 'styled-components';
 import { colors } from 'lib/colors';
 import { darken, transparentize } from 'lib/polished';
 
-export const light: DefaultTheme = {
+const shared = {
 	layout: {
 		maxWidth: 880
-	},
-	colors: {
-		foreground: colors.black,
-		background: colors.white,
-		highlight: colors.green,
-		highlightDark: darken(0.075, colors.green),
-		highlightLight: transparentize(0.75, colors.green),
-		muted: colors.gray
 	},
 	spacings: {
 		xlarge: 60,
@@ -33,4 +25,28 @@ export const light: DefaultTheme = {
 		}
 	},
 	typography: {}
+};
+
+export const light: DefaultTheme = {
+	...shared,
+	colors: {
+		foreground: colors.black,
+		background: colors.white,
+		highlight: colors.pink,
+		highlightDark: darken(0.075, colors.pink),
+		highlightLight: transparentize(0.75, colors.pink),
+		muted: colors.gray
+	}
+};
+
+export const dark: DefaultTheme = {
+	...shared,
+	colors: {
+		foreground: colors.white,
+		background: colors.black,
+		highlight: colors.pink,
+		highlightDark: darken(0.075, colors.pink),
+		highlightLight: transparentize(0.75, colors.pink),
+		muted: colors.gray
+	}
 };
