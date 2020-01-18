@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { rem } from 'lib/polished';
 
 import { Layout } from 'layouts/default';
-import { RichText } from 'components/core/RichText';
+import { RichText, asText } from 'components/core/RichText';
 
 import SEO from 'components/layout/SEO';
 
@@ -78,7 +78,7 @@ const BlogPost: FunctionComponent<BlogPostProps> = ({ data }) => {
 	return (
 		<Layout>
 			<BlogPostContainer>
-				<SEO lang='en' title='Blog' />
+				<SEO lang='en' title={asText(post.title)} />
 
 				<StyledBlogPostHeader title={post.title} date={post.date} />
 
@@ -89,6 +89,7 @@ const BlogPost: FunctionComponent<BlogPostProps> = ({ data }) => {
 				) : null}
 
 				{post.body ? <PostSlices slices={post.body} /> : null}
+				<hr />
 			</BlogPostContainer>
 		</Layout>
 	);

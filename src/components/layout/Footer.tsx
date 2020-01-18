@@ -37,6 +37,10 @@ const FooterContent = styled.div`
 		h2 {
 			margin-top: 0;
 		}
+
+		${mobile} {
+			width: ${cols(12)};
+		}
 	}
 `;
 
