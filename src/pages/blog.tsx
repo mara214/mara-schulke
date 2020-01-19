@@ -11,6 +11,7 @@ import SEO from 'components/layout/SEO';
 
 interface BlogProps {
 	data: any;
+	location: any;
 }
 
 const BlogContainer = styled.div`
@@ -19,11 +20,11 @@ const BlogContainer = styled.div`
 	}
 `;
 
-const Blog: FunctionComponent<BlogProps> = ({ data }) => {
+const Blog: FunctionComponent<BlogProps> = ({ data, location }) => {
 	const posts = data.prismic.allBlogPosts.edges.map((el: any) => el.node);
 
 	return (
-		<Layout>
+		<Layout location={location}>
 			<BlogContainer>
 				<SEO lang='en' title='Blog' />
 

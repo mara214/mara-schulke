@@ -12,7 +12,7 @@ import Container from 'components/layout/Container';
 
 const initializeTheme = (): ThemeType => Cookies.get('theme') as ThemeType || ThemeType.Light;
 
-export const Layout: FunctionComponent<{}> = ({ children }) => {
+export const Layout: FunctionComponent<{ location: any; }> = ({ children, location }) => {
 	const [themeName, setThemeName] = useState<ThemeType>(initializeTheme);
 
 	useEffect(() => {
@@ -31,9 +31,8 @@ export const Layout: FunctionComponent<{}> = ({ children }) => {
 	return (
 		<ThemeProvider theme={theme}>
 			<GlobalStyles />
-			<Header toggleTheme={toggleTheme} />
+			<Header toggleTheme={toggleTheme} location={location}/>
 			<Container>{children}</Container>
-			<Footer />
 		</ThemeProvider>
 	);
 };

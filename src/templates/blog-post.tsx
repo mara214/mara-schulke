@@ -14,6 +14,7 @@ import ImageSlice from 'components/slices/Image';
 
 interface BlogPostProps {
 	data: any;
+	location: any;
 }
 
 const BlogPostContainer = styled.div`
@@ -41,12 +42,6 @@ const BlogPostHeader: FunctionComponent<{ title: any; date: any; className?: str
 }) => (
 	<div className={className}>
 		<RichText render={title} />
-		<span>
-			{date
-				.split('-')
-				.reverse()
-				.join('/')}
-		</span>
 	</div>
 );
 
@@ -68,7 +63,7 @@ const StyledBlogPostHeader = styled(BlogPostHeader)`
 	}
 `;
 
-const BlogPost: FunctionComponent<BlogPostProps> = ({ data }) => {
+const BlogPost: FunctionComponent<BlogPostProps> = ({ data, location }) => {
 	if (!data.prismic.allBlogPosts.edges[0]) {
 		return <p>e</p>;
 	}
@@ -76,7 +71,7 @@ const BlogPost: FunctionComponent<BlogPostProps> = ({ data }) => {
 	const post = data.prismic.allBlogPosts.edges[0].node;
 
 	return (
-		<Layout>
+		<Layout location={location}>
 			<BlogPostContainer>
 				<SEO lang='en' title={asText(post.title)} />
 
