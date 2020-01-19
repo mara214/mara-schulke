@@ -16,7 +16,7 @@ const shared = {
 	},
 	border: {
 		radius: {
-			rounded: 4
+			rounded: 3
 		}
 	},
 	animation: {
@@ -32,10 +32,14 @@ export const light: DefaultTheme = {
 	colors: {
 		foreground: colors.black,
 		background: colors.white,
-		highlight: colors.pink,
+		highlight: colors.violet,
         highlightForeground: colors.white,
-		highlightDark: darken(0.075, colors.pink),
-		highlightLight: transparentize(0.75, colors.pink),
+		highlightDark: darken(0.075, colors.violet),
+		highlightLight: transparentize(0.75, colors.violet),
+        highlightGradient: {
+			colorStops: [colors.violet, colors.blue],
+			toDirection: "-213deg"
+		},
 		muted: colors.gray
 	}
 };
@@ -45,10 +49,14 @@ export const dark: DefaultTheme = {
 	colors: {
 		foreground: colors.white,
 		background: colors.black,
-		highlight: colors.pink,
+		highlight: colors.violet,
 		highlightForeground: colors.white,
-		highlightDark: darken(0.075, colors.pink),
-		highlightLight: transparentize(0.75, colors.pink),
+		highlightDark: darken(0.075, colors.violet),
+		highlightLight: transparentize(0.75, colors.violet),
+		highlightGradient: {
+			colorStops: [colors.violet, colors.blue],
+			toDirection: "-213deg"
+		},
 		muted: colors.gray
 	}
 };

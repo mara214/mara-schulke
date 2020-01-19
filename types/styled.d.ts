@@ -1,7 +1,8 @@
 import 'styled-components';
-import {colors} from "lib/colors";
+import {LinearGradientConfiguration} from "polished/lib/types/linearGradientConfiguration";
 
 declare module 'styled-components' {
+
 	export interface DefaultTheme {
 		layout: {
 			maxWidth: number;
@@ -14,6 +15,7 @@ declare module 'styled-components' {
 			highlightForeground: string,
 			highlightDark: string;
 			highlightLight: string;
+			highlightGradient: LinearGradientConfiguration,
 
 			muted: string;
 		};
