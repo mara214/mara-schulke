@@ -11,6 +11,7 @@ import SEO from 'components/layout/SEO';
 
 interface HomePageProps {
 	data: any;
+	location: any;
 }
 
 const HomePageContainer = styled.div`
@@ -19,11 +20,11 @@ const HomePageContainer = styled.div`
 	}
 `;
 
-const HomePage: FunctionComponent<HomePageProps> = ({ data }) => {
+const HomePage: FunctionComponent<HomePageProps> = ({ data, location }) => {
 	const document = data.prismic.allHomePages.edges[0].node;
 
 	return (
-		<Layout>
+		<Layout location={location}>
 			<HomePageContainer>
 				<SEO lang='en' title='Home' />
 				<RichText render={document.introduction} />
