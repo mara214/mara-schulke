@@ -66,7 +66,7 @@ const BlogPostListItem: FunctionComponent<BlogPostListItemProps> = ({ post, clas
 				</div>
 			</BlogPostListItemContentContainer>
 			<div>
-				<Link to={postHref}>Read Article</Link>
+				<Link to={postHref}>Read Article →</Link>
 			</div>
 		</div>
 	);
