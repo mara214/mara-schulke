@@ -20,7 +20,7 @@ const typography = new Typography({
 		},
 		'h1,h2,h3,h4': {
 			lineHeight: 1.4,
-			marginTop: props.rhythm(1),
+			marginTop: props.rhythm(2),
 			marginBottom: props.rhythm(1 / 2)
 		}
 	})

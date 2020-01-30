@@ -1,7 +1,7 @@
 import { DefaultTheme } from 'styled-components';
 
 import { colors } from 'lib/colors';
-import { darken, transparentize } from 'lib/polished';
+import { lighten, darken, transparentize } from 'lib/polished';
 
 const shared = {
 	layout: {
@@ -21,6 +21,7 @@ const shared = {
 	},
 	animation: {
 		duration: {
+			instant: 0.1,
 			fast: 0.25
 		}
 	},
@@ -40,8 +41,9 @@ export const light: DefaultTheme = {
 			colorStops: [colors.violet, colors.blue],
 			toDirection: "-213deg"
 		},
-		muted: colors.gray
-	}
+		muted: darken(0.05, colors.white)
+	},
+	_id: 'light'
 };
 
 export const dark: DefaultTheme = {
@@ -57,11 +59,12 @@ export const dark: DefaultTheme = {
 			colorStops: [colors.violet, colors.blue],
 			toDirection: "-213deg"
 		},
-		muted: colors.gray
-	}
+		muted: lighten(0.05, colors.black)
+	},
+	_id: 'dark'
 };
 
 export enum ThemeType {
-	Light = "light",
-	Dark = "dark"
+	Light = 'light',
+	Dark = 'dark'
 }

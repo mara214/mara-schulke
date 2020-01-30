@@ -33,10 +33,12 @@ declare module 'styled-components' {
 		};
 		animation: {
 			duration: {
+				instant: number;
 				fast: number;
 			};
 		};
 		typography: {};
+		_id: string;
 	}
 
 	export type Theme = DefaultTheme;
