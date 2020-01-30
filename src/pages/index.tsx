@@ -29,7 +29,7 @@ const HomePage: FunctionComponent<HomePageProps> = ({ data, location }) => {
 				<SEO lang='en' title='Home' />
 				<RichText render={document.introduction} />
 
-				<Link to='/blog'>
+				<Link to='/latest'>
 					<Button muted slim>
 						Browse all articles
 					</Button>
