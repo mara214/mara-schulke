@@ -6,13 +6,12 @@ import fonts from 'lib/fonts';
 
 export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobalStyle`
 	${fonts}
-	${typography.toString()}
 	${normalize()}
+	${typography.toString()}
 	
 	* {
 		color: ${props => props.theme.colors.foreground};
 		text-align: left;
-		line-height: 1.7;
 		word-wrap: break-word;
 		font-kerning: normal;
 
@@ -27,6 +26,10 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 		min-width: 100vw;
 		max-width: 100vw;
 		overflow-x: hidden;
+		
+		&.theme-transition * {
+			transition: none !important;
+		}
 	}
 
 	a {

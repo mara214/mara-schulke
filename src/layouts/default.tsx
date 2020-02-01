@@ -1,18 +1,17 @@
-import React, {FunctionComponent, useEffect, useState} from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
-import {ThemeProvider} from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 
-import {GlobalStyles} from 'lib/global-styles';
+import { GlobalStyles } from 'lib/global-styles';
 import * as themes from 'lib/themes';
-import {ThemeType} from 'lib/themes';
+import { ThemeType } from 'lib/themes';
 
 import Header from 'components/layout/Header';
-import Footer from 'components/layout/Footer';
 import Container from 'components/layout/Container';
 
-const initializeTheme = (): ThemeType => Cookies.get('theme') as ThemeType || ThemeType.Light;
+const initializeTheme = (): ThemeType => (Cookies.get('theme') as ThemeType) || ThemeType.Light;
 
-export const Layout: FunctionComponent<{}> = ({ children }) => {
+export const Layout: FunctionComponent<{ location: any }> = ({ children, location }) => {
 	const [themeName, setThemeName] = useState<ThemeType>(initializeTheme);
 
 	useEffect(() => {
@@ -20,10 +19,17 @@ export const Layout: FunctionComponent<{}> = ({ children }) => {
 	}, [themeName]);
 
 	const toggleTheme = () => {
-		if (themeName === ThemeType.Light)
-			return setThemeName(ThemeType.Dark);
-		else
-			return setThemeName(ThemeType.Light);
+		// @ts-ignore
+		const html = document.querySelector('html') as HTMLHtmlElement;
+
+		html.classList.add('theme-transition');
+
+		if (themeName === ThemeType.Light) setThemeName(ThemeType.Dark);
+		else setThemeName(ThemeType.Light);
+
+		setTimeout(() => {
+			html.classList.remove('theme-transition');
+		}, 250);
 	};
 
 	const theme = themes[themeName];
@@ -31,9 +37,8 @@ export const Layout: FunctionComponent<{}> = ({ children }) => {
 	return (
 		<ThemeProvider theme={theme}>
 			<GlobalStyles />
-			<Header toggleTheme={toggleTheme} />
+			<Header toggleTheme={toggleTheme} location={location} />
 			<Container>{children}</Container>
-			<Footer />
 		</ThemeProvider>
 	);
 };

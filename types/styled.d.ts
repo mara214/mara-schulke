@@ -1,5 +1,5 @@
 import 'styled-components';
-import {colors} from "lib/colors";
+import { LinearGradientConfiguration } from "polished/lib/types/linearGradientConfiguration";
 
 declare module 'styled-components' {
 	export interface DefaultTheme {
@@ -14,6 +14,7 @@ declare module 'styled-components' {
 			highlightForeground: string,
 			highlightDark: string;
 			highlightLight: string;
+			highlightGradient: LinearGradientConfiguration,
 
 			muted: string;
 		};
@@ -31,10 +32,12 @@ declare module 'styled-components' {
 		};
 		animation: {
 			duration: {
+				instant: number;
 				fast: number;
 			};
 		};
 		typography: {};
+		_id: string;
 	}
 
 	export type Theme = DefaultTheme;

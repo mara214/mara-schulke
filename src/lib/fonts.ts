@@ -2,6 +2,13 @@ import { css } from 'styled-components';
 
 export default css`
 	@font-face {
+		font-family: 'Inter UI Light';
+		font-style: normal;
+		font-weight: 300;
+		src: url('/assets/fonts/inter-ui-light.woff') format('woff');
+		font-display: fallback;
+	}
+	@font-face {
 		font-family: 'Inter UI Regular';
 		font-style: normal;
 		font-weight: 400;
@@ -13,20 +20,6 @@ export default css`
 		font-style: italic;
 		font-weight: 400;
 		src: url('/assets/fonts/inter-ui-italic.woff') format('woff');
-		font-display: fallback;
-	}
-	@font-face {
-		font-family: 'Inter UI SemiBold';
-		font-style: normal;
-		font-weight: 600;
-		src: url('/assets/fonts/inter-ui-semibold.woff') format('woff');
-		font-display: fallback;
-	}
-	@font-face {
-		font-family: 'Inter UI SemiBold Italic';
-		font-style: italic;
-		font-weight: 600;
-		src: url('/assets/fonts/inter-ui-semibold-italic.woff') format('woff');
 		font-display: fallback;
 	}
 	@font-face {

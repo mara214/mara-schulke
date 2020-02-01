@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { graphql } from 'gatsby';
+import { graphql, useStaticQuery } from 'gatsby';
 import { Link } from 'gatsby';
 import styled from 'styled-components';
 import { rem } from 'lib/polished';
@@ -14,6 +14,7 @@ import ImageSlice from 'components/slices/Image';
 
 interface BlogPostProps {
 	data: any;
+	location: any;
 }
 
 const BlogPostContainer = styled.div`
@@ -34,19 +35,9 @@ const PostSlices: FunctionComponent<{ slices: any }> = ({ slices }) => {
 	});
 };
 
-const BlogPostHeader: FunctionComponent<{ title: any; date: any; className?: string }> = ({
-	title,
-	date,
-	className
-}) => (
+const BlogPostHeader: FunctionComponent<{ title: any; date: any; className?: string }> = ({ title, className }) => (
 	<div className={className}>
 		<RichText render={title} />
-		<span>
-			{date
-				.split('-')
-				.reverse()
-				.join('/')}
-		</span>
 	</div>
 );
 
@@ -68,37 +59,53 @@ const StyledBlogPostHeader = styled(BlogPostHeader)`
 	}
 `;
 
-const BlogPost: FunctionComponent<BlogPostProps> = ({ data }) => {
-	if (!data.prismic.allBlogPosts.edges[0]) {
-		return <p>e</p>;
+const BlogPost: FunctionComponent<BlogPostProps> = ({ data, location }) => {
+	if (!data.prismic.post.edges[0]) {
+		return <p>404</p>;
 	}
 
-	const post = data.prismic.allBlogPosts.edges[0].node;
+	const post = data.prismic.post.edges[0].node;
+	const { similar } = data.prismic;
 
 	return (
-		<Layout>
+		<Layout location={location}>
 			<BlogPostContainer>
 				<SEO lang='en' title={asText(post.title)} />
-
 				<StyledBlogPostHeader title={post.title} date={post.date} />
-
 				{post.image ? (
 					<p className='mobile-fullscreen-image'>
 						<img src={post.image.url} />
 					</p>
 				) : null}
-
 				{post.body ? <PostSlices slices={post.body} /> : null}
 				<hr />
+				Similar Documents: {similar.totalCount} (Shouldnt be shown if 0)
+				<ul>
+					{similar.edges.map((edge: any) => (
+						<li key={edge.node._meta.uid}>{asText(edge.node.title)}</li>
+					))}
+				</ul>
 			</BlogPostContainer>
 		</Layout>
 	);
 };
 
 export const query = graphql`
-	query BlogPostQuery($uid: String) {
+	query BlogPostQuery($uid: String!, $id: String!) {
 		prismic {
-			allBlogPosts(uid: $uid) {
+			similar: allBlogPosts(similar: { documentId: $id, max: 3 }) {
+				totalCount
+				edges {
+					node {
+						_meta {
+							uid
+						}
+						title
+					}
+				}
+			}
+
+			post: allBlogPosts(uid: $uid) {
 				edges {
 					node {
 						_meta {
