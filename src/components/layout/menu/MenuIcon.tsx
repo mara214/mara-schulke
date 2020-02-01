@@ -17,7 +17,7 @@ const MenuIconContainer = styled.button<{ open: boolean, inverted: boolean; }>`
     cursor: pointer;
     width: 1.5rem;
     height: 1rem;
-    outline: none;
+    outline: none
     padding: 0;
     background-color: transparent;
 
@@ -51,9 +51,9 @@ const MenuIconContainer = styled.button<{ open: boolean, inverted: boolean; }>`
 
 const MenuIcon: FunctionComponent<MenuIconProps> = ({ className, inverted, open, onClick }) => (
     <MenuIconContainer open={open} onClick={onClick} className={className} inverted={inverted}>
-        <span></span>
-        <span></span>
-        <span></span>
+        <span/>
+        <span/>
+        <span/>
     </MenuIconContainer>
 );
 
