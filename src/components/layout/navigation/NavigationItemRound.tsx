@@ -20,6 +20,10 @@ const NavigationItemRound = styled(NavigationItem)<NavigationItemProps>`
 	:hover {
 		color: ${props => props.theme.colors.highlightForeground};
 		background-color: ${props => props.theme.colors.highlightDark};
+		
+		svg {
+       		stroke: ${props => props.theme.colors.highlightForeground};
+		}
 	}
 
 	${props => props.inverted && css`

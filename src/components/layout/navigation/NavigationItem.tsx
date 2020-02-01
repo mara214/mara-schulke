@@ -7,9 +7,10 @@ import { rem } from "lib/polished";
 import { darken, transparentize } from "polished";
 import { landscape } from "lib/media";
 
+console.log("FIX STYLEDLISTITEM")
 const StyledListItem = styled.li`
 	margin: 0;
-
+	
 	:not(:last-child) {
 		margin-right: ${(props: any) => rem(props.theme.spacings.small)};
 	}
@@ -51,11 +52,11 @@ export default styled(NavigationItem)<NavigationItemProps>`
 	background-color: transparent;
 	white-space: nowrap;
 	cursor: pointer;
-	transition: all ${props => props.theme.animation.duration.fast}s;
 	font-family: ${fonts.light};
 	color: ${props => props.theme.colors.foreground};
 	border-radius: ${props => rem(props.theme.border.radius.rounded)};
 	padding: ${props => rem(props.theme.spacings.small)};
+	transition: all ${props => props.theme.animation.duration.fast}s;
 
 	:hover {
 		color: ${props => props.theme.colors.highlight};

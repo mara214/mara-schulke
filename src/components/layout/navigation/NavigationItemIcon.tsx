@@ -12,8 +12,8 @@ const NavigationItemIcon = styled.svg.attrs(props => ({
     width: 1rem;
     height: 1rem;
     fill: none;
-    transition: all ${props => props.theme.animation.duration.fast};
-    
+    transition: all ${props => props.theme.animation.duration.fast}s;
+
     :hover {
         fill: none;
     }
