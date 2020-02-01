@@ -5,7 +5,7 @@ import { ThemeType } from "lib/themes";
 
 import NavigationItemIcon from "components/layout/navigation/NavigationItemIcon";
 
-import {Invertible, Openable} from "components/layout/Header";
+import {Invertible} from "components/layout/Header";
 
 const Sun: FunctionComponent<Invertible> = ({ inverted }) => (
     <NavigationItemIcon strokeWidth={2} inverted={inverted}>
@@ -27,11 +27,11 @@ const Moon: FunctionComponent<Invertible> = ({ inverted }) => (
     </NavigationItemIcon>
 );
 
-interface NavigationThemeToggleIconProps extends Invertible, Openable {}
+interface NavigationThemeToggleIconProps extends Invertible {}
 
-const NavigationThemeToggleIcon: FunctionComponent<NavigationThemeToggleIconProps> = ({ inverted, open }) => {
+const NavigationThemeToggleIcon: FunctionComponent<NavigationThemeToggleIconProps> = ({ inverted }) => {
     const theme = useContext(ThemeContext);
-    return theme._id === ThemeType.Light ? <Moon inverted={inverted || open} /> : <Sun inverted={inverted || open} />;
+    return theme._id === ThemeType.Light ? <Moon inverted={inverted} /> : <Sun inverted={inverted} />;
 };
 
 export default NavigationThemeToggleIcon;

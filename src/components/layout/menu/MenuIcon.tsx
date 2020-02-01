@@ -3,10 +3,9 @@ import styled, { css } from 'styled-components';
 
 import { rem } from "lib/polished";
 
-import { Invertible } from "components/layout/Header";
+import { Invertible, Openable } from "components/layout/Header";
 
-interface MenuIconProps extends Invertible {
-    open: boolean;
+interface MenuIconProps extends Invertible, Openable {
     onClick(): void;
     className?: string;
 }
@@ -19,7 +18,7 @@ const MenuIconContainer = styled.button<MenuIconProps>`
     cursor: pointer;
     width: 1.5rem;
     height: 1rem;
-    outline: none
+    outline: none;
     padding: 0;
     background-color: transparent;
 
@@ -31,7 +30,7 @@ const MenuIconContainer = styled.button<MenuIconProps>`
         height: ${rem(2)};
         background-color: ${props => props.theme.colors.foreground};
         
-        ${props => props.inverted && css`
+        ${props => (props.inverted || props.open) && css`
             background-color: ${props.theme.colors.highlightForeground};
         `}
     }

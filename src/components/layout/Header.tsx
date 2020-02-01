@@ -71,7 +71,7 @@ const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, location }) => {
 		<Navigation
 			open={open}
 			inverted={inverted}
-			toggleOpen={toggleOpen}
+			setOpen={value => setOpen(value)}
 			toggleTheme={toggleTheme}
 		/>
 	);
@@ -84,7 +84,7 @@ const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, location }) => {
 					<NavigationDesktopWrapper>{nav}</NavigationDesktopWrapper>
 					<NavigationMobileWrapper>
 						<MenuIcon
-							inverted={inverted}
+							inverted={inverted || open}
                             open={open}
 							onClick={toggleOpen}
 						/>
