@@ -19,8 +19,17 @@ export const Layout: FunctionComponent<{ location: any }> = ({ children, locatio
 	}, [themeName]);
 
 	const toggleTheme = () => {
-		if (themeName === ThemeType.Light) return setThemeName(ThemeType.Dark);
-		else return setThemeName(ThemeType.Light);
+		// @ts-ignore
+		const html = document.querySelector('html') as HTMLHtmlElement;
+
+		html.classList.add('theme-transition');
+
+		if (themeName === ThemeType.Light) setThemeName(ThemeType.Dark);
+		else setThemeName(ThemeType.Light);
+
+		setTimeout(() => {
+			html.classList.remove('theme-transition');
+		}, 250);
 	};
 
 	const theme = themes[themeName];

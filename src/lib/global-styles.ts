@@ -26,6 +26,10 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 		min-width: 100vw;
 		max-width: 100vw;
 		overflow-x: hidden;
+		
+		&.theme-transition * {
+			transition: none !important;
+		}
 	}
 
 	a {
