@@ -1,8 +1,7 @@
 import 'styled-components';
-import {LinearGradientConfiguration} from "polished/lib/types/linearGradientConfiguration";
+import { LinearGradientConfiguration } from "polished/lib/types/linearGradientConfiguration";
 
 declare module 'styled-components' {
-
 	export interface DefaultTheme {
 		layout: {
 			maxWidth: number;

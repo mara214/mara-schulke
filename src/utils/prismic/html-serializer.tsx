@@ -11,7 +11,7 @@ type Transformer = {
 	[key: string]: (element: any, content: any, children: any, key: number | string) => React.ReactChild;
 };
 
-const tranform: Transformer = {
+const transform: Transformer = {
 	hyperlink: (element, content, children, key) => {
 		if (element.data.link_type === 'Document') {
 			const props = {
@@ -83,7 +83,7 @@ export const HTMLserializer = (
 	children: any,
 	key: number | string
 ): React.ReactChild | null => {
-	if (tranform[type]) return tranform[type](element, content, children, key);
+	if (transform[type]) return transform[type](element, content, children, key);
 
 	return null;
 };

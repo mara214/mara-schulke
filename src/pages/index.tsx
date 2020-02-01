@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Layout } from 'layouts/default';
 import { RichText } from 'components/core/RichText';
 
-import Button from 'components/core/Button';
+import Button from 'components/ui/Button';
 import SEO from 'components/layout/SEO';
 
 interface HomePageProps {
