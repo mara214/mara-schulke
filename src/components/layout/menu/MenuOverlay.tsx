@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
-import styled, { css } from 'styled-components';
-import {linearGradient, rem} from "lib/polished";
+import styled from 'styled-components';
+import { linearGradient } from "lib/polished";
 
 interface MenuOverlayProps {
     className?: string;
@@ -20,18 +20,20 @@ const MenuOverlayContainer = styled.div`
     color: ${props => props.theme.colors.highlightForeground};
 `;
 
+const MenuOverlayContent = styled.div`
+    height: min-content;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+`;
+
 const MenuOverlay: FunctionComponent<MenuOverlayProps> = ({ className, children }) => (
     <MenuOverlayContainer className={className}>
-        <div css={`
-            height: min-content;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center; 
-        `}>
+        <MenuOverlayContent>
             { children }
-        </div>
+        </MenuOverlayContent>
     </MenuOverlayContainer>
 );
 

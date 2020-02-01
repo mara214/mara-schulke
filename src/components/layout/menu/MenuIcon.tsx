@@ -1,15 +1,17 @@
 import React, { FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
-import {rem} from "lib/polished";
 
-interface MenuIconProps {
+import { rem } from "lib/polished";
+
+import { Invertible } from "components/layout/Header";
+
+interface MenuIconProps extends Invertible {
     open: boolean;
-    inverted: boolean;
     onClick(): void;
     className?: string;
 }
 
-const MenuIconContainer = styled.button<{ open: boolean, inverted: boolean; }>`
+const MenuIconContainer = styled.button<MenuIconProps>`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -25,7 +27,7 @@ const MenuIconContainer = styled.button<{ open: boolean, inverted: boolean; }>`
         transition: all ${props => props.theme.animation.duration.instant}s;
         opacity: 1;
         display: block;
-        width: 100%;
+        width: 1.5rem;
         height: ${rem(2)};
         background-color: ${props => props.theme.colors.foreground};
         
@@ -35,6 +37,8 @@ const MenuIconContainer = styled.button<{ open: boolean, inverted: boolean; }>`
     }
     
     ${props => props.open && css`
+        z-index: 99;
+    
         span:first-child {
             transform: rotate(45deg) translate(5px, 5px);
         }
