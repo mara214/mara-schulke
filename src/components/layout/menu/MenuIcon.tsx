@@ -15,20 +15,22 @@ const MenuIconContainer = styled.button<MenuIconProps>`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    cursor: pointer;
-    width: 1.5rem;
-    height: 1rem;
-    outline: none;
-    padding: 0;
     background-color: transparent;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    width: ${props => rem((props.theme.spacings.small * 2) + 24)};
+    height: ${props => rem((props.theme.spacings.small * 2) + 16)};
+    padding: ${props => rem(props.theme.spacings.small)};
+    right: -${props => rem(props.theme.spacings.small)};
 
     span {
-        transition: all ${props => props.theme.animation.duration.instant}s;
         opacity: 1;
         display: block;
         width: 1.5rem;
         height: ${rem(2)};
         background-color: ${props => props.theme.colors.foreground};
+        transition: all ${props => props.theme.animation.duration.instant}s;
         
         ${props => (props.inverted || props.open) && css`
             background-color: ${props.theme.colors.highlightForeground};
