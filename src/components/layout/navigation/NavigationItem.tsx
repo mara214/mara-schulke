@@ -9,6 +9,7 @@ import { landscape } from "lib/media";
 
 console.log("FIX STYLEDLISTITEM")
 const StyledListItem = styled.li`
+	display: block;
 	margin: 0;
 	
 	:not(:last-child) {
@@ -45,10 +46,15 @@ const NavigationItem: FunctionComponent<NavigationItemProps> = ({ to, className,
 		);
 	}
 
-	return <StyledListItem>{content}</StyledListItem>;
+	return (
+		<StyledListItem>
+			{content}
+		</StyledListItem>
+	);
 };
 
 export default styled(NavigationItem)<NavigationItemProps>`
+	display: block;
 	background-color: transparent;
 	white-space: nowrap;
 	cursor: pointer;
