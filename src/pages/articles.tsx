@@ -38,7 +38,7 @@ const Latest: FunctionComponent<LatestProps> = ({ data, location }) => {
 export const query = graphql`
 	{
 		prismic {
-			allBlogPosts(last: 50) {
+			allBlogPosts(lang: "en-us") {
 				edges {
 					node {
 						_meta {
