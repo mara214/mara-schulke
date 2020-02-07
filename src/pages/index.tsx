@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react';
+import styled from 'styled-components';
 import { graphql } from 'gatsby';
 import { Link } from 'gatsby';
-import styled from 'styled-components';
 
 import { Layout } from 'layouts/default';
-import { RichText } from 'components/core/RichText';
+import { asText, RichText } from 'components/core/RichText';
 
 import Button from 'components/ui/Button';
 import SEO from 'components/layout/SEO';
@@ -29,9 +29,9 @@ const HomePage: FunctionComponent<HomePageProps> = ({ data, location }) => {
 				<SEO lang='en' title='Home' />
 				<RichText render={document.introduction} />
 
-				<Link to='/latest'>
+				<Link to='/articles'>
 					<Button muted slim>
-						Browse all articles
+						{asText(document.cta)}
 					</Button>
 				</Link>
 				<hr />
@@ -47,6 +47,7 @@ export const query = graphql`
 				edges {
 					node {
 						introduction
+						cta
 					}
 				}
 			}
