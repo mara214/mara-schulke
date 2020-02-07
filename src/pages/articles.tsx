@@ -7,18 +7,18 @@ import { Layout } from 'layouts/default';
 import BlogPostListItem from 'components/core/BlogPostListItem';
 import SEO from 'components/layout/SEO';
 
-interface LatestProps {
-	data: any;
-	location: any;
-}
-
 const LatestContainer = styled.div`
 	h1 {
 		margin-top: 0;
 	}
 `;
 
-const Latest: FunctionComponent<LatestProps> = ({ data, location }) => {
+interface ArticlesProps {
+	data: any;
+	location: any;
+}
+
+const Articles: FunctionComponent<ArticlesProps> = ({ data, location }) => {
 	const posts = data.prismic.allBlogPosts.edges.map((el: any) => el.node);
 
 	return (
@@ -55,4 +55,4 @@ export const query = graphql`
 	}
 `;
 
-export default Latest;
+export default Articles;
