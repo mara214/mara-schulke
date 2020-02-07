@@ -1,8 +1,8 @@
 import { createGlobalStyle, GlobalStyleComponent, DefaultTheme } from 'styled-components';
-import { normalize, rem } from 'lib/polished';
 
 import typography from 'lib/typography';
 import fonts from 'lib/fonts';
+import { normalize, rem } from 'lib/polished';
 
 export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobalStyle`
 	${fonts}
@@ -65,5 +65,22 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 		font-size: 0.85rem;
 		padding: ${props => rem(props.theme.spacings.small)};
 		overflow: auto;
+	}
+
+	.prism-code {
+		border-radius: ${props => rem(props.theme.border.radius.rounded)};
+
+		* {
+			color: inherit;
+		}
+
+		.highlighted-line {
+			position: relative;
+			left: -${props => rem(props.theme.spacings.small)};
+			margin-right: -${props => rem(props.theme.spacings.small * 2)};
+			padding-left: ${props => rem(props.theme.spacings.small - 5)};
+			border-left: 5px solid rgb(201, 167, 255);
+			background-color: rgba(201, 167, 255, 0.2);
+		}
 	}
 `;
