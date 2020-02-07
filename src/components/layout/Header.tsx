@@ -5,10 +5,10 @@ import Container from 'components/layout/Container';
 import Navigation from "components/layout/navigation/Navigation";
 import MenuIcon from 'components/layout/menu/MenuIcon';
 import MenuOverlay from 'components/layout/menu/MenuOverlay';
+import HeaderHomeLink from "components/layout/header/HeaderHomeLink";
 
 import { linearGradient } from 'lib/polished';
 import { landscape } from 'lib/media';
-import HeaderHomeLink from "components/layout/header/HeaderHomeLink";
 
 export interface Invertible {
 	inverted: boolean;

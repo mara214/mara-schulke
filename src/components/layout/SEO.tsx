@@ -12,9 +12,9 @@ export interface SEOProps {
 }
 
 const SEO: FunctionComponent<SEOProps> = ({ description = '', lang = 'en', meta = [], title = '' }) => {
-	const { site } = useStaticQuery(
+	const { site } = useStaticQuery<{ site: any }>(
 		graphql`
-			query {
+			query SiteMetaData {
 				site {
 					siteMetadata {
 						title
@@ -26,7 +26,7 @@ const SEO: FunctionComponent<SEOProps> = ({ description = '', lang = 'en', meta 
 		`
 	);
 
-	const descr = description || site.siteMetadata.description;
+	const descr: string = description || site.siteMetadata.description;
 
 	return (
 		<Helmet
