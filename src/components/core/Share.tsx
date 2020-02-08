@@ -3,6 +3,7 @@ import React, { FunctionComponent } from 'react';
 import Button from 'components/ui/Button';
 
 import { rem } from 'lib/polished';
+import { landscape } from 'lib/media';
 
 const Share: FunctionComponent<{}> = () => (
 	<div
@@ -20,6 +21,12 @@ const Share: FunctionComponent<{}> = () => (
 
 			p {
 				margin-bottom: ${(props: any) => rem(props.theme.spacings.small)};
+				max-width: 50%;
+				text-align: center;
+
+				${landscape} {
+					max-width: 100%;
+				}
 			}
 
 			${Button} {
@@ -27,8 +34,10 @@ const Share: FunctionComponent<{}> = () => (
 			}
 		`}>
 		<h2>Enjoying this Post?</h2>
-		<p>Share it to help me out!</p>
-		<Button>Share on Twitter</Button>
+		<p>If you appreciate my content, think about sharing my posts or giving this project a star on github! </p>
+		<a href='https://github.com/schulke-214/maximilian-schulke' target='__blank'>
+			<Button>Go To GitHub</Button>
+		</a>
 	</div>
 );
 
