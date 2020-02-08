@@ -79,8 +79,8 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 			left: -${props => rem(props.theme.spacings.small)};
 			margin-right: -${props => rem(props.theme.spacings.small * 2)};
 			padding-left: ${props => rem(props.theme.spacings.small - 5)};
-			border-left: 5px solid rgb(201, 167, 255);
-			background-color: rgba(201, 167, 255, 0.2);
+			border-left: 5px solid ${props => props.theme.code.highlight.border};
+			background-color: ${props => props.theme.code.highlight.background};
 		}
 	}
 `;
