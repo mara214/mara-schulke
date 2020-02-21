@@ -1,5 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
+import { Link } from 'gatsby';
 import styled from 'styled-components';
+import Cookies from 'js-cookie';
 
 import { rem } from 'lib/polished';
 
@@ -24,7 +26,11 @@ const CookieConsentContainer = styled.div`
 `;
 
 const CookieConsent: FunctionComponent<{}> = () => {
-	const [accepted, setAccepted] = useState(false);
+	const [accepted, setAccepted] = useState(() => Cookies.get('cookie-consent') || false);
+	const acceptCookieConsent = () => {
+		Cookies.set('cookie-consent', 'true');
+		setAccepted(true);
+	};
 
 	if (accepted) return <></>;
 
@@ -52,7 +58,7 @@ const CookieConsent: FunctionComponent<{}> = () => {
 							margin-bottom: ${(props: any) => rem(props.theme.spacings.small)};
 						}
 					`}>
-					This site uses cookies to save user preferences across browser sessions.
+					This site uses cookies to save user preferences across browser sessions
 				</span>
 				<div
 					css={`
@@ -68,8 +74,10 @@ const CookieConsent: FunctionComponent<{}> = () => {
 							}
 						}
 					`}>
-					<Button>Accept</Button>
-					<Button muted>Learn More</Button>
+					<Button onClick={acceptCookieConsent}>Accept</Button>
+					<Link to='/privacy-policy'>
+						<Button muted>Learn More</Button>
+					</Link>
 				</div>
 			</Container>
 		</CookieConsentContainer>
