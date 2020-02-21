@@ -4,7 +4,9 @@ export const colors = {
 	gray: '#f0f0f0',
 
 	violet: '#7447f5',
-	blue: '#90c6f3'
+	blue: '#90c6f3',
+
+	orange: '#FF6100'
 };
 
 /*

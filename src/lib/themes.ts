@@ -35,9 +35,9 @@ const shared = {
 
 const BLACK: string = colors.black;
 const WHITE: string = colors.white;
-const HIGHLIGHT: string = colors.violet;
+const HIGHLIGHT: string = colors.orange;
 const HIGHLIGHT_GRADIENT: LinearGradientConfiguration = {
-	colorStops: [colors.blue, colors.violet],
+	colorStops: [colors.orange, colors.orange],
 	toDirection: '-213deg'
 };
 
