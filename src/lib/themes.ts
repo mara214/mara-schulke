@@ -1,12 +1,12 @@
 import { DefaultTheme } from 'styled-components';
-import DarkTheme from 'prism-react-renderer/themes/nightOwl';
-import LightTheme from 'prism-react-renderer/themes/nightOwlLight';
+import { Dark as DarkTheme } from 'lib/syntax';
+import { Light as LightTheme } from 'lib/syntax';
 
 import { colors } from 'lib/colors';
 import { lighten, darken, transparentize } from 'lib/polished';
 import { LinearGradientConfiguration } from 'polished/lib/types/linearGradientConfiguration';
 
-DarkTheme.plain.backgroundColor = 'rgb(25, 26, 27)';
+DarkTheme.plain.backgroundColor = 'rgb(20, 20, 20)';
 LightTheme.plain.backgroundColor = 'rgb(248, 249, 250)';
 
 const shared = {
