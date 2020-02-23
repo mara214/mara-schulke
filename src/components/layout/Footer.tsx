@@ -28,23 +28,7 @@ const StyledSocialIcon = styled(SocialIcon)`
 	}
 `;
 
-const FooterContent = styled.div`
-	div {
-		display: flex;
-		flex-direction: column;
-		width: ${cols(10)};
-
-		h2 {
-			margin-top: 0;
-		}
-
-		${mobile} {
-			width: ${cols(12)};
-		}
-	}
-`;
-
-const FooterEnding = styled.div`
+const FooterWrapper = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -70,7 +54,7 @@ const FooterEnding = styled.div`
 	}
 `;
 
-const Footer: FunctionComponent<FooterProps> = props => {
+const Footer: FunctionComponent<FooterProps> = () => {
 	const data = useStaticQuery(graphql`
 		{
 			prismic {
@@ -112,17 +96,12 @@ const Footer: FunctionComponent<FooterProps> = props => {
 	);
 
 	return (
-		<Container style={{ paddingTop: 0 }}>
-			<FooterContent>
-				<div style={{ display: 'flex' }}>
-					<RichText render={content.title} />
-					<RichText render={content.description} />
-				</div>
-			</FooterContent>
-			<FooterEnding>
+		<Container>
+			<hr style={{ marginTop: 0 }} />
+			<FooterWrapper>
 				<RichText render={content.trademark} />
 				{renderSocialMediaIconList()}
-			</FooterEnding>
+			</FooterWrapper>
 		</Container>
 	);
 };
