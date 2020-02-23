@@ -1,10 +1,10 @@
 import React from 'react';
+import { navigate } from "gatsby"
 import { link, href } from './config';
 
 const clickHandler = (href: string, as: string) => (e: any) => {
 	e.preventDefault();
-	// Router.push(href, as);
-	// todo(max): use gatsby router
+	navigate(href);
 };
 
 type Transformer = {

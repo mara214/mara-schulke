@@ -1,10 +1,10 @@
-import React, {FunctionComponent} from "react";
-import styled, {css} from "styled-components";
-import { Link } from "gatsby";
+import React, { FunctionComponent } from 'react';
+import styled, { css } from 'styled-components';
+import { Link } from 'gatsby';
 
-import { mobile } from "lib/media";
-import { rem } from "lib/polished";
-import { Invertible } from "components/layout/Header";
+import { mobile } from 'lib/media';
+import { rem } from 'lib/polished';
+import { Invertible } from 'components/layout/Header';
 
 const AvatarContainer = styled.span<Invertible>`
 	display: block;
@@ -20,43 +20,47 @@ const AvatarContainer = styled.span<Invertible>`
 		height: ${rem(50)};
 	}
 
-	${props => props.inverted && css`
-		background-color: ${props.theme.colors.highlightDark};
-	`}
+	${props =>
+		props.inverted &&
+		css`
+			background-color: ${props.theme.colors.highlightLight};
+		`}
 `;
 
 const Avatar: FunctionComponent<Invertible> = ({ inverted }) => (
-    <AvatarContainer inverted={inverted}>
-        <img src='/assets/maximilian-schulke.png' alt='portrait' />
-    </AvatarContainer>
+	<AvatarContainer inverted={inverted}>
+		<img src='/assets/maximilian-schulke.png' alt='portrait' />
+	</AvatarContainer>
 );
 
 const Title = styled.span<Invertible>`
 	color: ${props => props.theme.colors.foreground};
 	white-space: nowrap;
 
-	${props => props.inverted && css`
-		color: ${props => props.theme.colors.highlightForeground};
-	`}
+	${props =>
+		props.inverted &&
+		css`
+			color: ${props => props.theme.colors.highlightForeground};
+		`}
 `;
 
 const HeaderHomeLink: FunctionComponent<Invertible> = ({ inverted }) => {
-    return (
-        <Link to='/' style={{ display: 'flex', width: 'min-content', alignItems: 'center' }}>
+	return (
+		<Link to='/' style={{ display: 'flex', width: 'min-content', alignItems: 'center' }}>
 			<span style={{ marginRight: '1rem' }}>
 				<Avatar inverted={inverted} />
 			</span>
-            <Title
-                inverted={inverted}
-                css={`
+			<Title
+				inverted={inverted}
+				css={`
 					${mobile} {
 						display: none;
 					}
 				`}>
-                Maximilian Schulke
-            </Title>
-        </Link>
-    );
+				Maximilian Schulke
+			</Title>
+		</Link>
+	);
 };
 
 export default HeaderHomeLink;

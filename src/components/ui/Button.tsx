@@ -12,7 +12,7 @@ export default styled.button<ButtonProps>`
 	width: min-content;
 	max-width: ${rem(300)};
 
-	color: ${props => props.theme.colors.background};
+	color: ${props => props.theme.colors.highlightForeground};
 	background: ${props => props.theme.colors.highlight};
 	padding: ${props => rem(props.theme.spacings.small)} ${props => rem(props.theme.spacings.medium)};
 	border-radius: ${props => rem(props.theme.border.radius.rounded)};

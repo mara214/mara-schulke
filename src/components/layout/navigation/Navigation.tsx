@@ -76,7 +76,7 @@ const Navigation: FunctionComponent<NavigationProps> = ({ inverted: inv, open, t
     return (
         <nav>
             <NavigationContainer>
-                <NavigationItem to="/latest" inverted={inverted}>Latest Posts</NavigationItem>
+                <NavigationItem to="/articles" inverted={inverted}>All Articles</NavigationItem>
                 <NavigationItemRound
                     inverted={inverted}
                     onClick={() => {

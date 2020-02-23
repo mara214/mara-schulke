@@ -1,5 +1,6 @@
 import 'styled-components';
-import { LinearGradientConfiguration } from "polished/lib/types/linearGradientConfiguration";
+import { LinearGradientConfiguration } from 'polished/lib/types/linearGradientConfiguration';
+import { PrismTheme } from 'prism-react-renderer';
 
 declare module 'styled-components' {
 	export interface DefaultTheme {
@@ -11,10 +12,10 @@ declare module 'styled-components' {
 			background: string;
 
 			highlight: string;
-			highlightForeground: string,
+			highlightForeground: string;
 			highlightDark: string;
 			highlightLight: string;
-			highlightGradient: LinearGradientConfiguration,
+			highlightGradient: LinearGradientConfiguration;
 
 			muted: string;
 		};
@@ -36,7 +37,13 @@ declare module 'styled-components' {
 				fast: number;
 			};
 		};
-		typography: {};
+		code: {
+			syntax: PrismTheme;
+			highlight: {
+				border: string;
+				background: string;
+			};
+		};
 		_id: string;
 	}
 

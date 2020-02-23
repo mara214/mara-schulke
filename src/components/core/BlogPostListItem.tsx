@@ -75,7 +75,7 @@ const BlogPostListItem: FunctionComponent<BlogPostListItemProps> = ({ post, clas
 export default styled(BlogPostListItem)<BlogPostListItemProps>`
 	display: flex;
 	flex-direction: column;
-	margin-top: ${props => rem(props.theme.spacings.xlarge)};
+	margin-top: ${props => rem(props.theme.spacings.large)};
 
 	h2 {
 		margin-top: 0;

@@ -8,6 +8,8 @@ import { ThemeType } from 'lib/themes';
 
 import Header from 'components/layout/Header';
 import Container from 'components/layout/Container';
+import CookieConsent from 'components/layout/CookieConsent';
+import Footer from 'components/layout/Footer';
 
 const initializeTheme = (): ThemeType => (Cookies.get('theme') as ThemeType) || ThemeType.Light;
 
@@ -39,6 +41,8 @@ export const Layout: FunctionComponent<{ location: any }> = ({ children, locatio
 			<GlobalStyles />
 			<Header toggleTheme={toggleTheme} location={location} />
 			<Container>{children}</Container>
+			<Footer />
+			<CookieConsent />
 		</ThemeProvider>
 	);
 };

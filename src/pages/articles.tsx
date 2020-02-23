@@ -7,18 +7,18 @@ import { Layout } from 'layouts/default';
 import BlogPostListItem from 'components/core/BlogPostListItem';
 import SEO from 'components/layout/SEO';
 
-interface LatestProps {
-	data: any;
-	location: any;
-}
-
 const LatestContainer = styled.div`
 	h1 {
 		margin-top: 0;
 	}
 `;
 
-const Latest: FunctionComponent<LatestProps> = ({ data, location }) => {
+interface ArticlesProps {
+	data: any;
+	location: any;
+}
+
+const Articles: FunctionComponent<ArticlesProps> = ({ data, location }) => {
 	const posts = data.prismic.allBlogPosts.edges.map((el: any) => el.node);
 
 	return (
@@ -29,7 +29,6 @@ const Latest: FunctionComponent<LatestProps> = ({ data, location }) => {
 				{posts.map((post: any) => (
 					<BlogPostListItem key={post._meta.uid} post={post} />
 				))}
-				<hr />
 			</LatestContainer>
 		</Layout>
 	);
@@ -38,7 +37,7 @@ const Latest: FunctionComponent<LatestProps> = ({ data, location }) => {
 export const query = graphql`
 	{
 		prismic {
-			allBlogPosts(last: 50) {
+			allBlogPosts(lang: "en-us") {
 				edges {
 					node {
 						_meta {
@@ -55,4 +54,4 @@ export const query = graphql`
 	}
 `;
 
-export default Latest;
+export default Articles;

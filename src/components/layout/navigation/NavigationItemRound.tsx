@@ -1,9 +1,9 @@
 import React from 'react';
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
-import { rem, darken, transparentize} from "lib/polished";
+import { rem, darken, transparentize } from 'lib/polished';
 
-import NavigationItem, { NavigationItemProps } from "components/layout/navigation/NavigationItem";
+import NavigationItem, { NavigationItemProps } from 'components/layout/navigation/NavigationItem';
 
 const NavigationItemRound = styled(NavigationItem)<NavigationItemProps>`
 	width: ${rem(40)};
@@ -19,21 +19,23 @@ const NavigationItemRound = styled(NavigationItem)<NavigationItemProps>`
 
 	:hover {
 		color: ${props => props.theme.colors.highlightForeground};
-		background-color: ${props => props.theme.colors.highlightDark};
-		
+		background-color: ${props => props.theme.colors.highlight};
+
 		svg {
-       		stroke: ${props => props.theme.colors.highlightForeground};
+			stroke: ${props => props.theme.colors.highlightForeground};
 		}
 	}
 
-	${props => props.inverted && css`
-		color: ${props.theme.colors.highlightForeground};
-		background-color: ${props => transparentize(0.8, props.theme.colors.highlightDark)};
+	${props =>
+		props.inverted &&
+		css`
+			color: ${props.theme.colors.highlightForeground};
+			background-color: ${props => transparentize(0.8, props.theme.colors.highlightDark)};
 
-		:hover {
-			background-color: ${props => transparentize(0.8, darken(0.2, props.theme.colors.highlightDark))};
-		}
-	`};
+			:hover {
+				background-color: ${props => transparentize(0.8, darken(0.2, props.theme.colors.highlightDark))};
+			}
+		`};
 `;
 
 export default NavigationItemRound;
