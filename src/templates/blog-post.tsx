@@ -92,7 +92,6 @@ const BlogPost: FunctionComponent<BlogPostProps> = ({ data, location }) => {
 			<Share />
 			<hr />
 			{related.totalCount > 0 && <RelatedBlogPosts posts={related} />}
-			<hr />
 		</Layout>
 	);
 };

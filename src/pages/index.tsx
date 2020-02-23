@@ -34,7 +34,6 @@ const HomePage: FunctionComponent<HomePageProps> = ({ data, location }) => {
 						{asText(document.cta)}
 					</Button>
 				</Link>
-				<hr />
 			</HomePageContainer>
 		</Layout>
 	);

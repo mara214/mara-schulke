@@ -29,7 +29,6 @@ const Articles: FunctionComponent<ArticlesProps> = ({ data, location }) => {
 				{posts.map((post: any) => (
 					<BlogPostListItem key={post._meta.uid} post={post} />
 				))}
-				<hr />
 			</LatestContainer>
 		</Layout>
 	);
