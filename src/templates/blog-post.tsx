@@ -85,8 +85,7 @@ export const query = graphql`
 				edges {
 					node {
 						_meta {
-							id
-							uid
+							...DocumentMeta
 						}
 						title
 						description
@@ -99,9 +98,7 @@ export const query = graphql`
 				edges {
 					node {
 						_meta {
-							id
-							uid
-							type
+							...DocumentMeta
 						}
 						title
 						date

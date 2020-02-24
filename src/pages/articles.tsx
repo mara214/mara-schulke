@@ -7,12 +7,6 @@ import { Layout } from 'layouts/default';
 import BlogPostListItem from 'components/core/BlogPostListItem';
 import SEO from 'components/layout/SEO';
 
-const LatestContainer = styled.div`
-	h1 {
-		margin-top: 0;
-	}
-`;
-
 interface ArticlesProps {
 	data: any;
 	location: any;
@@ -23,13 +17,11 @@ const Articles: FunctionComponent<ArticlesProps> = ({ data, location }) => {
 
 	return (
 		<Layout location={location}>
-			<LatestContainer>
-				<SEO lang='en' title='Blog' />
+			<SEO lang='en' title='Blog' />
 
-				{posts.map((post: any) => (
-					<BlogPostListItem key={post._meta.uid} post={post} />
-				))}
-			</LatestContainer>
+			{posts.map((post: any) => (
+				<BlogPostListItem key={post._meta.uid} post={post} />
+			))}
 		</Layout>
 	);
 };
@@ -41,7 +33,7 @@ export const query = graphql`
 				edges {
 					node {
 						_meta {
-							uid
+							...DocumentMeta
 						}
 						date
 						image

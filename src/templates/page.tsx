@@ -59,8 +59,7 @@ export const query = graphql`
 				edges {
 					node {
 						_meta {
-							id
-							uid
+							...DocumentMeta
 						}
 						title
 					}
