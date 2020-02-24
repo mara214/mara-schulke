@@ -20,7 +20,7 @@ const PageTitle = styled(RawPageTitle)`
 	}
 
 	h1 {
-		margin-bottom: ${props => rem(props.theme.spacings.small)};
+		margin-bottom: 0;
 	}
 
 	span {

@@ -65,10 +65,7 @@ const Footer: FunctionComponent<FooterProps> = () => {
 								internalPageLink {
 									... on PRISMIC_Page {
 										_meta {
-											id
-											uid
-											type
-											lang
+											...DocumentMeta
 										}
 										title
 									}

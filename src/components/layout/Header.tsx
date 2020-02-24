@@ -7,7 +7,7 @@ import MenuIcon from 'components/layout/menu/MenuIcon';
 import MenuOverlay from 'components/layout/menu/MenuOverlay';
 import HeaderHomeLink from 'components/layout/header/HeaderHomeLink';
 
-import { linearGradient } from 'lib/polished';
+import { linearGradient, rem } from 'lib/polished';
 import { landscape } from 'lib/media';
 
 export interface Invertible {
@@ -27,22 +27,6 @@ const HeaderContainer = styled.div<Invertible>`
 		css`
 			color: ${props => props.theme.colors.foreground};
 			background: ${linearGradient(props.theme.colors.highlightGradient)};
-		`}
-
-	${props =>
-		!props.inverted &&
-		css`
-			&:after {
-				content: '';
-				position: absolute;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				left: 0;
-				z-index: -1;
-				height: 2px;
-				background: ${linearGradient(props.theme.colors.highlightGradient)};
-			}
 		`}
 `;
 
@@ -67,14 +51,18 @@ const NavigationMobileWrapper = styled.div`
 `;
 
 interface HeaderProps {
+	openSearch(): void;
 	toggleTheme(): void;
 	location: any;
 }
 
-const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, location }) => {
+const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, openSearch, location }) => {
 	const [open, setOpen] = useState(false);
 	const toggleOpen = () => setOpen(o => !o);
-	const inverted = location.pathname === '/';
+
+	// For now - this is deactivated.
+	// Was originally = location.pathname === '/';
+	const inverted = false;
 
 	useEffect(() => {
 		if (open) {
@@ -87,7 +75,13 @@ const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, location }) => {
 	}, [open]);
 
 	const nav = (
-		<Navigation open={open} inverted={inverted} setOpen={value => setOpen(value)} toggleTheme={toggleTheme} />
+		<Navigation
+			open={open}
+			inverted={inverted}
+			setOpen={value => setOpen(value)}
+			toggleTheme={toggleTheme}
+			openSearch={openSearch}
+		/>
 	);
 
 	return (
@@ -97,7 +91,14 @@ const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, location }) => {
 					<HeaderHomeLink inverted={inverted} />
 					<NavigationDesktopWrapper>{nav}</NavigationDesktopWrapper>
 					<NavigationMobileWrapper>
-						<MenuIcon inverted={inverted || open} open={open} onClick={toggleOpen} />
+						<MenuIcon
+							inverted={inverted || open}
+							open={open}
+							onClick={toggleOpen}
+							css={`
+								right: -${(props: any) => rem(props.theme.spacings.small)};
+							`}
+						/>
 						{open ? <MenuOverlay>{nav}</MenuOverlay> : null}
 					</NavigationMobileWrapper>
 				</NavigationContainer>
