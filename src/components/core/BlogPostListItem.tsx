@@ -4,6 +4,7 @@ import { rem } from 'lib/polished';
 
 import { asText } from 'components/core/RichText';
 import { Link } from 'gatsby';
+import { href } from 'utils/prismic/config';
 
 interface BlogPostListItemProps {
 	post: {
@@ -45,32 +46,28 @@ const BlogPostListItemContentContainer = styled.div`
 	}
 `;
 
-const BlogPostListItem: FunctionComponent<BlogPostListItemProps> = ({ post, className }) => {
-	const postHref = `/post/${post._meta.uid}`;
-
-	return (
-		<div className={className}>
-			<BlogPostListItemContentContainer>
-				{post.image ? (
-					<p className='image mobile-fullscreen-image'>
-						<Link to={postHref}>
-							<img src={post.image.teaser.url} />
-						</Link>
-					</p>
-				) : null}
-				<div className='content'>
-					<Link to={postHref}>
-						<h2>{asText(post.title)}</h2>
+const BlogPostListItem: FunctionComponent<BlogPostListItemProps> = ({ post, className }) => (
+	<div className={className}>
+		<BlogPostListItemContentContainer>
+			{post.image ? (
+				<p className='image mobile-fullscreen-image'>
+					<Link to={href(post._meta)}>
+						<img src={post.image.teaser.url} />
 					</Link>
-					<p>{post.description}</p>
-				</div>
-			</BlogPostListItemContentContainer>
-			<div>
-				<Link to={postHref}>Read Article →</Link>
+				</p>
+			) : null}
+			<div className='content'>
+				<Link to={href(post._meta)}>
+					<h2>{asText(post.title)}</h2>
+				</Link>
+				<p>{post.description}</p>
 			</div>
+		</BlogPostListItemContentContainer>
+		<div>
+			<Link to={href(post._meta)}>Read Article →</Link>
 		</div>
-	);
-};
+	</div>
+);
 
 export default styled(BlogPostListItem)<BlogPostListItemProps>`
 	display: flex;
