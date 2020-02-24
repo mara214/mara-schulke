@@ -11,7 +11,7 @@ const NavigationItemRound = styled(NavigationItem)<NavigationItemProps>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: ${props => props.theme.colors.muted};
+	background-color: ${props => props.theme.colors.state.muted};
 	color: ${props => props.theme.colors.foreground};
 	padding: ${props => rem(props.theme.spacings.xsmall)};
 	cursor: pointer;

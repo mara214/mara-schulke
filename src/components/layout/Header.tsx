@@ -64,16 +64,6 @@ const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, openSearch, locat
 	// Was originally = location.pathname === '/';
 	const inverted = false;
 
-	useEffect(() => {
-		if (open) {
-			document.body.style.height = '100vh';
-			document.body.style.overflowY = 'hidden';
-		} else {
-			document.body.style.height = '';
-			document.body.style.overflowY = '';
-		}
-	}, [open]);
-
 	const nav = (
 		<Navigation
 			open={open}

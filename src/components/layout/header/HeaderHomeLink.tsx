@@ -12,7 +12,7 @@ const AvatarContainer = styled.span<Invertible>`
 	overflow: hidden;
 	width: ${rem(50)};
 	height: ${rem(50)};
-	background-color: ${props => props.theme.colors.muted};
+	background-color: ${props => props.theme.colors.state.muted};
 
 	img {
 		margin: 0;

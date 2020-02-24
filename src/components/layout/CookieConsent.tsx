@@ -18,7 +18,7 @@ const CookieConsentContainer = styled.div`
 	right: 0;
 
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 40px;
-	border-top: 1px solid ${props => props.theme.colors.muted};
+	border-top: 1px solid ${props => props.theme.colors.state.muted};
 	background-color: ${props => props.theme.colors.background};
 
 	${Container} {
