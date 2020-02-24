@@ -3,6 +3,12 @@ import { LinearGradientConfiguration } from 'polished/lib/types/linearGradientCo
 import { PrismTheme } from 'prism-react-renderer';
 
 declare module 'styled-components' {
+	interface LayerConfiguration {
+		foreground: number;
+		content: number;
+		background: number;
+	}
+
 	export interface DefaultTheme {
 		layout: {
 			maxWidth: number;
@@ -43,6 +49,11 @@ declare module 'styled-components' {
 				border: string;
 				background: string;
 			};
+		};
+		layers: {
+			overlay: LayerConfiguration;
+			popup: LayerConfiguration;
+			default: LayerConfiguration;
 		};
 		_id: string;
 	}

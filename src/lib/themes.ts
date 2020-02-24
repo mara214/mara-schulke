@@ -30,14 +30,31 @@ const shared = {
 			instant: 0.1,
 			fast: 0.25
 		}
+	},
+	layers: {
+		overlay: {
+			foreground: 105,
+			content: 100,
+			background: 95
+		},
+		popup: {
+			foreground: 55,
+			content: 50,
+			background: 45
+		},
+		default: {
+			foreground: 5,
+			content: 0,
+			background: -5
+		}
 	}
 };
 
 const BLACK: string = colors.black;
 const WHITE: string = colors.white;
-const HIGHLIGHT: string = colors.orange;
+const HIGHLIGHT: string = colors.terraCotta;
 const HIGHLIGHT_GRADIENT: LinearGradientConfiguration = {
-	colorStops: [colors.orange, colors.orange],
+	colorStops: [colors.terraCotta, colors.terraCotta],
 	toDirection: '-213deg'
 };
 
@@ -73,7 +90,7 @@ export const dark: DefaultTheme = {
 		highlightDark: darken(0.075, HIGHLIGHT),
 		highlightLight: transparentize(0.75, HIGHLIGHT),
 		highlightGradient: HIGHLIGHT_GRADIENT,
-		muted: lighten(0.05, BLACK)
+		muted: lighten(0.1, BLACK)
 	},
 	code: {
 		syntax: DarkTheme,
