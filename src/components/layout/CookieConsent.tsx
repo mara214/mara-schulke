@@ -1,13 +1,15 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Link } from 'gatsby';
+import { Link, useStaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
 import Cookies from 'js-cookie';
 
 import { rem } from 'lib/polished';
+import { landscape } from 'lib/media';
+
+import { href } from 'utils/prismic/config';
 
 import Container from 'components/layout/Container';
 import Button from 'components/ui/Button';
-import { landscape } from 'lib/media';
 
 const CookieConsentContainer = styled.div`
 	position: fixed;
@@ -26,6 +28,29 @@ const CookieConsentContainer = styled.div`
 `;
 
 const CookieConsent: FunctionComponent<{}> = () => {
+	const data = useStaticQuery(graphql`
+		{
+			prismic {
+				allCookieConsents(lang: "en-us") {
+					edges {
+						node {
+							info
+							acceptCta
+							learnMoreCta
+							privacyPolicy {
+								... on PRISMIC_Page {
+									_meta {
+										...DocumentMeta
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	`);
+
 	const [accepted, setAccepted] = useState(() => Cookies.get('cookie-consent') || false);
 	const acceptCookieConsent = () => {
 		Cookies.set('cookie-consent', 'true');
@@ -33,6 +58,8 @@ const CookieConsent: FunctionComponent<{}> = () => {
 	};
 
 	if (accepted) return <></>;
+
+	const content = data.prismic.allCookieConsents.edges[0].node;
 
 	return (
 		<CookieConsentContainer>
@@ -58,7 +85,7 @@ const CookieConsent: FunctionComponent<{}> = () => {
 							margin-bottom: ${(props: any) => rem(props.theme.spacings.small)};
 						}
 					`}>
-					This site uses cookies to save user preferences across browser sessions
+					{content.info}
 				</span>
 				<div
 					css={`
@@ -74,9 +101,9 @@ const CookieConsent: FunctionComponent<{}> = () => {
 							}
 						}
 					`}>
-					<Button onClick={acceptCookieConsent}>Accept</Button>
-					<Link to='/privacy-policy'>
-						<Button muted>Learn More</Button>
+					<Button onClick={acceptCookieConsent}>{content.acceptCta}</Button>
+					<Link to={href(content.privacyPolicy._meta)}>
+						<Button muted>{content.learnMoreCta}</Button>
 					</Link>
 				</div>
 			</Container>
