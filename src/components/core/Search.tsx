@@ -1,23 +1,10 @@
 import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
-import { graphql } from 'gatsby';
 
-import { linearGradient, rem } from 'lib/polished';
+import { rem } from 'lib/polished';
 
 import MenuIcon from 'components/layout/menu/MenuIcon';
 import Container from 'components/layout/Container';
-
-const SearchOverlay = styled.div`
-	position: fixed;
-	height: 100vh;
-	width: 100vw;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: ${props => props.theme.layers.overlay.background};
-	background: ${props => linearGradient(props.theme.colors.highlightGradient)};
-`;
+import Overlay from 'components/ui/Overlay';
 
 interface SearchProps {
 	onClose(): void;
@@ -25,7 +12,7 @@ interface SearchProps {
 
 const Search: FunctionComponent<SearchProps> = ({ onClose }) => {
 	return (
-		<SearchOverlay>
+		<Overlay>
 			<Container>
 				<div
 					css={`
@@ -47,7 +34,7 @@ const Search: FunctionComponent<SearchProps> = ({ onClose }) => {
 					/>
 				</div>
 			</Container>
-		</SearchOverlay>
+		</Overlay>
 	);
 };
 
