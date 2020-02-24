@@ -2,7 +2,9 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { graphql, useStaticQuery, Link } from 'gatsby';
 import { SocialIcon } from 'react-social-icons';
+
 import { rem } from 'lib/polished';
+import { mobile } from 'lib/media';
 
 import Container from 'components/layout/Container';
 import { RichText, asText } from 'components/core/RichText';
@@ -49,6 +51,14 @@ const FooterWrapper = styled.div`
 			&:last-child {
 				margin-right: 0;
 			}
+		}
+	}
+
+	${mobile} {
+		flex-direction: column;
+
+		ul {
+			margin-top: ${props => rem(props.theme.spacings.small)};
 		}
 	}
 `;
@@ -124,6 +134,13 @@ const Footer: FunctionComponent<FooterProps> = () => {
 					css={`
 						display: flex;
 						align-items: center;
+
+						${mobile} {
+							flex-direction: column;
+							ul {
+								margin-left: 0 !important;
+							}
+						}
 					`}>
 					<RichText render={content.trademark} />
 					{renderInternalPageLinks()}
