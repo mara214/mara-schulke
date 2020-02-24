@@ -1,13 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { graphql, useStaticQuery } from 'gatsby';
+import { graphql, useStaticQuery, Link } from 'gatsby';
 import { SocialIcon } from 'react-social-icons';
 import { rem } from 'lib/polished';
 
 import Container from 'components/layout/Container';
-import { RichText } from 'components/core/RichText';
-import { cols } from 'lib/flex';
-import { desktop, mobile } from 'lib/media';
+import { RichText, asText } from 'components/core/RichText';
+import { href } from 'utils/prismic/config';
 
 interface FooterProps {}
 
@@ -61,13 +60,23 @@ const Footer: FunctionComponent<FooterProps> = () => {
 				allFooters {
 					edges {
 						node {
-							title
-							description
 							trademark
-							social_media {
-								social_media_link {
+							internalPageLinks {
+								internalPageLink {
+									... on PRISMIC_Page {
+										_meta {
+											id
+											uid
+											type
+											lang
+										}
+										title
+									}
+								}
+							}
+							socialMedia {
+								socialMediaLink {
 									... on PRISMIC__ExternalLink {
-										_linkType
 										url
 									}
 								}
@@ -81,12 +90,27 @@ const Footer: FunctionComponent<FooterProps> = () => {
 
 	const content = data.prismic.allFooters.edges[0].node;
 
+	const renderInternalPageLinks = () => (
+		<ul
+			css={`
+				margin-left: ${(props: any) => rem(props.theme.spacings.small)} !important;
+			`}>
+			{content.internalPageLinks.map((entry: any) => (
+				<li key={entry.internalPageLink._meta.uid}>
+					<p>
+						<Link to={href(entry.internalPageLink._meta)}>{asText(entry.internalPageLink.title)}</Link>
+					</p>
+				</li>
+			))}
+		</ul>
+	);
+
 	const renderSocialMediaIconList = () => (
 		<ul>
-			{content.social_media.map((entry: any) => (
-				<li key={entry.social_media_link.url}>
+			{content.socialMedia.map((entry: any) => (
+				<li key={entry.socialMediaLink.url}>
 					<StyledSocialIcon
-						url={entry.social_media_link.url}
+						url={entry.socialMediaLink.url}
 						target='_blank'
 						style={{ width: rem(30), height: rem(30) }}
 					/>
@@ -99,7 +123,14 @@ const Footer: FunctionComponent<FooterProps> = () => {
 		<Container>
 			<hr style={{ marginTop: 0 }} />
 			<FooterWrapper>
-				<RichText render={content.trademark} />
+				<div
+					css={`
+						display: flex;
+						align-items: center;
+					`}>
+					<RichText render={content.trademark} />
+					{renderInternalPageLinks()}
+				</div>
 				{renderSocialMediaIconList()}
 			</FooterWrapper>
 		</Container>
