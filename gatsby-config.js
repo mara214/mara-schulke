@@ -43,6 +43,12 @@ module.exports = {
 						match: '/post/:uid',
 						path: '/post',
 						component: require.resolve('./src/templates/blog-post.tsx')
+					},
+					{
+						type: 'Page',
+						match: '/:uid',
+						path: '/',
+						component: require.resolve('./src/templates/page.tsx')
 					}
 				]
 			}
@@ -50,8 +56,8 @@ module.exports = {
 		{
 			resolve: `gatsby-plugin-manifest`,
 			options: {
-				name: `My Blog`,
-				short_name: `My Blog`,
+				name: `Maximilian Schulke`,
+				short_name: `Maximilian Schulke`,
 				start_url: `/`,
 				background_color: `#000000`,
 				theme_color: `#ffffff`,
