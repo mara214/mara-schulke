@@ -62,7 +62,7 @@ const BlogPostListItem: FunctionComponent<BlogPostListItemProps> = ({ post, clas
 					<Link to={postHref}>
 						<h2>{asText(post.title)}</h2>
 					</Link>
-					<p>{asText(post.description)}</p>
+					<p>{post.description}</p>
 				</div>
 			</BlogPostListItemContentContainer>
 			<div>
