@@ -8,7 +8,7 @@ import { landscape } from 'lib/media';
 import { graphql } from 'gatsby';
 import { asText } from 'components/core/RichText';
 
-const Share: FunctionComponent<{}> = () => {
+const Share: FunctionComponent<{ className?: string }> = ({ className }) => {
 	const data = useStaticQuery(graphql`
 		{
 			prismic {
@@ -34,6 +34,7 @@ const Share: FunctionComponent<{}> = () => {
 
 	return (
 		<div
+			className={className}
 			css={`
 				display: flex;
 				flex-direction: column;

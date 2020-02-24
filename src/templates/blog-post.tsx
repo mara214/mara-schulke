@@ -11,9 +11,8 @@ import TextSlice from 'components/slices/Text';
 import ImageSlice from 'components/slices/Image';
 import CodeSlice from 'components/slices/Code';
 import Share from 'components/core/Share';
+import PageTitle from 'components/core/PageTitle';
 import RelatedBlogPosts from 'components/core/RelatedBlogPosts';
-
-import { rem } from 'lib/polished';
 
 interface BlogPostProps {
 	data: any;
@@ -44,30 +43,6 @@ const PostSlices: FunctionComponent<{ slices: any }> = ({ slices }) => {
 	});
 };
 
-const BlogPostHeader: FunctionComponent<{ title: any; className?: string }> = ({ title, className }) => (
-	<div className={className}>
-		<RichText render={title} />
-	</div>
-);
-
-const StyledBlogPostHeader = styled(BlogPostHeader)`
-	margin-bottom: ${props => rem(props.theme.spacings.large)};
-
-	&,
-	h1,
-	span {
-		text-align: center;
-	}
-
-	h1 {
-		margin-bottom: ${props => rem(props.theme.spacings.small)};
-	}
-
-	span {
-		font-size: ${rem(12)};
-	}
-`;
-
 const BlogPost: FunctionComponent<BlogPostProps> = ({ data, location }) => {
 	if (!data.prismic.post.edges[0]) {
 		return <p>404</p>;
@@ -76,11 +51,13 @@ const BlogPost: FunctionComponent<BlogPostProps> = ({ data, location }) => {
 	const post = data.prismic.post.edges[0].node;
 	const { related } = data.prismic;
 
+	const hasRelated = related.totalCount > 0;
+
 	return (
 		<Layout location={location}>
 			<BlogPostContainer>
 				<SEO lang='en' title={asText(post.title)} />
-				<StyledBlogPostHeader title={post.title} />
+				<PageTitle title={post.title} />
 				{post.image ? (
 					<p className='mobile-fullscreen-image'>
 						<img src={post.image.url} />
@@ -89,9 +66,13 @@ const BlogPost: FunctionComponent<BlogPostProps> = ({ data, location }) => {
 				{post.body ? <PostSlices slices={post.body} /> : null}
 			</BlogPostContainer>
 			<hr />
-			<Share />
-			<hr />
-			{related.totalCount > 0 && <RelatedBlogPosts posts={related} />}
+			<Share css={hasRelated ? `` : `margin-bottom: 0;`} />
+			{hasRelated && (
+				<>
+					<hr />
+					<RelatedBlogPosts posts={related} />
+				</>
+			)}
 		</Layout>
 	);
 };
