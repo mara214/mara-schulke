@@ -4,7 +4,11 @@ export const colors = {
 	gray: '#f0f0f0',
 
 	// violet: '#7447f5',
-	// blue: '#3f8cf6',
+	blue: '#3f8cf6',
+	yellow: '#ffd215',
+	red: '#E74C3C',
+	green: '#39cc9f',
+
 	terraCotta: '#d44d5c'
 };
 

@@ -52,11 +52,17 @@ const shared = {
 
 const BLACK: string = colors.black;
 const WHITE: string = colors.white;
+
 const HIGHLIGHT: string = colors.terraCotta;
 const HIGHLIGHT_GRADIENT: LinearGradientConfiguration = {
 	colorStops: [colors.terraCotta, colors.terraCotta],
 	toDirection: '-213deg'
 };
+
+// states
+const SUCCESS: string = colors.green;
+const INFO: string = colors.blue;
+const ERROR: string = colors.red;
 
 export const light: DefaultTheme = {
 	...shared,
@@ -68,7 +74,12 @@ export const light: DefaultTheme = {
 		highlightDark: darken(0.075, HIGHLIGHT),
 		highlightLight: transparentize(0.75, HIGHLIGHT),
 		highlightGradient: HIGHLIGHT_GRADIENT,
-		muted: darken(0.05, WHITE)
+		state: {
+			success: SUCCESS,
+			info: INFO,
+			error: ERROR,
+			muted: darken(0.05, WHITE)
+		}
 	},
 	code: {
 		syntax: LightTheme,
@@ -90,7 +101,12 @@ export const dark: DefaultTheme = {
 		highlightDark: darken(0.075, HIGHLIGHT),
 		highlightLight: transparentize(0.75, HIGHLIGHT),
 		highlightGradient: HIGHLIGHT_GRADIENT,
-		muted: lighten(0.1, BLACK)
+		state: {
+			success: SUCCESS,
+			info: INFO,
+			error: ERROR,
+			muted: lighten(0.1, BLACK)
+		}
 	},
 	code: {
 		syntax: DarkTheme,

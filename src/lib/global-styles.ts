@@ -3,6 +3,7 @@ import { createGlobalStyle, GlobalStyleComponent, DefaultTheme } from 'styled-co
 import typography from 'lib/typography';
 import fonts from 'lib/fonts';
 import { normalize, rem } from 'lib/polished';
+import { mobile } from 'lib/media';
 
 export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobalStyle`
 	${fonts}
@@ -48,11 +49,15 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 
 	hr {
 		margin: ${props => rem(props.theme.spacings.xlarge)} 0px;
-		border-color: ${props => props.theme.colors.muted} currentcolor currentcolor;
+		border-color: ${props => props.theme.colors.state.muted} currentcolor currentcolor;
 		border-style: solid none none;
 		border-width: 1px medium medium;
 		border-image: none 100% / 1 / 0 stretch;
 		background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;
+
+		${mobile} {
+			margin: ${props => rem(props.theme.spacings.large)} 0px;
+		}
 	}
 
 	button {

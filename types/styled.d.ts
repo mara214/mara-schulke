@@ -23,7 +23,12 @@ declare module 'styled-components' {
 			highlightLight: string;
 			highlightGradient: LinearGradientConfiguration;
 
-			muted: string;
+			state: {
+				muted: string;
+				success: string;
+				info: string;
+				error: string;
+			};
 		};
 		spacings: {
 			xlarge: number;
