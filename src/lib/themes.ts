@@ -47,15 +47,18 @@ const shared = {
 			content: 0,
 			background: -5
 		}
+	},
+	boxShadow: {
+		default: 'rgba(0, 0, 0, 0.15) 0px 5px 40px'
 	}
 };
 
 const BLACK: string = colors.black;
 const WHITE: string = colors.white;
 
-const HIGHLIGHT: string = colors.terraCotta;
+const HIGHLIGHT: string = colors.orange;
 const HIGHLIGHT_GRADIENT: LinearGradientConfiguration = {
-	colorStops: [colors.terraCotta, colors.terraCotta],
+	colorStops: [colors.orange, colors.orange],
 	toDirection: '-213deg'
 };
 

@@ -60,6 +60,9 @@ declare module 'styled-components' {
 			popup: LayerConfiguration;
 			default: LayerConfiguration;
 		};
+		boxShadow: {
+			default: string;
+		};
 		_id: string;
 	}
 

@@ -9,7 +9,8 @@ export const colors = {
 	red: '#E74C3C',
 	green: '#39cc9f',
 
-	terraCotta: '#d44d5c'
+	terraCotta: '#d44d5c',
+	orange: '#fa8d3e'
 };
 
 /*
