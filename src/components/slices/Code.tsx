@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, useContext } from 'react';
 import Highlight, { Language } from 'prism-react-renderer';
-
 import { ThemeContext, css } from 'styled-components';
+import Prism from 'utils/prism';
 
 import { asText } from 'components/core/RichText';
 
@@ -94,8 +94,6 @@ const CodeSlice: FunctionComponent<CodeSliceProps> = ({ slice }) => {
 		return !!(lineNumber >= start && lineNumber <= end);
 	};
 
-	const Prism: any = (global as any).Prism || (window as any).Prism;
-
 	return (
 		<div
 			css={`
@@ -110,7 +108,7 @@ const CodeSlice: FunctionComponent<CodeSliceProps> = ({ slice }) => {
 				`}
 			/>
 			<Highlight
-				Prism={Prism}
+				Prism={Prism as any}
 				code={asText(slice.primary.code)}
 				language={slice.primary.language as Language}
 				theme={styledTheme.code.syntax}>
