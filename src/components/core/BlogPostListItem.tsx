@@ -5,6 +5,7 @@ import { rem } from 'lib/polished';
 import { asText } from 'components/core/RichText';
 import { Link } from 'gatsby';
 import { href } from 'utils/prismic/config';
+import { Document } from 'prismic-javascript/d.ts/documents';
 
 interface BlogPostListItemProps {
 	post: {
@@ -19,9 +20,7 @@ interface BlogPostListItemProps {
 				url: string;
 			};
 		};
-		_meta: {
-			uid: string;
-		};
+		_meta: Document;
 	};
 	className?: string;
 }

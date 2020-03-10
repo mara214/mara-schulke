@@ -6,6 +6,7 @@ export const DocumentMeta = graphql`
 		id
 		lang
 		type
+		tags
 		firstPublicationDate
 		lastPublicationDate
 		alternateLanguages {
