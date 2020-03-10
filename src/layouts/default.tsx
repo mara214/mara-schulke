@@ -10,12 +10,10 @@ import Header from 'components/layout/Header';
 import Container from 'components/layout/Container';
 import CookieConsent from 'components/layout/CookieConsent';
 import Footer from 'components/layout/Footer';
-import Search from 'components/core/Search';
 
 const initializeTheme = (): ThemeType => (Cookies.get('theme') as ThemeType) || ThemeType.Light;
 
-export const Layout: FunctionComponent<{ location: any }> = ({ children, location }) => {
-	const [searching, setSearching] = useState<boolean>(false);
+const Layout: FunctionComponent<{ location: any }> = ({ children, location }) => {
 	const [themeName, setThemeName] = useState<ThemeType>(initializeTheme);
 
 	useEffect(() => {
@@ -41,11 +39,12 @@ export const Layout: FunctionComponent<{ location: any }> = ({ children, locatio
 	return (
 		<ThemeProvider theme={theme}>
 			<GlobalStyles />
-			{searching && <Search onClose={() => setSearching(false)} />}
-			<Header openSearch={() => setSearching(true)} toggleTheme={toggleTheme} location={location} />
+			<Header toggleTheme={toggleTheme} location={location} />
 			<Container>{children}</Container>
 			<Footer />
 			<CookieConsent />
 		</ThemeProvider>
 	);
 };
+
+export default Layout;

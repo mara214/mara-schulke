@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { graphql } from 'gatsby';
 import { Link } from 'gatsby';
 
-import { Layout } from 'layouts/default';
+import Layout from 'layouts/default';
 import { asText, RichText } from 'components/core/RichText';
 
 import Button from 'components/ui/Button';
