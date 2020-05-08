@@ -1,15 +1,22 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { graphql } from 'gatsby';
+import { MDXRenderer } from 'gatsby-plugin-mdx';
 
-// import Layout from 'layouts/default';
+import Layout from 'layouts/default';
 
 interface ArticleProps {
 	data: any;
 }
 
 const Article: FunctionComponent<ArticleProps> = ({ data }) => {
-	return <pre>{JSON.stringify(data, null, 4)}</pre>
+	return (
+		<Layout>
+			<pre>{JSON.stringify(data, null, 4)}</pre>
+
+			<MDXRenderer>{data.article.body}</MDXRenderer>
+		</Layout>
+	);
 };
 
 export const query = graphql`
