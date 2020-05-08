@@ -68,22 +68,18 @@ const Copy: FunctionComponent<CopyProps> = ({ text, className }) => {
 	);
 };
 
-interface CodeSliceProps {
-	slice: {
-		primary: {
-			language: string;
-			code: any;
-			highlightStart?: number;
-			highlightEnd?: number;
-		};
-	};
+export interface CodeProps {
+	language: string;
+	code: string;
+	highlightStart?: number;
+	highlightEnd?: number;
 }
 
-const CodeSlice: FunctionComponent<CodeSliceProps> = ({ slice }) => {
+const Code: FunctionComponent<CodeProps> = ({ language, code, highlightStart, highlightEnd }) => {
 	const styledTheme = useContext(ThemeContext);
 
 	const isHighlighted = (lineNumber: number) => {
-		const { highlightStart: start, highlightEnd: end } = slice.primary;
+		const [start, end] = [highlightStart, highlightEnd];
 
 		if (typeof start !== 'number' || typeof end !== 'number') return false;
 
@@ -96,7 +92,7 @@ const CodeSlice: FunctionComponent<CodeSliceProps> = ({ slice }) => {
 				position: relative;
 			`}>
 			<Copy
-				text={slice.primary.code}
+				text={code}
 				css={`
 					position: absolute;
 					top: ${(props: any) => rem(props.theme.spacings.small)};
@@ -105,8 +101,8 @@ const CodeSlice: FunctionComponent<CodeSliceProps> = ({ slice }) => {
 			/>
 			<Highlight
 				Prism={Prism as any}
-				code={slice.primary.code}
-				language={slice.primary.language as Language}
+				code={code}
+				language={language as Language}
 				theme={styledTheme.code.syntax}>
 				{({ className, style, tokens, getLineProps, getTokenProps }) => (
 					<pre className={className} style={style}>
@@ -140,4 +136,4 @@ const CodeSlice: FunctionComponent<CodeSliceProps> = ({ slice }) => {
 	);
 };
 
-export default CodeSlice;
+export default Code;
