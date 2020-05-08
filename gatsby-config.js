@@ -28,20 +28,20 @@ const sources = [
 		resolve: 'gatsby-source-filesystem',
 		options: {
 			name: 'static',
-			path: '${__dirname}/static',
+			path: path.join(__dirname, 'static'),
 		},
 	},
 	{
 		resolve: 'gatsby-source-filesystem',
 		options: {
-			name: 'Articles',
+			name: 'articles',
 			path: path.join(CONTENT_DIR, 'articles'),
 		},
 	},
 	{
 		resolve: 'gatsby-source-filesystem',
 		options: {
-			name: 'Pages',
+			name: 'pages',
 			path: path.join(CONTENT_DIR, 'pages'),
 		},
 	},
