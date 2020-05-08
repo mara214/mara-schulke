@@ -34,8 +34,6 @@
 		"js-cookie": "^2.2.1",
 		"polished": "^3.4.2",
 		"prism-react-renderer": "^1.0.2",
-		"prismic-javascript": "^2.1.1",
-		"prismic-reactjs": "^1.1.1",
 		"prismjs": "^1.19.0",
 		"react": "^16.11.0",
 		"react-dom": "^16.11.0",
@@ -59,6 +57,9 @@
 		"babel-plugin-styled-components": "^1.10.6",
 		"dotenv": "^8.2.0",
 		"gatsby-plugin-typescript": "^2.1.17",
+		"lodash.kebabcase": "^4.1.1",
+		"mdx": "^0.3.1",
+		"mkdirp": "^1.0.4",
 		"serialize-javascript": "^2.1.1"
 	}
 }
