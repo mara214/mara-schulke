@@ -6,8 +6,6 @@ import Cookies from 'js-cookie';
 import { rem } from 'lib/polished';
 import { landscape } from 'lib/media';
 
-import { href } from 'utils/prismic/config';
-
 import Container from 'components/layout/Container';
 import Button from 'components/ui/Button';
 
@@ -28,28 +26,9 @@ const CookieConsentContainer = styled.div`
 `;
 
 const CookieConsent: FunctionComponent<{}> = () => {
-	const data = useStaticQuery(graphql`
-		{
-			prismic {
-				allCookieConsents(lang: "en-us") {
-					edges {
-						node {
-							info
-							acceptCta
-							learnMoreCta
-							privacyPolicy {
-								... on PRISMIC_Page {
-									_meta {
-										...DocumentMeta
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	`);
+	const data = {};
+
+	return 'lol';
 
 	const [accepted, setAccepted] = useState(() => Cookies.get('cookie-consent') || false);
 	const acceptCookieConsent = () => {
@@ -102,7 +81,7 @@ const CookieConsent: FunctionComponent<{}> = () => {
 						}
 					`}>
 					<Button onClick={acceptCookieConsent}>{content.acceptCta}</Button>
-					<Link to={href(content.privacyPolicy._meta)}>
+					<Link to={content.privacyPolicy._meta}>
 						<Button muted>{content.learnMoreCta}</Button>
 					</Link>
 				</div>

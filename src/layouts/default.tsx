@@ -13,7 +13,7 @@ import Footer from 'components/layout/Footer';
 
 const initializeTheme = (): ThemeType => (Cookies.get('theme') as ThemeType) || ThemeType.Light;
 
-const Layout: FunctionComponent<{ location: any }> = ({ children, location }) => {
+const Layout: FunctionComponent<{}> = ({ children }) => {
 	const [themeName, setThemeName] = useState<ThemeType>(initializeTheme);
 
 	useEffect(() => {
@@ -39,7 +39,7 @@ const Layout: FunctionComponent<{ location: any }> = ({ children, location }) =>
 	return (
 		<ThemeProvider theme={theme}>
 			<GlobalStyles />
-			<Header toggleTheme={toggleTheme} location={location} />
+			<Header toggleTheme={toggleTheme} />
 			<Container>{children}</Container>
 			<Footer />
 			<CookieConsent />

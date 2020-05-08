@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import { RichText } from 'components/core/RichText';
 
 interface ImageSliceProps {
 	slice: {
@@ -15,7 +14,6 @@ const ImageSlice: FunctionComponent<ImageSliceProps> = ({ slice }) => (
 		<p className='mobile-fullscreen-image'>
 			<img src={slice.primary.image.url} />
 		</p>
-		<RichText render={slice.primary.description} />
 	</div>
 );
 

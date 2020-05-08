@@ -64,36 +64,7 @@ const FooterWrapper = styled.div`
 `;
 
 const Footer: FunctionComponent<FooterProps> = () => {
-	const data = useStaticQuery(graphql`
-		{
-			prismic {
-				allFooters {
-					edges {
-						node {
-							trademark
-							internalPageLinks {
-								internalPageLink {
-									... on PRISMIC_Page {
-										_meta {
-											...DocumentMeta
-										}
-										title
-									}
-								}
-							}
-							socialMedia {
-								socialMediaLink {
-									... on PRISMIC__ExternalLink {
-										url
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	`);
+	return 'lol';
 
 	const content = data.prismic.allFooters.edges[0].node;
 

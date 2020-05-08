@@ -3,11 +3,7 @@ import Highlight, { Language } from 'prism-react-renderer';
 import { ThemeContext, css } from 'styled-components';
 import Prism from 'utils/prism';
 
-import { asText } from 'components/core/RichText';
-
 import { rem, transparentize } from 'lib/polished';
-import { colors } from 'lib/colors';
-import { ThemeType } from 'lib/themes';
 
 interface CopyProps {
 	text: string;
@@ -100,7 +96,7 @@ const CodeSlice: FunctionComponent<CodeSliceProps> = ({ slice }) => {
 				position: relative;
 			`}>
 			<Copy
-				text={asText(slice.primary.code)}
+				text={slice.primary.code}
 				css={`
 					position: absolute;
 					top: ${(props: any) => rem(props.theme.spacings.small)};
@@ -109,7 +105,7 @@ const CodeSlice: FunctionComponent<CodeSliceProps> = ({ slice }) => {
 			/>
 			<Highlight
 				Prism={Prism as any}
-				code={asText(slice.primary.code)}
+				code={slice.primary.code}
 				language={slice.primary.language as Language}
 				theme={styledTheme.code.syntax}>
 				{({ className, style, tokens, getLineProps, getTokenProps }) => (

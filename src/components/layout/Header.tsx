@@ -53,15 +53,12 @@ const NavigationMobileWrapper = styled.div`
 interface HeaderProps {
 	openSearch(): void;
 	toggleTheme(): void;
-	location: any;
 }
 
-const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, openSearch, location }) => {
+const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, openSearch }) => {
 	const [open, setOpen] = useState(false);
 	const toggleOpen = () => setOpen(o => !o);
 
-	// For now - this is deactivated.
-	// Was originally = location.pathname === '/';
 	const inverted = false;
 
 	const nav = (
