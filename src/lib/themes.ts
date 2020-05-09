@@ -72,6 +72,8 @@ export const light: DefaultTheme = {
 	colors: {
 		foreground: BLACK,
 		background: WHITE,
+		navigationForeground: WHITE,
+		navigationBackground: BLACK,
 		highlight: HIGHLIGHT,
 		highlightForeground: WHITE,
 		highlightDark: darken(0.075, HIGHLIGHT),
@@ -81,7 +83,7 @@ export const light: DefaultTheme = {
 			success: SUCCESS,
 			info: INFO,
 			error: ERROR,
-			muted: darken(0.05, WHITE)
+			muted: darken(0.075, WHITE)
 		}
 	},
 	code: {
@@ -99,6 +101,8 @@ export const dark: DefaultTheme = {
 	colors: {
 		foreground: WHITE,
 		background: BLACK,
+		navigationForeground: WHITE,
+		navigationBackground: BLACK,
 		highlight: HIGHLIGHT,
 		highlightForeground: WHITE,
 		highlightDark: darken(0.075, HIGHLIGHT),
@@ -108,7 +112,7 @@ export const dark: DefaultTheme = {
 			success: SUCCESS,
 			info: INFO,
 			error: ERROR,
-			muted: lighten(0.1, BLACK)
+			muted: lighten(0.075, BLACK)
 		}
 	},
 	code: {

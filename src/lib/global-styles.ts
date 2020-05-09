@@ -1,12 +1,10 @@
 import { createGlobalStyle, GlobalStyleComponent, DefaultTheme } from 'styled-components';
 
 import typography from 'lib/typography';
-import fonts from 'lib/fonts';
-import { normalize, rem } from 'lib/polished';
+import { normalize, rem, darken } from 'lib/polished';
 import { mobile } from 'lib/media';
 
 export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobalStyle`
-	${fonts}
 	${normalize()}
 	${typography.toString()}
 	
@@ -15,11 +13,6 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 		text-align: left;
 		word-wrap: break-word;
 		font-kerning: normal;
-
-		::selection {
-			background-color: ${props => props.theme.colors.highlight};
-			color: ${props => props.theme.colors.highlightForeground};
-		}
 	}
 
 	html {
@@ -33,13 +26,21 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 		}
 	}
 
-	a {
-		color: ${props => props.theme.colors.highlight};
-		text-decoration: none;
+	p code {
+		position: relative;
+		top: -2px;
+		padding: ${props => rem(props.theme.spacings.xsmall)};
+		line-height: 1.5;
+		background-color: ${props => props.theme.colors.state.muted};
+	}
 
-		h1,h2,h3,h4,h5,h6 {
-			color: ${props => props.theme.colors.foreground};
-		}
+	a {
+		color: ${props => props.theme.colors.foreground};
+		text-decoration: none;
+	}
+
+	p a {
+		text-decoration: underline;
 	}
 
 	ul {
@@ -47,16 +48,28 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 		list-style-position: inside;
 	}
 
+	pre, hr, code {
+		font-family: 'Roboto Mono', monospace;
+	}
+
 	hr {
-		margin: ${props => rem(props.theme.spacings.xlarge)} 0px;
-		border-color: ${props => props.theme.colors.state.muted} currentcolor currentcolor;
-		border-style: solid none none;
-		border-width: 1px medium medium;
-		border-image: none 100% / 1 / 0 stretch;
-		background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;
+		overflow: hidden;
+		white-space: nowrap;
+		font-size: 0.85rem;
+		height: auto;
+		color: ${props => darken(0.5, props.theme.colors.state.muted)} !important;
+		margin: ${props => rem(props.theme.spacings.medium)} 0px;
 
 		${mobile} {
-			margin: ${props => rem(props.theme.spacings.large)} 0px;
+			margin: ${props => rem(props.theme.spacings.small)} 0px;
+		}
+
+		&::before {
+			content: '//';
+		}
+
+		&::after {
+			content: '________________________________________________________________________________________________________________________________';
 		}
 	}
 
