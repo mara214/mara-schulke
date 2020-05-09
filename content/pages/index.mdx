@@ -4,12 +4,58 @@ slug: /
 date: 2019-01-29
 ---
 
-import { Link } from 'gatsby';
+# This is my blog
 
-<Link to="/about"><a>abt</a></Link><br/>
-<Link to="/about/me"><a>me</a></Link>
+Am cool dev from `germany.berlin()` :P
 
-# hello my friend
-i am max
+With the Dropbox Business API — and an assist from a few Python scripts—you’ll be automating user lifecycle management,
+giving your company more time and security. Long gone are the days of employees waiting for the IT department to manually
+grant them access to the files they need; now, a simple script can give them that access before they even step through the door.  
 
-a cool dev from berlin :P
+This article covered some of the User Lifecycle Management capabilities available in the Dropbox Business API such as
+adding a team member, removing a team member, suspending a team member, and provided guidance around best practices.
+But this is just the beginning. The Dropbox API can help you with many other tasks such as managing groups, granting
+administrative permissions, setting secondary e-mail addresses, and setting member space limits. Please take the time
+to look at the Dropbox Business API Documentation and see what else you can automate with it.
+
+```rust {2,4-5}
+mod backend;
+
+use backend::service::emails;
+
+async fn main() -> Result<(), Error> {
+	println!("This code is very modern :p");
+
+	emails.send(emails.Configuration {
+		sender: "sender",
+		reciever: "reciever",
+		text: "heyo :)"
+	}).await;
+
+	Ok(())
+}
+```
+
+This article covered some of the User Lifecycle Management capabilities available in the Dropbox Business API such as
+adding a team member, removing a team member, suspending a team member, and provided guidance around best practices.
+But this is just the beginning. The Dropbox API can help you with many other tasks such as managing groups, granting
+administrative permissions, setting secondary e-mail addresses, and setting member space limits. Please take the time
+to look at the Dropbox Business API Documentation and see what else you can automate with it. adding a team member, 
+removing a team member, suspending a team member, and provided guidance around best practices. But this is just the
+beginning. The Dropbox API can help you with many other tasks such as managing groups, granting. Please take the time
+administrative permissions, setting secondary e-mail addresses, and setting member space limits. you can automate with
+to look at the Dropbox Business API Documentation and see what else you can automate with it.
+
+
+```haskell
+main :: IO
+main = do
+    db <- dbConnection "127.0.0.1:27017" ("user", "pass")
+	-- insert complicated haskell code here
+```
+
+This article covered some of the User Lifecycle Management capabilities available in the Dropbox Business API such as
+adding a team member, removing a team member, suspending a team member, and provided guidance around best practices.
+But this is just the beginning. The Dropbox API can help you with many other tasks such as managing groups, granting
+administrative permissions, setting secondary e-mail addresses, and setting member space limits. Please take the time
+to look at the Dropbox Business API Documentation and see what else you can automate with it.
