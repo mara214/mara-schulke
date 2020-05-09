@@ -17,6 +17,9 @@ declare module 'styled-components' {
 			foreground: string;
 			background: string;
 
+			navigationForeground: string;
+			navigationBackground: string;
+
 			highlight: string;
 			highlightForeground: string;
 			highlightDark: string;
