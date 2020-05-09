@@ -10,8 +10,8 @@ import { ThemeType } from 'lib/themes';
 
 import Header from 'components/layout/Header';
 import Container from 'components/layout/Container';
-// import CookieConsent from 'components/layout/CookieConsent';
-// import Footer from 'components/layout/Footer';
+import Footer from 'components/layout/Footer';
+import CookieConsent from 'components/layout/CookieConsent';
 
 const initializeTheme = (): ThemeType => (Cookies.get('theme') as ThemeType) || ThemeType.Light;
 
@@ -44,8 +44,8 @@ const Layout: FunctionComponent<{}> = ({ children }) => {
 				<GlobalStyles />
 				<Header toggleTheme={toggleTheme} openSearch={() => {}} />
 				<Container>{children}</Container>
-				{/* <Footer />
-				<CookieConsent /> */}
+				<Footer />
+				<CookieConsent />
 			</MDXProvider>
 		</ThemeProvider>
 	);
