@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/max/.nvm/versions/node/v12.14.1/bin/node /usr/local/Cellar/yarn/1.13.0/libexec/bin/yarn.js add @types/mdx-utils -D
+  /Users/max/.nvm/versions/node/v12.14.1/bin/node /usr/local/Cellar/yarn/1.13.0/libexec/bin/yarn.js add -D @types/typography-theme-github
 
 PATH: 
   /Users/max/.pyenv/shims:/Users/max/.nvm/versions/node/v12.14.1/bin:/Users/max/.nvm/versions/node/v12.14.1/bin:/Users/max/go/bin:/usr/local/opt/python/libexec/bin:/Users/max/.local/bin:/Users/max/.cargo/bin:/usr/local/sbin:/usr/local/bin:/Users/max/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/usr/local/go/bin:/Users/max/.pyenv/shims:/Users/max/.nvm/versions/node/v12.14.1/bin:/Users/max/go/bin:/usr/local/opt/python/libexec/bin:/Users/max/.local/bin:/Users/max/.cargo/bin:/usr/local/sbin:/Users/max/bin:/usr/local/mysql/bin:/usr/local/mysql/bin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fmdx-utils: Not found
+  Error: https://registry.yarnpkg.com/@types%2ftypography-theme-github: Not found
       at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.13.0/libexec/lib/cli.js:66255:18)
       at Request.self.callback (/usr/local/Cellar/yarn/1.13.0/libexec/lib/cli.js:129397:22)
       at Request.emit (events.js:223:5)
@@ -62,7 +62,6 @@ npm manifest:
   		"gatsby-transformer-sharp": "^2.5.1",
   		"graphql": "^14.5.8",
   		"js-cookie": "^2.2.1",
-  		"mdx-utils": "^0.2.0",
   		"polished": "^3.4.2",
   		"prism-react-renderer": "^1.0.2",
   		"prismjs": "^1.19.0",
@@ -71,11 +70,13 @@ npm manifest:
   		"react-helmet": "^5.2.1",
   		"react-social-icons": "^4.1.0",
   		"styled-components": "^4.4.1",
-  		"typography": "^0.16.19"
+  		"typography": "^0.16.19",
+  		"typography-theme-github": "^0.16.19"
   	},
   	"devDependencies": {
   		"@babel/core": "^7.7.2",
   		"@types/js-cookie": "^2.2.4",
+  		"@types/mdx-js__react": "^1.5.1",
   		"@types/node": "^12.12.7",
   		"@types/prismjs": "^1.16.0",
   		"@types/react": "^16.9.11",
@@ -1657,6 +1658,13 @@ Lockfile:
     version "4.14.150"
     resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.150.tgz#649fe44684c3f1fcb6164d943c5a61977e8cf0bd"
     integrity sha512-kMNLM5JBcasgYscD9x/Gvr6lTAv2NVgsKtet/hm93qMyf/D1pt+7jeEZklKJKxMVmXjxbRVQQGfqDSfipYCO6w==
+  
+  "@types/mdx-js__react@^1.5.1":
+    version "1.5.1"
+    resolved "https://registry.yarnpkg.com/@types/mdx-js__react/-/mdx-js__react-1.5.1.tgz#3fbd03c083c34564520416202f24447a6197cb6d"
+    integrity sha512-CTt1SJxp5+bh+F3FNlmh7ZQCI4TH+Y68AvknWwo0IfevtN6OT0gkQEoNz4eUZzuNG0mr+21hSvvN38VJ3+GtPw==
+    dependencies:
+      "@types/react" "*"
   
   "@types/minimatch@*":
     version "3.0.3"
@@ -9174,11 +9182,6 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
     integrity sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=
   
-  mdx-utils@^0.2.0:
-    version "0.2.0"
-    resolved "https://registry.yarnpkg.com/mdx-utils/-/mdx-utils-0.2.0.tgz#b759c5d06545c4f5c49ac3adba3b93942039ac52"
-    integrity sha512-kRhSIrvJ/++jz+ppDNqG3vjJSqSipjqdh2BqYXxUTJBo1cO+hRtQwuudM0ljAWKf5WmePwT4OBRjoCrhmiK+RA==
-  
   mdx@^0.3.1:
     version "0.3.1"
     resolved "https://registry.yarnpkg.com/mdx/-/mdx-0.3.1.tgz#08598f85c4e1c31c8f50c33126af04f285f4bd2a"
@@ -13723,6 +13726,13 @@ Lockfile:
     version "0.16.19"
     resolved "https://registry.yarnpkg.com/typography-normalize/-/typography-normalize-0.16.19.tgz#58e0cf12466870c5b27006daa051fe7307780660"
     integrity sha512-vtnSv/uGBZVbd4e/ZhZB9HKBgKKlWQUXw74+ADIHHxzKp27CEf8PSR8TX1zF2qSyQ9/qMdqLwXYz8yRQFq9JLQ==
+  
+  typography-theme-github@^0.16.19:
+    version "0.16.19"
+    resolved "https://registry.yarnpkg.com/typography-theme-github/-/typography-theme-github-0.16.19.tgz#91842d3e0a92ad952adf6350ede0924d574193e8"
+    integrity sha512-kDfFjbeh2JW3buPub1JUA39AIKQrZhMuEeqJo6P+9c9JOEMLUBPvcHGrNd+wtAuZlVehPbqG6bcW6KAANHrsGw==
+    dependencies:
+      gray-percentage "^2.0.0"
   
   typography@^0.16.19:
     version "0.16.19"
