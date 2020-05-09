@@ -28,14 +28,8 @@ const MenuIconContainer = styled.button<MenuIconProps>`
 		display: block;
 		width: 1.5rem;
 		height: ${rem(2)};
-		background-color: ${props => props.theme.colors.foreground};
+		background-color: ${props => props.theme.colors.navigationForeground};
 		transition: all ${props => props.theme.animation.duration.instant}s;
-
-		${props =>
-			(props.inverted || props.open) &&
-			css`
-				background-color: ${props.theme.colors.highlightForeground};
-			`}
 	}
 
 	${props =>

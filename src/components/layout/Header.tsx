@@ -20,7 +20,8 @@ export interface Openable {
 
 const HeaderContainer = styled.div<Invertible>`
 	position: relative;
-	color: ${props => props.theme.colors.highlightForeground};
+	color: ${props => props.theme.colors.navigationForeground};
+	background-color: ${props => props.theme.colors.navigationBackground};
 
 	${props =>
 		props.inverted &&
@@ -73,7 +74,7 @@ const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, openSearch }) => 
 
 	return (
 		<HeaderContainer inverted={inverted}>
-			<Container>
+			<Container css={`padding-top: ${(props: any) => rem(props.theme.spacings.medium)}; padding-bottom: ${(props: any) => rem(props.theme.spacings.medium)};`}>
 				<NavigationContainer>
 					<HeaderHomeLink inverted={inverted} />
 					<NavigationDesktopWrapper>{nav}</NavigationDesktopWrapper>

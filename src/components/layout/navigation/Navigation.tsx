@@ -77,10 +77,10 @@ const Navigation: FunctionComponent<NavigationProps> = ({ inverted: inv, open, t
 	return (
 		<nav>
 			<NavigationContainer>
-				<NavigationItem to='/articles' inverted={inverted}>
-					All Articles
+				<NavigationItem to='/about' inverted={inverted}>
+					About
 				</NavigationItem>
-				<NavigationItemRound
+				{/* <NavigationItemRound
 					inverted={inverted}
 					onClick={() => {
 						openSearch();
@@ -96,7 +96,7 @@ const Navigation: FunctionComponent<NavigationProps> = ({ inverted: inv, open, t
 						setOpen(false);
 					}}>
 					<NavigationThemeToggleIcon inverted={inverted} />
-				</NavigationItemRound>
+				</NavigationItemRound> */}
 			</NavigationContainer>
 		</nav>
 	);

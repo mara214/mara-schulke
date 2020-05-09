@@ -4,7 +4,6 @@ import { ThemeContext } from "styled-components";
 import { ThemeType } from "lib/themes";
 
 import NavigationItemIcon from "components/layout/navigation/NavigationItemIcon";
-
 import {Invertible} from "components/layout/Header";
 
 const Sun: FunctionComponent<Invertible> = ({ inverted }) => (

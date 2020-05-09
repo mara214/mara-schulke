@@ -17,13 +17,7 @@ const MenuOverlayContent = styled.div`
 `;
 
 const MenuOverlay: FunctionComponent<MenuOverlayProps> = ({ className, children }) => (
-	<Overlay
-		className={className}
-		css={`
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		`}>
+	<Overlay className={className}>
 		<MenuOverlayContent>{children}</MenuOverlayContent>
 	</Overlay>
 );
