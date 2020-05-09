@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Link, useStaticQuery, graphql } from 'gatsby';
+import { Link } from 'gatsby';
 import styled from 'styled-components';
 import Cookies from 'js-cookie';
 
@@ -26,19 +26,14 @@ const CookieConsentContainer = styled.div`
 `;
 
 const CookieConsent: FunctionComponent<{}> = () => {
-	const data = {};
-
-	return 'lol';
-
 	const [accepted, setAccepted] = useState(() => Cookies.get('cookie-consent') || false);
-	const acceptCookieConsent = () => {
+	const acceptCookieConsent = ev => {
+		ev.preventDefault();
 		Cookies.set('cookie-consent', 'true');
 		setAccepted(true);
 	};
 
 	if (accepted) return <></>;
-
-	const content = data.prismic.allCookieConsents.edges[0].node;
 
 	return (
 		<CookieConsentContainer>
@@ -59,31 +54,32 @@ const CookieConsent: FunctionComponent<{}> = () => {
 					css={`
 						display: block;
 						height: min-content;
+						margin-right: ${(props: any) => rem(props.theme.spacings.small)};
 
 						${landscape} {
 							margin-bottom: ${(props: any) => rem(props.theme.spacings.small)};
+							margin-right: 0;
 						}
 					`}>
-					{content.info}
+					This site is collecting data to enhance your experience and using cookies to save user preferences across browser sessions.
 				</span>
 				<div
 					css={`
 						display: flex;
 						align-items: center;
 
-						${Button} {
+						a {
 							margin-bottom: 0;
 							text-align: center;
+							white-space: nowrap;
 
 							&:first-child {
 								margin-right: ${(props: any) => rem(props.theme.spacings.small)};
 							}
 						}
 					`}>
-					<Button onClick={acceptCookieConsent}>{content.acceptCta}</Button>
-					<Link to={content.privacyPolicy._meta}>
-						<Button muted>{content.learnMoreCta}</Button>
-					</Link>
+					<a href="" onClick={acceptCookieConsent}><code>accept()</code></a>
+					<Link to='/data-privacy'><code>learn_more()</code></Link>
 				</div>
 			</Container>
 		</CookieConsentContainer>
