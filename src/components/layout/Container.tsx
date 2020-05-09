@@ -16,6 +16,10 @@ export default styled.div<ContainerProps>`
 	max-width: ${props => rem(props.theme.layout.maxWidth)};
 	padding: ${props => (props.slim ? `0 ${rem(props.theme.spacings.large)}` : rem(props.theme.spacings.large))};
 
+	> h1:first-child {
+		margin-top: 0;
+	}
+
 	.mobile-fullscreen-image img {
 		display: block;
 		margin: 0 auto;
