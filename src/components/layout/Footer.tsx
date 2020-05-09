@@ -1,124 +1,73 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { graphql, useStaticQuery, Link } from 'gatsby';
+import { Link } from 'gatsby';
 import { SocialIcon } from 'react-social-icons';
 
 import { rem } from 'lib/polished';
-import { mobile } from 'lib/media';
+import { mobile, tablet } from 'lib/media';
 
 import Container from 'components/layout/Container';
-import { RichText, asText } from 'components/core/RichText';
-import { href } from 'utils/prismic/config';
 
-interface FooterProps {}
-
-const StyledSocialIcon = styled(SocialIcon)`
-	.social-container .social-svg-mask {
-		display: none !important;
-	}
-
-	.social-container .social-svg-icon {
-		fill: ${props => props.theme.colors.foreground} !important;
-		transition: none !important;
-		transform-origin: center;
-		transform: scale(1.5);
-	}
-
-	&:hover .social-container .social-svg-icon {
-		fill: ${props => props.theme.colors.highlight} !important;
-	}
-`;
-
-const FooterWrapper = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-
-	p {
-		font-size: ${rem(12)};
-		margin: 0;
+const FooterContainer = styled.div`
+	&, * {
+		color: ${props => props.theme.colors.navigationForeground};
+		background-color: ${props => props.theme.colors.navigationBackground};
 	}
 
 	ul {
 		margin: 0;
-		display: flex;
 
 		li {
-			margin: 0;
-			margin-right: ${props => rem(props.theme.spacings.small)};
 			list-style: none;
+			padding-right: ${props => rem(props.theme.spacings.medium)};
 
 			&:last-child {
-				margin-right: 0;
+				padding: 0;
 			}
-		}
-	}
-
-	${mobile} {
-		flex-direction: column;
-
-		ul {
-			margin-top: ${props => rem(props.theme.spacings.small)};
 		}
 	}
 `;
 
+interface FooterProps {}
+
 const Footer: FunctionComponent<FooterProps> = () => {
-	return 'lol';
-
-	const content = data.prismic.allFooters.edges[0].node;
-
-	const renderInternalPageLinks = () => (
-		<ul
-			css={`
-				margin-left: ${(props: any) => rem(props.theme.spacings.small)} !important;
-			`}>
-			{content.internalPageLinks.map((entry: any) => (
-				<li key={entry.internalPageLink._meta.uid}>
-					<p>
-						<Link to={href(entry.internalPageLink._meta)}>{asText(entry.internalPageLink.title)}</Link>
-					</p>
-				</li>
-			))}
-		</ul>
-	);
-
-	const renderSocialMediaIconList = () => (
-		<ul>
-			{content.socialMedia.map((entry: any) => (
-				<li key={entry.socialMediaLink.url}>
-					<StyledSocialIcon
-						url={entry.socialMediaLink.url}
-						target='_blank'
-						style={{ width: rem(30), height: rem(30) }}
-					/>
-				</li>
-			))}
-		</ul>
-	);
+	const renderLink = ({ to, text }: { to: string; text: string; }) => <li><Link to={to}>{text}</Link></li>;
 
 	return (
-		<Container>
-			<hr style={{ marginTop: 0 }} />
-			<FooterWrapper>
-				<div
-					css={`
-						display: flex;
-						align-items: center;
+		<FooterContainer>
+			<Container css={`padding-bottom: 0;`}>
+				<hr/>
+				<pre css={`padding: 0;`}>
+					// Subscribe to my newsletter<br/>
+					// Buy my book
+				</pre>
+				<hr/>
+			</Container>
 
-						${mobile} {
-							flex-direction: column;
-							ul {
-								margin-left: 0 !important;
-							}
+			<Container 
+				css={`
+					display: flex;
+					justify-content: space-between;
+
+					${mobile} {
+						flex-direction: column;
+						ul {
+							justify-content: start;
 						}
-					`}>
-					<RichText render={content.trademark} />
-					{renderInternalPageLinks()}
+					}
+				`}
+			>
+				<div css={`display: flex; ${mobile} { margin-bottom: ${(props: any) => rem(props.theme.spacings.small)}}`}>
+					<code>maximilian::schulke(2020)</code>
 				</div>
-				{renderSocialMediaIconList()}
-			</FooterWrapper>
-		</Container>
+				<ul css={`display: flex; justify-content: end; ${tablet} { li {margin: 0;} }`}>
+					{renderLink({ to: '/', text: 'GitHub' })}
+					{renderLink({ to: '/', text: 'Reddit' })}
+					{renderLink({ to: '/imprint', text: 'Imprint' })}
+					{renderLink({ to: '/data-privacy', text: 'Data Privacy' })}
+				</ul>
+			</Container>
+		</FooterContainer>
 	);
 };
 
