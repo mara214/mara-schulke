@@ -12,8 +12,6 @@ interface ArticleProps {
 const Article: FunctionComponent<ArticleProps> = ({ data }) => {
 	return (
 		<Layout>
-			<pre>{JSON.stringify(data, null, 4)}</pre>
-
 			<MDXRenderer>{data.article.body}</MDXRenderer>
 		</Layout>
 	);

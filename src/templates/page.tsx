@@ -11,8 +11,6 @@ interface PageProps {
 const Page: FunctionComponent<PageProps> = ({ data }) => {
 	return (
 		<Layout>
-			<pre>{JSON.stringify(data, null, 4)}</pre>
-
 			<MDXRenderer>{data.page.body}</MDXRenderer>
 		</Layout>
 	);};
