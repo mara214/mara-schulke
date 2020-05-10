@@ -11,7 +11,7 @@ interface ArticleProps {
 
 const Article: FunctionComponent<ArticleProps> = ({ data }) => {
 	return (
-		<Layout>
+		<Layout readMode={true}>
 			<MDXRenderer>{data.article.body}</MDXRenderer>
 		</Layout>
 	);

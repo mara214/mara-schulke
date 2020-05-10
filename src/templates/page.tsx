@@ -10,7 +10,7 @@ interface PageProps {
 
 const Page: FunctionComponent<PageProps> = ({ data }) => {
 	return (
-		<Layout>
+		<Layout readMode={false}>
 			<MDXRenderer>{data.page.body}</MDXRenderer>
 		</Layout>
 	);};
