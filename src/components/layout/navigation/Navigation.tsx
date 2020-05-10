@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
+import { graphql, useStaticQuery } from 'gatsby';
 
 import { breakpoints, landscape } from 'lib/media';
 
@@ -8,12 +9,11 @@ import NavigationItemRound from 'components/layout/navigation/NavigationItemRoun
 import NavigationItemIcon from 'components/layout/navigation/NavigationItemIcon';
 import NavigationThemeToggleIcon from 'components/layout/navigation/NavigationThemeToggleIcon';
 
-import { Invertible, Openable } from 'components/layout/Header';
-import { useWindowSize, WindowSize } from '../../../hooks/use-window-size';
+import { Openable } from 'components/layout/Header';
+import { useWindowSize, WindowSize } from 'hooks/use-window-size';
 
-const Search: FunctionComponent<Invertible> = ({ inverted }) => (
+const Search: FunctionComponent = () => (
 	<NavigationItemIcon
-		inverted={inverted}
 		strokeWidth={0}
 		css={`
 			fill: currentColor;
@@ -59,27 +59,36 @@ const NavigationContainer = styled.ul`
 	}
 `;
 
-interface NavigationProps extends Invertible, Openable {
+interface NavigationProps extends Openable {
 	toggleTheme(): void;
 	openSearch(): void;
 	setOpen(newState: boolean): void;
 }
 
-const Navigation: FunctionComponent<NavigationProps> = ({ inverted: inv, open, toggleTheme, openSearch, setOpen }) => {
+const Navigation: FunctionComponent<NavigationProps> = ({ open, toggleTheme, setOpen }) => {
+	const links = useStaticQuery(graphql`
+		{
+			all: allPage(filter: { navigatable: { eq: true }}) {
+				edges {
+					node {
+						title
+						slug
+					}
+				}
+			}
+		}
+	`).all.edges.map(({ node }: any) => node);
+
 	const size: WindowSize = useWindowSize();
-
-	const inverted: boolean = (() => {
-		if (size.width && size.width <= breakpoints.md) return inv || open;
-
-		return inv;
-	})();
 
 	return (
 		<nav>
 			<NavigationContainer>
-				<NavigationItem to='/about' inverted={inverted}>
-					About
-				</NavigationItem>
+				{links.map(({ slug, title }: any) => 
+					<NavigationItem key={slug} to={slug}>
+						{title}
+					</NavigationItem>
+				)}
 				{/* <NavigationItemRound
 					inverted={inverted}
 					onClick={() => {
@@ -89,14 +98,14 @@ const Navigation: FunctionComponent<NavigationProps> = ({ inverted: inv, open, t
 					css={SearchWrapperHotfix}>
 					<Search inverted={inverted} />
 				</NavigationItemRound>
+				 */}
 				<NavigationItemRound
-					inverted={inverted}
 					onClick={() => {
 						toggleTheme();
 						setOpen(false);
 					}}>
-					<NavigationThemeToggleIcon inverted={inverted} />
-				</NavigationItemRound> */}
+					<NavigationThemeToggleIcon />
+				</NavigationItemRound>
 			</NavigationContainer>
 		</nav>
 	);

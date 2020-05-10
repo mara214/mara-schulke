@@ -88,6 +88,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 			id: ID!
 			slug: String!
 			title: String!
+			navigatable: Boolean
 			excerpt(pruneLength: Int = 160): String!
 			body: String!
 		}
@@ -108,6 +109,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 		type MdxPage implements Node & Page {
 			slug: String!
 			title: String!
+			navigatable: Boolean
 			excerpt(pruneLength: Int = 140): String! @mdxpassthrough(fieldName: "excerpt")
 			body: String! @mdxpassthrough(fieldName: "body")
 		}
@@ -175,6 +177,7 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId, createContentDig
 		const fieldData = {
 			title: node.frontmatter.title,
 			slug: node.frontmatter.slug,
+			navigatable: node.frontmatter.navigatable,
 		};
 
 		const mdxPageId = createNodeId(`${node.id} >>> MdxPage`);
