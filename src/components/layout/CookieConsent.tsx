@@ -27,7 +27,7 @@ const CookieConsentContainer = styled.div`
 
 const CookieConsent: FunctionComponent<{}> = () => {
 	const [accepted, setAccepted] = useState(() => Cookies.get('cookie-consent') || false);
-	const acceptCookieConsent = ev => {
+	const acceptCookieConsent = (ev: MouseEvent) => {
 		ev.preventDefault();
 		Cookies.set('cookie-consent', 'true');
 		setAccepted(true);
@@ -78,7 +78,7 @@ const CookieConsent: FunctionComponent<{}> = () => {
 							}
 						}
 					`}>
-					<a href="" onClick={acceptCookieConsent}><code>accept()</code></a>
+					<a href="" onClick={acceptCookieConsent as any}><code>accept()</code></a>
 					<Link to='/data-privacy'><code>learn_more()</code></Link>
 				</div>
 			</Container>
