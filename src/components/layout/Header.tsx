@@ -1,5 +1,5 @@
-import React, { FunctionComponent, useEffect, useState, useContext } from 'react';
-import styled, { css } from 'styled-components';
+import React, { FunctionComponent, useState } from 'react';
+import styled from 'styled-components';
 
 import Container from 'components/layout/Container';
 import Navigation from 'components/layout/navigation/Navigation';
@@ -7,28 +7,21 @@ import MenuIcon from 'components/layout/menu/MenuIcon';
 import MenuOverlay from 'components/layout/menu/MenuOverlay';
 import HeaderHomeLink from 'components/layout/header/HeaderHomeLink';
 
-import { linearGradient, rem } from 'lib/polished';
+import { rem } from 'lib/polished';
 import { landscape } from 'lib/media';
 
-export interface Invertible {
-	inverted: boolean;
-}
+import { useScrollData } from 'hooks/use-scroll-data';
 
 export interface Openable {
 	open: boolean;
 }
 
-const HeaderContainer = styled.div<Invertible>`
-	position: relative;
+const HeaderContainer = styled.header`
+	position: sticky;
+	top: 0;
+	z-index: ${props => props.theme.layers.overlay.foreground};
 	color: ${props => props.theme.colors.navigationForeground};
 	background-color: ${props => props.theme.colors.navigationBackground};
-
-	${props =>
-		props.inverted &&
-		css`
-			color: ${props => props.theme.colors.foreground};
-			background: ${linearGradient(props.theme.colors.highlightGradient)};
-		`}
 `;
 
 const NavigationContainer = styled.div`
@@ -57,15 +50,16 @@ interface HeaderProps {
 }
 
 const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, openSearch }) => {
+	const { y, deltaY } = useScrollData(100);
 	const [open, setOpen] = useState(false);
 	const toggleOpen = () => setOpen(o => !o);
 
 	const inverted = false;
+	const hidden = y > 200 && deltaY > 0;
 
 	const nav = (
 		<Navigation
 			open={open}
-			inverted={inverted}
 			setOpen={value => setOpen(value)}
 			toggleTheme={toggleTheme}
 			openSearch={openSearch}
@@ -73,14 +67,23 @@ const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, openSearch }) => 
 	);
 
 	return (
-		<HeaderContainer inverted={inverted}>
-			<Container css={`padding-top: ${(props: any) => rem(props.theme.spacings.medium)}; padding-bottom: ${(props: any) => rem(props.theme.spacings.medium)};`}>
+		<HeaderContainer
+			css={`
+				${hidden ? `transform: translateY(-100%);` : ''}
+				transition: transform ${(props: any) => props.theme.animation.duration.smooth}s ease-out;
+			`}
+		>
+			<Container
+				css={`
+					padding-top: ${(props: any) => rem(props.theme.spacings.medium)};
+					padding-bottom: ${(props: any) => rem(props.theme.spacings.medium)};
+				`}
+			>
 				<NavigationContainer>
 					<HeaderHomeLink inverted={inverted} />
 					<NavigationDesktopWrapper>{nav}</NavigationDesktopWrapper>
 					<NavigationMobileWrapper>
 						<MenuIcon
-							inverted={inverted || open}
 							open={open}
 							onClick={toggleOpen}
 							css={`

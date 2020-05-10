@@ -23,7 +23,6 @@ const StyledListItem = styled.li`
 `;
 
 export interface NavigationItemProps {
-	inverted: boolean;
 	to?: string;
 	className?: string;
 	onClick?: () => void;
@@ -58,8 +57,4 @@ export default styled(NavigationItem)<NavigationItemProps>`
 	cursor: pointer;
 	font-weight: 300;
 	color: ${props => props.theme.colors.navigationForeground};
-
-	${props => props.inverted && css`
-		color: ${props.theme.colors.highlightForeground};
-	`}
 `;

@@ -1,14 +1,12 @@
 import React from 'react';
-import styled, { css } from "styled-components";
-
-import { Invertible } from "components/layout/Header";
+import styled from "styled-components";
 
 const NavigationItemIcon = styled.svg.attrs(props => ({
-    stroke: 'currentColor',
+    stroke: props.theme.colors.navigationForeground,
     viewBox: '0 0 24 24',
     strokeLinecap: 'round',
     strokeLinejoin: 'round'
-}))<Invertible>`
+}))`
     width: 1rem;
     height: 1rem;
     fill: none;
@@ -17,10 +15,6 @@ const NavigationItemIcon = styled.svg.attrs(props => ({
     :hover {
         fill: none;
     }
-    
-    ${props => props.inverted && css`
-        stroke: ${props => props.theme.colors.highlightForeground};
-    `}
 `;
 
 export default NavigationItemIcon;
