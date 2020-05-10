@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { Link } from 'gatsby';
-import { SocialIcon } from 'react-social-icons';
 
 import { rem } from 'lib/polished';
 import { mobile, tablet } from 'lib/media';
@@ -31,41 +30,21 @@ const FooterContainer = styled.div`
 interface FooterProps {}
 
 const Footer: FunctionComponent<FooterProps> = () => {
-	const renderLink = ({ to, text }: { to: string; text: string; }) => <li><Link to={to}>{text}</Link></li>;
+	const renderExternalLink = ({ to, text }: { to: string; text: string; }) => <p>- <a href={to} target="_blank">{text}</a></p>;
+	const renderInternalLink = ({ to, text }: { to: string; text: string; }) => <p>- <Link to={to}>{text}</Link></p>;
 
 	return (
 		<FooterContainer>
-			<Container css={`padding-bottom: 0;`}>
+			<Container>
 				<hr/>
 				<pre css={`padding: 0;`}>
-					// Subscribe to my newsletter<br/>
-					// Buy my book
+					<p>by("Maximilian Schulke").in(2020);</p>
+					{renderExternalLink({ to: 'https://github.com/schulke-214', text: 'GitHub' })}
+					{renderExternalLink({ to: 'https://reddit.com/u/schulke-214', text: 'Reddit' })}
+					{renderInternalLink({ to: '/imprint', text: 'Imprint' })}
+					{renderInternalLink({ to: '/data-privacy', text: 'Data Privacy' })}
 				</pre>
 				<hr/>
-			</Container>
-
-			<Container 
-				css={`
-					display: flex;
-					justify-content: space-between;
-
-					${mobile} {
-						flex-direction: column;
-						ul {
-							justify-content: start;
-						}
-					}
-				`}
-			>
-				<div css={`display: flex; ${mobile} { margin-bottom: ${(props: any) => rem(props.theme.spacings.small)}}`}>
-					<code>maximilian::schulke(2020)</code>
-				</div>
-				<ul css={`display: flex; justify-content: end; ${tablet} { li {margin: 0;} }`}>
-					{renderLink({ to: '/', text: 'GitHub' })}
-					{renderLink({ to: '/', text: 'Reddit' })}
-					{renderLink({ to: '/imprint', text: 'Imprint' })}
-					{renderLink({ to: '/data-privacy', text: 'Data Privacy' })}
-				</ul>
 			</Container>
 		</FooterContainer>
 	);
