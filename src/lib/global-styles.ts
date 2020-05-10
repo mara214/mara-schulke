@@ -26,6 +26,11 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 		}
 	}
 
+	blockquote {
+		border-color: ${props => props.theme.colors.state.muted};
+		padding-left: ${props => rem(props.theme.spacings.medium)};
+	}
+
 	p code {
 		position: relative;
 		top: -2px;

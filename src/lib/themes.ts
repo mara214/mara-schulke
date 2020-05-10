@@ -28,7 +28,8 @@ const shared = {
 	animation: {
 		duration: {
 			instant: 0.1,
-			fast: 0.25
+			fast: 0.25,
+			smooth: 0.5
 		}
 	},
 	layers: {
