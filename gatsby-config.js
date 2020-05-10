@@ -13,6 +13,7 @@ const dev = [
 				fonts: './src/fonts',
 				lib: './src/lib',
 				utils: './src/utils',
+				hooks: './src/hooks',
 				layouts: './src/layouts',
 				pages: './src/pages',
 				templates: './src/templates',
@@ -21,6 +22,17 @@ const dev = [
 	},
 	'gatsby-plugin-styled-components',
 	'gatsby-plugin-typescript',
+];
+
+const images = [
+	{
+		resolve: 'gatsby-remark-images',
+		options: {
+			maxWidth: 960,
+			quality: 90,
+			linkImagesToOriginal: false,
+		}
+	}
 ];
 
 const sources = [
@@ -47,30 +59,12 @@ const sources = [
 	},
 	'gatsby-transformer-sharp',
 	'gatsby-plugin-sharp',
+	...images,
 	{
 		resolve: 'gatsby-plugin-mdx',
 		options: {
 			extensions: ['.mdx', '.md'],
-			gatsbyRemarkPlugins: [
-				{
-					resolve: 'gatsby-remark-images',
-					options: {
-						maxWidth: 960,
-						quality: 90,
-						linkImagesToOriginal: false,
-					},
-				},
-			],
-			plugins: [
-				{
-					resolve: 'gatsby-remark-images',
-					options: {
-						maxWidth: 960,
-						quality: 90,
-						linkImagesToOriginal: false,
-					},
-				},
-			],
+			gatsbyRemarkPlugins: [...images],
 		},
 	},
 ];
@@ -88,6 +82,13 @@ const seo = [
 			icon: 'static/assets/favicon.png',
 		},
 	},
+	{
+		resolve: 'gatsby-plugin-google-analytics',
+		options: {
+			trackingId: 'UA-165957143-1',
+			anonymize: true,
+		}
+	},
 	'gatsby-plugin-offline',
 	'gatsby-plugin-react-helmet',
 ];
@@ -97,6 +98,13 @@ module.exports = {
 		title: 'Maximilian Schulke',
 		description: 'A place where i post about nerd stuff with a lot of technical details.',
 		author: '@schulke-214',
+		socialLinks: [{
+			to: 'https://github.com/schulke-214',
+			text: 'GitHub'
+		}, {
+			to: 'https://reddit.com/schulke-214',
+			text: 'Reddit'
+		}]
 	},
 	plugins: [
 		...dev,
