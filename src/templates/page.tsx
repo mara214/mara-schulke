@@ -3,6 +3,7 @@ import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 import Layout from 'layouts/default';
+import SEO from 'components/layout/SEO';
 
 interface PageProps {
 	data: any;
@@ -11,6 +12,7 @@ interface PageProps {
 const Page: FunctionComponent<PageProps> = ({ data }) => {
 	return (
 		<Layout readMode={false}>
+			<SEO title={data.page.title} description={data.page.excerpt} />
 			<MDXRenderer>{data.page.body}</MDXRenderer>
 		</Layout>
 	);};
@@ -20,6 +22,7 @@ export const query = graphql`
 		page(slug: { eq: $slug }) {
 			slug
 			title
+			excerpt
 			body
 		}
 	}
