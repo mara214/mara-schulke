@@ -42,7 +42,7 @@ const Layout: FunctionComponent<{ readMode: boolean; }> = ({ children, readMode 
 		<ThemeProvider theme={theme}>
 			<MDXProvider components={MDXComponents}>
 				<GlobalStyles />
-				<Header toggleTheme={toggleTheme} openSearch={() => {}} hideOnScroll={readMode} />
+				<Header toggleTheme={toggleTheme} openSearch={() => {}} />
 				<Container>{children}</Container>
 				<Footer />
 				<CookieConsent />

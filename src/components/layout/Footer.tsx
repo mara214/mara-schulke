@@ -30,7 +30,7 @@ const FooterContainer = styled.div`
 interface FooterProps {}
 
 const Footer: FunctionComponent<FooterProps> = () => {
-	const renderExternalLink = ({ to, text }: { to: string; text: string; }) => <p>- <a href={to} target="_blank">{text}</a></p>;
+	const renderExternalLink = ({ to, text }: { to: string; text: string; }) => <p>- <a href={to} target="_blank" rel="noopener">{text}</a></p>;
 	const renderInternalLink = ({ to, text }: { to: string; text: string; }) => <p>- <Link to={to}>{text}</Link></p>;
 
 	return (

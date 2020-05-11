@@ -3,9 +3,9 @@ import styled, { css } from 'styled-components';
 
 import { rem } from 'lib/polished';
 
-import { Invertible, Openable } from 'components/layout/Header';
+import { Openable } from 'components/layout/Header';
 
-interface MenuIconProps extends Invertible, Openable {
+interface MenuIconProps extends Openable {
 	onClick(): void;
 	className?: string;
 }
@@ -51,8 +51,8 @@ const MenuIconContainer = styled.button<MenuIconProps>`
 		`}
 `;
 
-const MenuIcon: FunctionComponent<MenuIconProps> = ({ className, inverted, open, onClick }) => (
-	<MenuIconContainer open={open} onClick={onClick} className={className} inverted={inverted}>
+const MenuIcon: FunctionComponent<MenuIconProps> = ({ className, open, onClick }) => (
+	<MenuIconContainer open={open} onClick={onClick} className={className} title="Open Menu">
 		<span />
 		<span />
 		<span />
