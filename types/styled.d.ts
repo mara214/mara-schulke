@@ -51,6 +51,9 @@ declare module 'styled-components' {
 				fast: number;
 			};
 		};
+		hr: {
+			color: string;
+		},
 		code: {
 			syntax: PrismTheme;
 			highlight: {

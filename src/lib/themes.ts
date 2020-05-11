@@ -51,7 +51,10 @@ const shared = {
 	},
 	boxShadow: {
 		default: 'rgba(0, 0, 0, 0.15) 0px 5px 40px'
-	}
+	},
+	hr: {
+		color: darken(0.5, colors.white)
+	},
 };
 
 const BLACK: string = colors.black;

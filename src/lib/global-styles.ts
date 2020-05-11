@@ -1,7 +1,7 @@
 import { createGlobalStyle, GlobalStyleComponent, DefaultTheme } from 'styled-components';
 
 import typography from 'lib/typography';
-import { normalize, rem, darken } from 'lib/polished';
+import { normalize, rem, darken, transparentize } from 'lib/polished';
 import { mobile } from 'lib/media';
 
 export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobalStyle`
@@ -62,7 +62,8 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 		white-space: nowrap;
 		font-size: 0.85rem;
 		height: auto;
-		color: ${props => darken(0.5, props.theme.colors.state.muted)} !important;
+		color: ${props => props.theme.hr.color} !important;
+		background-color: transparent;
 		margin: ${props => rem(props.theme.spacings.medium)} 0px;
 
 		${mobile} {
