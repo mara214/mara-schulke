@@ -69,7 +69,8 @@ exports.createSchemaCustomization = ({ actions }) => {
 			id: ID!
 			slug: String! @slugify
 			title: String!
-			date: Date! @dateformat
+			published: Date! @dateformat
+			modified: Date @dateformat
 			excerpt(pruneLength: Int = 160): String!
 			body: String!
 			html: String
@@ -96,7 +97,8 @@ exports.createSchemaCustomization = ({ actions }) => {
 		type MdxArticle implements Node & Article {
 			slug: String! @slugify
 			title: String!
-			date: Date! @dateformat
+			published: Date! @dateformat
+			modified: Date @dateformat
 			excerpt(pruneLength: Int = 140): String! @mdxpassthrough(fieldName: "excerpt")
 			body: String! @mdxpassthrough(fieldName: "body")
 			html: String! @mdxpassthrough(fieldName: "html")
@@ -148,7 +150,8 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId, createContentDig
 		const fieldData = {
 			slug: node.frontmatter.slug ? node.frontmatter.slug : undefined,
 			title: node.frontmatter.title,
-			date: node.frontmatter.date,
+			published: node.frontmatter.published,
+			modified: node.frontmatter.modified,
 			banner: node.frontmatter.banner,
 			description: node.frontmatter.description,
 		};
@@ -175,10 +178,10 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId, createContentDig
 	// Check for "pages" and create the "Page" type
 	if (source === 'pages') {
 		const fieldData = {
-			title: node.frontmatter.title,
-			slug: node.frontmatter.slug,
-			navigatable: node.frontmatter.navigatable,
-		};
+			title,
+			slug,
+			navigatable,
+		} = node.frontmatter;
 
 		const mdxPageId = createNodeId(`${node.id} >>> MdxPage`);
 
@@ -205,7 +208,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
 	const result = await graphql(`
 		{
-			articles: allArticle(sort: { fields: date, order: DESC }) {
+			articles: allArticle(sort: { fields: published, order: DESC }) {
 				nodes {
 					slug
 				}
