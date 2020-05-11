@@ -97,14 +97,10 @@ module.exports = {
 	siteMetadata: {
 		title: 'Maximilian Schulke',
 		description: 'A place where i post about nerd stuff with a lot of technical details.',
-		author: '@schulke-214',
-		socialLinks: [{
-			to: 'https://github.com/schulke-214',
-			text: 'GitHub'
-		}, {
-			to: 'https://reddit.com/schulke-214',
-			text: 'Reddit'
-		}]
+		author: 'Maximilian Schulke',
+		twitterAuthor: '@schulke-214',
+		liveUrl: 'https://maximilianschulke.com',
+		previewImage: '/static/seo-banner.png'
 	},
 	plugins: [
 		...dev,
