@@ -28,30 +28,67 @@ const shared = {
 	animation: {
 		duration: {
 			instant: 0.1,
-			fast: 0.25
+			fast: 0.25,
+			smooth: 0.5
 		}
-	}
+	},
+	layers: {
+		overlay: {
+			foreground: 105,
+			content: 100,
+			background: 95
+		},
+		popup: {
+			foreground: 55,
+			content: 50,
+			background: 45
+		},
+		default: {
+			foreground: 5,
+			content: 0,
+			background: -5
+		}
+	},
+	boxShadow: {
+		default: 'rgba(0, 0, 0, 0.15) 0px 5px 40px'
+	},
+	hr: {
+		color: darken(0.5, colors.white)
+	},
 };
 
 const BLACK: string = colors.black;
 const WHITE: string = colors.white;
+
 const HIGHLIGHT: string = colors.orange;
 const HIGHLIGHT_GRADIENT: LinearGradientConfiguration = {
 	colorStops: [colors.orange, colors.orange],
 	toDirection: '-213deg'
 };
 
+// states
+const SUCCESS: string = colors.green;
+const INFO: string = colors.blue;
+const ERROR: string = colors.red;
+
 export const light: DefaultTheme = {
 	...shared,
 	colors: {
 		foreground: BLACK,
 		background: WHITE,
+		navigationForeground: WHITE,
+		navigationBackground: BLACK,
 		highlight: HIGHLIGHT,
 		highlightForeground: WHITE,
 		highlightDark: darken(0.075, HIGHLIGHT),
 		highlightLight: transparentize(0.75, HIGHLIGHT),
 		highlightGradient: HIGHLIGHT_GRADIENT,
-		muted: darken(0.05, WHITE)
+		state: {
+			success: SUCCESS,
+			info: INFO,
+			error: ERROR,
+			muted: darken(0.075, WHITE)
+		}
 	},
 	code: {
 		syntax: LightTheme,
@@ -68,12 +105,19 @@ export const dark: DefaultTheme = {
 	colors: {
 		foreground: WHITE,
 		background: BLACK,
+		navigationForeground: WHITE,
+		navigationBackground: BLACK,
 		highlight: HIGHLIGHT,
 		highlightForeground: WHITE,
 		highlightDark: darken(0.075, HIGHLIGHT),
 		highlightLight: transparentize(0.75, HIGHLIGHT),
 		highlightGradient: HIGHLIGHT_GRADIENT,
-		muted: lighten(0.05, BLACK)
+		state: {
+			success: SUCCESS,
+			info: INFO,
+			error: ERROR,
+			muted: lighten(0.075, BLACK)
+		}
 	},
 	code: {
 		syntax: DarkTheme,

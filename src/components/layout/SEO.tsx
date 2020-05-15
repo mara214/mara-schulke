@@ -6,12 +6,13 @@ type SEOMetaElement = React.DetailedHTMLProps<React.MetaHTMLAttributes<HTMLMetaE
 
 export interface SEOProps {
 	description?: string;
+	image?: string;
 	lang?: string;
 	meta?: SEOMetaElement;
 	title: string;
 }
 
-const SEO: FunctionComponent<SEOProps> = ({ description = '', lang = 'en', meta = [], title = '' }) => {
+const SEO: FunctionComponent<SEOProps> = ({ description = '', image = '', lang = 'en', meta = [], title = '' }) => {
 	const { site } = useStaticQuery<{ site: any }>(
 		graphql`
 			query SiteMetaData {
@@ -19,6 +20,9 @@ const SEO: FunctionComponent<SEOProps> = ({ description = '', lang = 'en', meta 
 					siteMetadata {
 						title
 						description
+						previewImage
+						twitterAuthor
+						liveUrl
 						author
 					}
 				}
@@ -27,6 +31,7 @@ const SEO: FunctionComponent<SEOProps> = ({ description = '', lang = 'en', meta 
 	);
 
 	const descr: string = description || site.siteMetadata.description;
+	const previewImage: string = image || site.siteMetadata.previewImage;
 
 	return (
 		<Helmet
@@ -51,12 +56,28 @@ const SEO: FunctionComponent<SEOProps> = ({ description = '', lang = 'en', meta 
 					content: `website`
 				},
 				{
+					property: `og:site_name`,
+					content: site.siteMetadata.title
+				},
+				{
+					property: `og:url`,
+					content: site.siteMetadata.liveUrl
+				},
+				{
+					property: `og:image`,
+					content: image
+				},
+				{
 					name: `twitter:card`,
 					content: `summary`
 				},
 				{
+					name: `twitter:image`,
+					content: image
+				},
+				{
 					name: `twitter:creator`,
-					content: site.siteMetadata.author
+					content: site.siteMetadata.twitter
 				},
 				{
 					name: `twitter:title`,
@@ -65,6 +86,13 @@ const SEO: FunctionComponent<SEOProps> = ({ description = '', lang = 'en', meta 
 				{
 					name: `twitter:description`,
 					content: descr
+				},
+				{
+					httpEquiv: 'Content-Type',
+					content: 'text/html; charset=utf-8'
+				},
+				{
+
 				},
 				...meta
 			]}

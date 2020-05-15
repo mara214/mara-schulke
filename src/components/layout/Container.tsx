@@ -16,29 +16,33 @@ export default styled.div<ContainerProps>`
 	max-width: ${props => rem(props.theme.layout.maxWidth)};
 	padding: ${props => (props.slim ? `0 ${rem(props.theme.spacings.large)}` : rem(props.theme.spacings.large))};
 
-	.mobile-fullscreen-image img {
-		display: block;
-		margin: 0 auto;
+	> h1:first-child {
+		margin-top: 0;
 	}
 
-	${landscape} {
-		.mobile-fullscreen-image {
-			margin-left: ${props => rem(-props.theme.spacings.large)};
-			margin-right: ${props => rem(-props.theme.spacings.large)};
+	.gatsby-resp-image-wrapper {
+		display: block;
+		margin: ${props => rem(props.theme.spacings.large)} auto;
+	
+		img {
+			display: block;
+			width: 100%;
 		}
 
-		.mobile-fullscreen-image img {
-			width: 100%;
+		${landscape} {
+			margin-left: ${props => rem(-props.theme.spacings.large)} !important;
+			margin-right: ${props => rem(-props.theme.spacings.large)} !important;
+		}
+
+		${mobile} {
+			margin: ${props => rem(props.theme.spacings.medium)} auto;
+			margin-left: ${props => rem(-props.theme.spacings.medium)} !important;
+			margin-right: ${props => rem(-props.theme.spacings.medium)} !important;
+			width: 100vw;
 		}
 	}
 
 	${mobile} {
 		padding: ${props => (props.slim ? `0 ${rem(props.theme.spacings.medium)}` : rem(props.theme.spacings.medium))};
-
-		.mobile-fullscreen-image {
-			margin-left: ${props => rem(-props.theme.spacings.medium)};
-			margin-right: ${props => rem(-props.theme.spacings.medium)};
-			width: 100vw;
-		}
 	}
 `;

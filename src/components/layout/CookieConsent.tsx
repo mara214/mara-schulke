@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import Cookies from 'js-cookie';
 
 import { rem } from 'lib/polished';
+import { landscape } from 'lib/media';
 
 import Container from 'components/layout/Container';
 import Button from 'components/ui/Button';
-import { landscape } from 'lib/media';
 
 const CookieConsentContainer = styled.div`
 	position: fixed;
@@ -15,8 +15,8 @@ const CookieConsentContainer = styled.div`
 	left: 0;
 	right: 0;
 
-	box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 40px;
-	border-top: 1px solid ${props => props.theme.colors.muted};
+	box-shadow: ${props => props.theme.boxShadow.default};
+	border-top: 1px solid ${props => props.theme.colors.state.muted};
 	background-color: ${props => props.theme.colors.background};
 
 	${Container} {
@@ -27,7 +27,8 @@ const CookieConsentContainer = styled.div`
 
 const CookieConsent: FunctionComponent<{}> = () => {
 	const [accepted, setAccepted] = useState(() => Cookies.get('cookie-consent') || false);
-	const acceptCookieConsent = () => {
+	const acceptCookieConsent = (ev: MouseEvent) => {
+		ev.preventDefault();
 		Cookies.set('cookie-consent', 'true');
 		setAccepted(true);
 	};
@@ -53,31 +54,32 @@ const CookieConsent: FunctionComponent<{}> = () => {
 					css={`
 						display: block;
 						height: min-content;
+						margin-right: ${(props: any) => rem(props.theme.spacings.small)};
 
 						${landscape} {
 							margin-bottom: ${(props: any) => rem(props.theme.spacings.small)};
+							margin-right: 0;
 						}
 					`}>
-					This site uses cookies to save user preferences across browser sessions
+					This site is collecting data to enhance your experience and using cookies to save user preferences across browser sessions.
 				</span>
 				<div
 					css={`
 						display: flex;
 						align-items: center;
 
-						${Button} {
+						a {
 							margin-bottom: 0;
 							text-align: center;
+							white-space: nowrap;
 
 							&:first-child {
 								margin-right: ${(props: any) => rem(props.theme.spacings.small)};
 							}
 						}
 					`}>
-					<Button onClick={acceptCookieConsent}>Accept</Button>
-					<Link to='/privacy-policy'>
-						<Button muted>Learn More</Button>
-					</Link>
+					<a href="" onClick={acceptCookieConsent as any}><code>accept()</code></a>
+					<Link to='/data-privacy'><code>learn_more()</code></Link>
 				</div>
 			</Container>
 		</CookieConsentContainer>

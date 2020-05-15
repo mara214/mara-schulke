@@ -3,6 +3,12 @@ import { LinearGradientConfiguration } from 'polished/lib/types/linearGradientCo
 import { PrismTheme } from 'prism-react-renderer';
 
 declare module 'styled-components' {
+	interface LayerConfiguration {
+		foreground: number;
+		content: number;
+		background: number;
+	}
+
 	export interface DefaultTheme {
 		layout: {
 			maxWidth: number;
@@ -11,13 +17,21 @@ declare module 'styled-components' {
 			foreground: string;
 			background: string;
 
+			navigationForeground: string;
+			navigationBackground: string;
+
 			highlight: string;
 			highlightForeground: string;
 			highlightDark: string;
 			highlightLight: string;
 			highlightGradient: LinearGradientConfiguration;
 
-			muted: string;
+			state: {
+				muted: string;
+				success: string;
+				info: string;
+				error: string;
+			};
 		};
 		spacings: {
 			xlarge: number;
@@ -37,12 +51,23 @@ declare module 'styled-components' {
 				fast: number;
 			};
 		};
+		hr: {
+			color: string;
+		},
 		code: {
 			syntax: PrismTheme;
 			highlight: {
 				border: string;
 				background: string;
 			};
+		};
+		layers: {
+			overlay: LayerConfiguration;
+			popup: LayerConfiguration;
+			default: LayerConfiguration;
+		};
+		boxShadow: {
+			default: string;
 		};
 		_id: string;
 	}

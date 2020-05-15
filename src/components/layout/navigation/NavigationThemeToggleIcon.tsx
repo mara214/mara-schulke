@@ -2,13 +2,10 @@ import React, { FunctionComponent, useContext } from 'react';
 import { ThemeContext } from "styled-components";
 
 import { ThemeType } from "lib/themes";
-
 import NavigationItemIcon from "components/layout/navigation/NavigationItemIcon";
 
-import {Invertible} from "components/layout/Header";
-
-const Sun: FunctionComponent<Invertible> = ({ inverted }) => (
-    <NavigationItemIcon strokeWidth={2} inverted={inverted}>
+const Sun: FunctionComponent = () => (
+    <NavigationItemIcon strokeWidth={2}>
         <circle cx='12' cy='12' r='5' />
         <line x1='12' y1='1' x2='12' y2='3' />
         <line x1='12' y1='21' x2='12' y2='23' />
@@ -21,17 +18,17 @@ const Sun: FunctionComponent<Invertible> = ({ inverted }) => (
     </NavigationItemIcon>
 );
 
-const Moon: FunctionComponent<Invertible> = ({ inverted }) => (
-    <NavigationItemIcon strokeWidth={2} inverted={inverted}>
+const Moon: FunctionComponent = () => (
+    <NavigationItemIcon strokeWidth={2}>
         <path d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z' />
     </NavigationItemIcon>
 );
 
-interface NavigationThemeToggleIconProps extends Invertible {}
+interface NavigationThemeToggleIconProps {}
 
-const NavigationThemeToggleIcon: FunctionComponent<NavigationThemeToggleIconProps> = ({ inverted }) => {
+const NavigationThemeToggleIcon: FunctionComponent<NavigationThemeToggleIconProps> = () => {
     const theme = useContext(ThemeContext);
-    return theme._id === ThemeType.Light ? <Moon inverted={inverted} /> : <Sun inverted={inverted} />;
+    return theme._id === ThemeType.Light ? <Moon/> : <Sun/>;
 };
 
 export default NavigationThemeToggleIcon;

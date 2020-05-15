@@ -1,19 +1,21 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { ThemeProvider } from 'styled-components';
+import { MDXProvider } from '@mdx-js/react';
 
+import { MDXComponents } from 'lib/mdx';
 import { GlobalStyles } from 'lib/global-styles';
 import * as themes from 'lib/themes';
 import { ThemeType } from 'lib/themes';
 
 import Header from 'components/layout/Header';
 import Container from 'components/layout/Container';
-import CookieConsent from 'components/layout/CookieConsent';
 import Footer from 'components/layout/Footer';
+import CookieConsent from 'components/layout/CookieConsent';
 
 const initializeTheme = (): ThemeType => (Cookies.get('theme') as ThemeType) || ThemeType.Light;
 
-export const Layout: FunctionComponent<{ location: any }> = ({ children, location }) => {
+const Layout: FunctionComponent<{ readMode: boolean; }> = ({ children, readMode }) => {
 	const [themeName, setThemeName] = useState<ThemeType>(initializeTheme);
 
 	useEffect(() => {
@@ -38,11 +40,15 @@ export const Layout: FunctionComponent<{ location: any }> = ({ children, locatio
 
 	return (
 		<ThemeProvider theme={theme}>
-			<GlobalStyles />
-			<Header toggleTheme={toggleTheme} location={location} />
-			<Container>{children}</Container>
-			<Footer />
-			<CookieConsent />
+			<MDXProvider components={MDXComponents}>
+				<GlobalStyles />
+				<Header toggleTheme={toggleTheme} openSearch={() => {}} />
+				<Container>{children}</Container>
+				<Footer />
+				<CookieConsent />
+			</MDXProvider>
 		</ThemeProvider>
 	);
 };
+
+export default Layout;

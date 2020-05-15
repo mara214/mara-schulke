@@ -1,108 +1,52 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { graphql, useStaticQuery } from 'gatsby';
-import { SocialIcon } from 'react-social-icons';
+import { Link } from 'gatsby';
+
 import { rem } from 'lib/polished';
+import { mobile, tablet } from 'lib/media';
 
 import Container from 'components/layout/Container';
-import { RichText } from 'components/core/RichText';
-import { cols } from 'lib/flex';
-import { desktop, mobile } from 'lib/media';
 
-interface FooterProps {}
-
-const StyledSocialIcon = styled(SocialIcon)`
-	.social-container .social-svg-mask {
-		display: none !important;
-	}
-
-	.social-container .social-svg-icon {
-		fill: ${props => props.theme.colors.foreground} !important;
-		transition: none !important;
-		transform-origin: center;
-		transform: scale(1.5);
-	}
-
-	&:hover .social-container .social-svg-icon {
-		fill: ${props => props.theme.colors.highlight} !important;
-	}
-`;
-
-const FooterWrapper = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-
-	p {
-		font-size: ${rem(12)};
-		margin: 0;
+const FooterContainer = styled.div`
+	&, * {
+		color: ${props => props.theme.colors.navigationForeground};
+		background-color: ${props => props.theme.colors.navigationBackground};
 	}
 
 	ul {
 		margin: 0;
-		display: flex;
 
 		li {
-			margin: 0;
-			margin-right: ${props => rem(props.theme.spacings.small)};
 			list-style: none;
+			padding-right: ${props => rem(props.theme.spacings.medium)};
 
 			&:last-child {
-				margin-right: 0;
+				padding: 0;
 			}
 		}
 	}
 `;
 
+interface FooterProps {}
+
 const Footer: FunctionComponent<FooterProps> = () => {
-	const data = useStaticQuery(graphql`
-		{
-			prismic {
-				allFooters {
-					edges {
-						node {
-							title
-							description
-							trademark
-							social_media {
-								social_media_link {
-									... on PRISMIC__ExternalLink {
-										_linkType
-										url
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	`);
-
-	const content = data.prismic.allFooters.edges[0].node;
-
-	const renderSocialMediaIconList = () => (
-		<ul>
-			{content.social_media.map((entry: any) => (
-				<li key={entry.social_media_link.url}>
-					<StyledSocialIcon
-						url={entry.social_media_link.url}
-						target='_blank'
-						style={{ width: rem(30), height: rem(30) }}
-					/>
-				</li>
-			))}
-		</ul>
-	);
+	const renderExternalLink = ({ to, text }: { to: string; text: string; }) => <p>- <a href={to} target="_blank" rel="noopener">{text}</a></p>;
+	const renderInternalLink = ({ to, text }: { to: string; text: string; }) => <p>- <Link to={to}>{text}</Link></p>;
 
 	return (
-		<Container>
-			<hr style={{ marginTop: 0 }} />
-			<FooterWrapper>
-				<RichText render={content.trademark} />
-				{renderSocialMediaIconList()}
-			</FooterWrapper>
-		</Container>
+		<FooterContainer>
+			<Container>
+				<hr/>
+				<pre css={`padding: 0;`}>
+					<p>by("Maximilian Schulke").in(2020);</p>
+					{renderExternalLink({ to: 'https://github.com/schulke-214', text: 'GitHub' })}
+					{renderExternalLink({ to: 'https://reddit.com/u/schulke-214', text: 'Reddit' })}
+					{renderInternalLink({ to: '/imprint', text: 'Imprint' })}
+					{renderInternalLink({ to: '/data-privacy', text: 'Data Privacy' })}
+				</pre>
+				<hr/>
+			</Container>
+		</FooterContainer>
 	);
 };
 
