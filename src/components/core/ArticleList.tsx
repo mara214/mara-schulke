@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import { useStaticQuery, graphql, Link } from 'gatsby';
 
 import { rem } from 'lib/polished';
+import ArticleListItem from './ArticleListItem';
 
 interface ArticleListProps {
 	className?: string;
+	filter?: (article: any) => boolean
 }
 
-const ArticleList: FunctionComponent<ArticleListProps> = ({ className }) => {
+const ArticleList: FunctionComponent<ArticleListProps> = ({ filter = () => true }) => {
 	const data = useStaticQuery(graphql`
 		{
 			articles: allArticle {
@@ -17,6 +19,7 @@ const ArticleList: FunctionComponent<ArticleListProps> = ({ className }) => {
 						title
 						excerpt
 						slug
+						featured
 						timeToRead
 						published(formatString: "MMM DD, YYYY")
 					}
@@ -24,16 +27,11 @@ const ArticleList: FunctionComponent<ArticleListProps> = ({ className }) => {
 			}
 		}
 	`);
-
-	const articles = data.articles.edges.map(({ node: { title, published, timeToRead, slug } }: any) => (
-		<Link to={slug} key={slug} css={`display: block; margin-bottom: ${(props: any) => rem(props.theme.spacings.medium)};`}>
-			<h3 css={`margin: 0;`}>{title}</h3>
-			<code>// {published} • {timeToRead} min</code>
-		</Link>
-	));
-
-	return articles;
+	const { edges } = data.articles;
+	return edges
+		.map(({ node }: any) => node)
+		.filter(filter)
+		.map((article: any) => <ArticleListItem {...article} key={article.slug}/>);
 }
 
-export default styled(ArticleList)<ArticleListProps>`
-`;
+export default styled(ArticleList)<ArticleListProps>``;
