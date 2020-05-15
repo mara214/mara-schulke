@@ -100,7 +100,39 @@ module.exports = {
 		author: 'Maximilian Schulke',
 		twitterAuthor: '@schulke-214',
 		liveUrl: 'https://maximilianschulke.com',
-		previewImage: '/static/seo-banner.png'
+		previewImage: '/static/seo-banner.png',
+		categories: [
+			{
+				name: 'Frontend',
+				slug: 'frontend',
+				color: '#ffffff'
+			},
+			{
+				name: 'Backend',
+				slug: 'backend',
+				color: '#ffffff'
+			},
+			{
+				name: 'Compiler',
+				slug: 'compiler',
+				color: '#ffffff'
+			},
+			{
+				name: 'Infrastructure',
+				slug: 'infrastructure',
+				color: '#ffffff'
+			},
+			{
+				name: 'Linux',
+				slug: 'linux',
+				color: '#ffffff'
+			},
+			{
+				name: 'Rust',
+				slug: 'rust',
+				color: '#ffffff'
+			},
+		]
 	},
 	plugins: [
 		...dev,
