@@ -71,6 +71,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 			title: String!
 			published: Date! @dateformat
 			modified: Date @dateformat
+			featured: Boolean
 			excerpt(pruneLength: Int = 160): String!
 			body: String!
 			html: String
@@ -99,6 +100,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 			title: String!
 			published: Date! @dateformat
 			modified: Date @dateformat
+			featured: Boolean
 			excerpt(pruneLength: Int = 140): String! @mdxpassthrough(fieldName: "excerpt")
 			body: String! @mdxpassthrough(fieldName: "body")
 			html: String! @mdxpassthrough(fieldName: "html")
@@ -152,8 +154,13 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId, createContentDig
 			title: node.frontmatter.title,
 			published: node.frontmatter.published,
 			modified: node.frontmatter.modified,
+			featured: node.frontmatter.featured,
 			banner: node.frontmatter.banner,
 			description: node.frontmatter.description,
+			tags: node.frontmatter.tags ? node.frontmatter.tags.map((tag) => ({
+				name: tag,
+				slug: kebabCase(tag),
+			})) : null
 		};
 
 		const mdxArticleId = createNodeId(`${node.id} >>> MdxArticle`);
