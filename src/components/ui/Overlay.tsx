@@ -5,12 +5,14 @@ import { rem } from 'lib/polished';
 
 const RawOverlay: FunctionComponent<{ className?: string }> = ({ className, children }) => {
 	useEffect(() => {
+		const top = window.scrollY;
 		document.body.style.height = '100vh';
 		document.body.style.overflowY = 'hidden';
 
 		return () => {
 			document.body.style.height = '';
 			document.body.style.overflowY = '';
+			window.scrollTo({ top });
 		};
 	}, []);
 
