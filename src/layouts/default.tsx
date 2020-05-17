@@ -19,7 +19,7 @@ const Layout: FunctionComponent<{ readMode: boolean; }> = ({ children, readMode 
 	const [themeName, setThemeName] = useState<ThemeType>(initializeTheme);
 
 	useEffect(() => {
-		Cookies.set('theme', themeName);
+		Cookies.set('theme', themeName, { sameSite: 'lax' });
 	}, [themeName]);
 
 	const toggleTheme = () => {
