@@ -7,7 +7,6 @@ import { rem } from 'lib/polished';
 import { landscape } from 'lib/media';
 
 import Container from 'components/layout/Container';
-import Button from 'components/ui/Button';
 
 const CookieConsentContainer = styled.div`
 	position: fixed;

@@ -31,20 +31,20 @@ interface FooterProps {}
 
 const Footer: FunctionComponent<FooterProps> = () => {
 	const renderExternalLink = ({ to, text }: { to: string; text: string; }) => <p>- <a href={to} target="_blank" rel="noopener">{text}</a></p>;
-	const renderInternalLink = ({ to, text }: { to: string; text: string; }) => <p>- <Link to={to}>{text}</Link></p>;
+	const renderInternalLink = ({ to, text }: { to: string; text: string; }) => <span><Link to={to}>{text}</Link></span>;
 
 	return (
 		<FooterContainer>
 			<Container>
-				<hr/>
-				<pre css={`padding: 0;`}>
+				<pre css={`padding: 0; margin: 0;`}>
+					{/*
 					<p>by("Maximilian Schulke").in(2020);</p>
 					{renderExternalLink({ to: 'https://github.com/schulke-214', text: 'GitHub' })}
 					{renderExternalLink({ to: 'https://reddit.com/u/schulke-214', text: 'Reddit' })}
 					{renderInternalLink({ to: '/imprint', text: 'Imprint' })}
 					{renderInternalLink({ to: '/data-privacy', text: 'Data Privacy' })}
+					*/}
 				</pre>
-				<hr/>
 			</Container>
 		</FooterContainer>
 	);
