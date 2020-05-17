@@ -2,6 +2,7 @@ const fs = require(`fs`);
 const kebabCase = require(`lodash.kebabcase`);
 const mkdirp = require(`mkdirp`);
 const path = require(`path`);
+const { siteMetadata } = require('./gatsby-config');
 
 const CONTENT_PATH = path.join(__dirname, 'content');
 const ARTICLE_PATH = path.join(CONTENT_PATH, 'articles');
@@ -69,6 +70,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 			id: ID!
 			slug: String! @slugify
 			title: String!
+			category: ArticleCategory!
 			published: Date! @dateformat
 			modified: Date @dateformat
 			featured: Boolean
@@ -80,10 +82,16 @@ exports.createSchemaCustomization = ({ actions }) => {
 			banner: File @fileByRelativePath
 			description: String
 		}
-			
+		
+		type ArticleCategory {
+			name: String!
+			slug: String!
+			color: String!
+		}
+		
 		type ArticleTag {
-			name: String
-			slug: String
+			name: String!
+			slug: String!
 		}
 			
 		interface Page @nodeInterface {
@@ -100,6 +108,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 			title: String!
 			published: Date! @dateformat
 			modified: Date @dateformat
+			category: ArticleCategory!
 			featured: Boolean
 			excerpt(pruneLength: Int = 140): String! @mdxpassthrough(fieldName: "excerpt")
 			body: String! @mdxpassthrough(fieldName: "body")
@@ -149,11 +158,21 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId, createContentDig
 
 	// Check for "articles" and create the "Article" type
 	if (source === 'articles') {
+		const category = siteMetadata.categories.find(category => {
+			return category.name.toLowerCase() === node.frontmatter.category.toLowerCase();
+		});
+
+		if (!category) {
+			console.error(`An article (${node.frontmatter.title}) has an invalid category (${node.frontmatter.category}). Check for typos in the frontmatter or add the category in the gatsby-config.js!`);
+			return;
+		}
+
 		const fieldData = {
 			slug: node.frontmatter.slug ? node.frontmatter.slug : undefined,
 			title: node.frontmatter.title,
 			published: node.frontmatter.published,
 			modified: node.frontmatter.modified,
+			category,
 			featured: node.frontmatter.featured,
 			banner: node.frontmatter.banner,
 			description: node.frontmatter.description,
@@ -215,6 +234,14 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
 	const result = await graphql(`
 		{
+			site {
+				siteMetadata {
+					categories {
+						slug
+					}
+				}
+			}
+
 			articles: allArticle(sort: { fields: published, order: DESC }) {
 				nodes {
 					slug
@@ -234,6 +261,18 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 		return
 	}
 
+	const { categories } = result.data.site.siteMetadata;
+
+	categories.map((category) =>
+		createPage({
+			path: category.slug,
+			component: require.resolve(`./src/templates/category.tsx`),
+			context: {
+				slug: category.slug,
+			},
+		})
+	);
+
 	const articles = result.data.articles.nodes
 
 	articles.map((article) =>
@@ -244,7 +283,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 				slug: article.slug,
 			},
 		})
-	)
+	);
 
 	const pages = result.data.pages.nodes
 
@@ -257,6 +296,6 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 					slug: page.slug,
 				},
 			})
-		)
+		);
 	}
 }
