@@ -7,13 +7,14 @@ import ArticleListItem from './ArticleListItem';
 
 interface ArticleListProps {
 	className?: string;
+	withCategory?: boolean;
 	filter?: (article: any) => boolean
 }
 
-const ArticleList: FunctionComponent<ArticleListProps> = ({ filter = () => true }) => {
+const ArticleList: FunctionComponent<ArticleListProps> = ({ filter = () => true, withCategory }) => {
 	const data = useStaticQuery(graphql`
 		{
-			articles: allArticle {
+			articles: allArticle(sort: {order: DESC, fields: published}) {
 				edges {
 					node {
 						title
@@ -21,6 +22,11 @@ const ArticleList: FunctionComponent<ArticleListProps> = ({ filter = () => true 
 						slug
 						featured
 						timeToRead
+						category {
+							name
+							slug
+							color
+						}
 						published(formatString: "MMM DD, YYYY")
 					}
 				}
@@ -31,7 +37,7 @@ const ArticleList: FunctionComponent<ArticleListProps> = ({ filter = () => true 
 	return edges
 		.map(({ node }: any) => node)
 		.filter(filter)
-		.map((article: any) => <ArticleListItem {...article} key={article.slug}/>);
+		.map((article: any) => <ArticleListItem {...article} withCategory={withCategory} key={article.slug}/>);
 }
 
 export default styled(ArticleList)<ArticleListProps>``;
