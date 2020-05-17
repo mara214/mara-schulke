@@ -104,33 +104,33 @@ module.exports = {
 		categories: [
 			{
 				name: 'Frontend',
-				slug: 'frontend',
-				color: '#ffffff'
+				slug: '/frontend',
+				color: '#62d0dd',
 			},
 			{
 				name: 'Backend',
-				slug: 'backend',
-				color: '#ffffff'
+				slug: '/backend',
+				color: '#ff8e21',
 			},
 			{
 				name: 'Compiler',
-				slug: 'compiler',
-				color: '#ffffff'
+				slug: '/compiler',
+				color: '#a2d39b',
 			},
 			{
 				name: 'Infrastructure',
-				slug: 'infrastructure',
-				color: '#ffffff'
+				slug: '/infrastructure',
+				color: '#ceb4ff',
+			},
+			{
+				name: 'Security',
+				slug: '/security',
+				color: '#a0b7ff',
 			},
 			{
 				name: 'Linux',
-				slug: 'linux',
-				color: '#ffffff'
-			},
-			{
-				name: 'Rust',
-				slug: 'rust',
-				color: '#ffffff'
+				slug: '/linux',
+				color: '#ff708b',
 			},
 		]
 	},
