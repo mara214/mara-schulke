@@ -15,7 +15,7 @@ import CookieConsent from 'components/layout/CookieConsent';
 
 const initializeTheme = (): ThemeType => (Cookies.get('theme') as ThemeType) || ThemeType.Light;
 
-const Layout: FunctionComponent<{ readMode: boolean; }> = ({ children, readMode }) => {
+const Layout: FunctionComponent<{ hasStage: boolean; }> = ({ children, hasStage }) => {
 	const [themeName, setThemeName] = useState<ThemeType>(initializeTheme);
 
 	useEffect(() => {
@@ -43,7 +43,13 @@ const Layout: FunctionComponent<{ readMode: boolean; }> = ({ children, readMode 
 			<MDXProvider components={MDXComponents}>
 				<GlobalStyles />
 				<Header toggleTheme={toggleTheme} openSearch={() => {}} />
-				<Container>{children}</Container>
+				<Container
+					style={{
+						paddingTop: hasStage ? '0' : ''
+					}}
+				>
+					{children}
+				</Container>
 				<Footer />
 				<CookieConsent />
 			</MDXProvider>
