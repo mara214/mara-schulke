@@ -54,7 +54,6 @@ const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, openSearch }) => 
 	const [open, setOpen] = useState(false);
 	const toggleOpen = () => setOpen(o => !o);
 
-	const inverted = false;
 	const hidden = y > 200 && deltaY > 0;
 
 	const nav = (
@@ -80,7 +79,7 @@ const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, openSearch }) => 
 				`}
 			>
 				<NavigationContainer>
-					<HeaderHomeLink inverted={inverted} />
+					<HeaderHomeLink />
 					<NavigationDesktopWrapper>{nav}</NavigationDesktopWrapper>
 					<NavigationMobileWrapper>
 						<MenuIcon

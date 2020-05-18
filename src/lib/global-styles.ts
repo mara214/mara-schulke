@@ -53,7 +53,7 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 		list-style-position: inside;
 	}
 
-	pre, hr, code {
+	pre, hr, code, .code {
 		font-family: 'Roboto Mono', monospace;
 	}
 
