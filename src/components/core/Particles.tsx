@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, useState, useLayoutEffect } from 'react';
+import React, { FunctionComponent, useContext, useState, useLayoutEffect, useCallback } from 'react';
 import styled, { ThemeContext, keyframes } from 'styled-components';
 import { mobile } from 'lib/media';
 
@@ -101,10 +101,10 @@ const Particles: FunctionComponent<ParticlesProps> = ({ className, amount, inter
 	const [particles, setParticles] = useState<JSX.Element[]>([]);
 	const theme = useContext(ThemeContext);
 
-	const allPaths = [...theme.particles.paths];
-	const allColors = [...theme.particles.colors];
-
-	useLayoutEffect(() => {
+	const generateParticles = useCallback(() => {
+		const allPaths = [...theme.particles.paths];
+		const allColors = [...theme.particles.colors];
+	
 		// @ts-ignore
 		const ids = [...Array(amount).keys()];
 
@@ -135,6 +135,10 @@ const Particles: FunctionComponent<ParticlesProps> = ({ className, amount, inter
 		});
 
 		setParticles(all);
+	}, [amount, interactive])
+
+	useLayoutEffect(() => {
+		generateParticles()
 	}, []);
 
 	return (
