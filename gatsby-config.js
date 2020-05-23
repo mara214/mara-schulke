@@ -132,7 +132,13 @@ module.exports = {
 				slug: '/linux',
 				color: '#ff708b',
 			},
-		]
+		],
+		support: {
+			headline: 'Do you enjoy reading this article?',
+			cta: 'Support me on Patreon!',
+			url: 'https://www.patreon.com/maximilianschulke',
+			description: 'To get access to alot of patron only content, choose the next topics i write about and much more.'
+		}
 	},
 	plugins: [
 		...dev,
