@@ -95,12 +95,14 @@ const seo = [
 
 module.exports = {
 	siteMetadata: {
-		title: 'Maximilian Schulke',
-		description: 'A place where i post about nerd stuff with a lot of technical details.',
-		author: 'Maximilian Schulke',
-		twitterAuthor: '@schulke-214',
-		liveUrl: 'https://maximilianschulke.com',
-		previewImage: '/static/seo-banner.png',
+		seo: {
+			title: 'Maximilian Schulke',
+			description: 'A place where i post about nerd stuff with a lot of technical details.',
+			author: 'Maximilian Schulke',
+			twitter: '@schulke-214',
+			url: 'https://maximilianschulke.com',
+			previewImage: '/static/seo-banner.png',
+		},
 		categories: [
 			{
 				name: 'Frontend',
