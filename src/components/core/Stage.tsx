@@ -8,16 +8,17 @@ import { rem } from 'lib/polished';
 
 interface StageProps {
 	className?: string;
+	particles?: boolean;
 	title: string;
 }
 
-const Stage: FunctionComponent<StageProps> = ({ className, title }) => {
+const Stage: FunctionComponent<StageProps> = ({ className, particles, title }) => {
 	return (
 		<Unaligned className={className}>
 			<Container slim css={`pointer-events: none;`}>
 				<h1>{title}</h1>
 			</Container>
-			<Particles amount={12} interactive />
+			{ particles && <Particles amount={12} interactive /> }
 		</Unaligned>
 	)
 }
