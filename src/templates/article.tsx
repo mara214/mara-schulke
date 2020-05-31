@@ -5,6 +5,7 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Layout from 'layouts/default';
 import SEO from 'components/layout/SEO';
 import Support from 'components/core/Support';
+import Stage from 'components/core/Stage';
 
 interface ArticleProps {
 	data: any;
@@ -40,12 +41,31 @@ const Article: FunctionComponent<ArticleProps> = ({ data }) => {
 		});
 
 	return (
-		<Layout hasStage={false}>
+		<Layout hasStage={true}>
 			<SEO
 				title={data.article.title}
 				description={data.article.excerpt}
-				image={ image || ''}
+				image={image || ''}
 				meta={meta}
+			/>
+			{/* 
+				<div
+				css={`
+					height: 300px;
+					
+					img {
+						display: block;
+						height: 100%;
+						width: 100%;
+						object-fit: cover;
+						margin: 0;
+					}
+				`}
+			>
+				<img src={image}></img>
+			</div> */}
+			<Stage
+				title={data.article.title}
 			/>
 			<h1>{data.article.title}</h1>
 			<MDXRenderer>{data.article.body}</MDXRenderer>
