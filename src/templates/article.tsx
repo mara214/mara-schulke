@@ -67,7 +67,6 @@ const Article: FunctionComponent<ArticleProps> = ({ data }) => {
 			<Stage
 				title={data.article.title}
 			/>
-			<h1>{data.article.title}</h1>
 			<MDXRenderer>{data.article.body}</MDXRenderer>
 			<Support />
 		</Layout>
