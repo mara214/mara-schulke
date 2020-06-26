@@ -5,7 +5,7 @@ import Particles from 'components/core/Particles';
 import Container, { Unaligned } from 'components/layout/Container';
 
 import { rem } from 'lib/polished';
-import { mobile } from 'lib/media';
+import { mobile, landscape } from 'lib/media';
 
 interface StageProps {
 	className?: string;
@@ -52,6 +52,10 @@ export default styled(Stage)<StageProps>`
 			border: 0;
 			padding: 0;
 			font-size: 400%;
+
+			${landscape} {
+				font-size: 300%;
+			}
 
 			${mobile} {
 				font-size: 200%;
