@@ -22,9 +22,14 @@ const Category: FunctionComponent<CategoryProps> = ({ data, pageContext }) => {
 		<Layout hasStage>
 			<Stage
 				title={category.name}
+				particles
 				css={`
 					${Particles} svg {
 						fill: ${category.color};
+
+						&:nth-child(odd) {
+							opacity: 0;
+						}
 					}
 
 					h1 {
