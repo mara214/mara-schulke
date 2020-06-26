@@ -79,7 +79,6 @@ const Navigation: FunctionComponent<NavigationProps> = ({ open, toggleTheme, set
 		}
 	`).all.edges.map(({ node }: any) => node);
 
-	const size: WindowSize = useWindowSize();
 
 	return (
 		<nav>
