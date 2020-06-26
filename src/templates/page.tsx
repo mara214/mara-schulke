@@ -15,7 +15,7 @@ const Page: FunctionComponent<PageProps> = ({ data }) => {
 	return (
 		<Layout hasStage>
 			<SEO title={data.page.title} description={data.page.excerpt} />
-			<Stage title={data.page.title}/>
+			<Stage title={data.page.title} particles />
 			<MDXRenderer>{data.page.body}</MDXRenderer>
 		</Layout>
 	);};
