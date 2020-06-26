@@ -61,4 +61,8 @@ export default styled.div<ContainerProps>`
 	${mobile} {
 		padding: ${props => (props.slim ? `0 ${rem(props.theme.spacings.medium)}` : rem(props.theme.spacings.medium))};
 	}
+
+	& > *:last-child {
+		margin-bottom: 0;
+	}
 `;
