@@ -42,7 +42,7 @@ const Particle: FunctionComponent<{ className?: string; interactive?: boolean; }
 
 	const reposition = () => {
 		setLeft(between(12.5, 87.5));
-		setTop(between(12.5, 87.5));
+		setTop(between(25, 75));
 	}
 
 	useLayoutEffect(() => {
