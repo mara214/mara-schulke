@@ -5,6 +5,7 @@ import Particles from 'components/core/Particles';
 import Container, { Unaligned } from 'components/layout/Container';
 
 import { rem } from 'lib/polished';
+import { mobile } from 'lib/media';
 
 interface StageProps {
 	className?: string;
@@ -51,10 +52,18 @@ export default styled(Stage)<StageProps>`
 			border: 0;
 			padding: 0;
 			font-size: 400%;
+
+			${mobile} {
+				font-size: 200%;
+			}
 		}
 	}
 
 	${Particles} {
 		overflow: hidden;
+	}
+
+	+ * {
+		margin-top: ${props => rem(props.theme.spacings.large)};
 	}
 `;
