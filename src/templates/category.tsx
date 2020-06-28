@@ -27,7 +27,7 @@ const Category: FunctionComponent<CategoryProps> = ({ data, pageContext }) => {
 					${Particles} svg {
 						fill: ${category.color};
 
-						&:nth-child(odd) {
+						&:nth-child(even) {
 							opacity: 0;
 						}
 					}
