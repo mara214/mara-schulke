@@ -30,6 +30,10 @@ export default styled(ArticleListItem)<ArticleListItemProps>`
 	display: block;
 	margin-bottom: ${(props: any) => rem(props.theme.spacings.medium)};
 
+	&:last-child {
+		margin-bottom: 0;
+	}
+
 	h3 {
 		margin: 0;
 	}
