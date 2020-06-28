@@ -87,6 +87,7 @@ const seo = [
 		options: {
 			trackingId: 'UA-165957143-1',
 			anonymize: true,
+			respectDNT: true
 		}
 	},
 	'gatsby-plugin-offline',
