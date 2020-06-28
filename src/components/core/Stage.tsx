@@ -26,7 +26,7 @@ const Stage: FunctionComponent<StageProps> = ({ className, particles, title }) =
 
 export default styled(Stage)<StageProps>`
 	position: relative;
-	height: ${props => rem(5 * props.theme.spacings.xlarge)};
+	height: ${props => rem(6 * props.theme.spacings.xlarge)};
 	background-color: ${props => props.theme.colors.navigationBackground};
 
 	&::before {
@@ -69,5 +69,13 @@ export default styled(Stage)<StageProps>`
 
 	+ * {
 		margin-top: ${props => rem(props.theme.spacings.large)};
+
+		${mobile} {
+			margin-top: ${props => rem(props.theme.spacings.medium)};
+		}
+	}
+
+	${landscape} {
+		height: ${props => rem(5 * props.theme.spacings.xlarge)};
 	}
 `;
