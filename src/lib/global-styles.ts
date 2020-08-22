@@ -1,7 +1,7 @@
 import { createGlobalStyle, GlobalStyleComponent, DefaultTheme } from 'styled-components';
 
 import typography from 'lib/typography';
-import { normalize, rem, darken, transparentize } from 'lib/polished';
+import { normalize, rem } from 'lib/polished';
 import { mobile } from 'lib/media';
 
 export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobalStyle`
@@ -53,7 +53,7 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 		list-style-position: inside;
 	}
 
-	pre, hr, code {
+	pre, hr, code, .code {
 		font-family: 'Roboto Mono', monospace;
 	}
 

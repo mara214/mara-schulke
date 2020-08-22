@@ -1,50 +1,133 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { Link } from 'gatsby';
+import { Link, useStaticQuery } from 'gatsby';
+import Cookies from 'js-cookie';
 
 import { rem } from 'lib/polished';
-import { mobile, tablet } from 'lib/media';
+import { mobile } from 'lib/media';
 
 import Container from 'components/layout/Container';
+import { graphql } from 'gatsby';
+
 
 const FooterContainer = styled.div`
+	background-color: ${props => props.theme.colors.navigationBackground};
+
 	&, * {
 		color: ${props => props.theme.colors.navigationForeground};
-		background-color: ${props => props.theme.colors.navigationBackground};
+	}
+
+	${Container} {
+		display: flex;
+		justify-content: space-between;
+
+		${mobile} {
+			flex-direction: column;
+		}
+	}
+
+	pre {
+		padding: 0;
+		margin: 0;
 	}
 
 	ul {
+		display: grid;
+		grid-gap: ${props => rem(props.theme.spacings.xsmall)};
 		margin: 0;
 
 		li {
 			list-style: none;
-			padding-right: ${props => rem(props.theme.spacings.medium)};
+			margin: 0;
+			white-space: nowrap;
 
-			&:last-child {
+			button {
+				cursor: pointer;
 				padding: 0;
+				outline: none;
+				background: none;
+
+				&:hover {
+					text-decoration: underline;
+				}
 			}
 		}
 	}
 `;
 
+
 interface FooterProps {}
 
+
 const Footer: FunctionComponent<FooterProps> = () => {
-	const renderExternalLink = ({ to, text }: { to: string; text: string; }) => <p>- <a href={to} target="_blank" rel="noopener">{text}</a></p>;
-	const renderInternalLink = ({ to, text }: { to: string; text: string; }) => <p>- <Link to={to}>{text}</Link></p>;
+	const {legal, social} = useStaticQuery(graphql`
+		{
+			site {
+				siteMetadata {
+					footer {
+						legal {
+							slug
+							title
+						}
+
+						social {
+							href
+							title
+						}
+					}
+				}
+			}
+		}
+	`).site.siteMetadata.footer;
+
+	const binaryYear = (new Date().getFullYear() >>> 0).toString(2);
+	const clearCookies = () => {
+		Object.keys(Cookies.getJSON())
+			.filter(name => name !== 'theme')
+			.map(name => Cookies.remove(name));
+		window.location.reload();
+	}
 
 	return (
 		<FooterContainer>
 			<Container>
-				<hr/>
-				<pre css={`padding: 0;`}>
-					<p>by("Maximilian Schulke").in(2020);</p>
-					{renderExternalLink({ to: 'https://github.com/schulke-214', text: 'GitHub' })}
-					{renderExternalLink({ to: 'https://reddit.com/u/schulke-214', text: 'Reddit' })}
-					{renderInternalLink({ to: '/imprint', text: 'Imprint' })}
-					{renderInternalLink({ to: '/data-privacy', text: 'Data Privacy' })}
-				</pre>
-				<hr/>
+				<pre>{binaryYear}</pre>
+				<div
+					css={`
+						width: min-content;
+						display: grid;
+						grid-template-columns: auto auto;
+						grid-gap: ${(props: any) => rem(props.theme.spacings.large)};
+
+						${mobile} {
+							margin-top: ${(props: any) => rem(props.theme.spacings.medium)};
+						}
+					`}
+				>
+					<ul>
+						{legal.map(({title, slug}: any) => (
+							<li key={slug}>
+								<Link to={slug}>
+									<code>{title}</code>
+								</Link>
+							</li>
+						))}
+						<li>
+							<button type="button" onClick={clearCookies}>
+								<code>Revoke Consent</code>
+							</button>
+						</li>
+					</ul>
+					<ul>
+						{social.map(({title, href}: any) => (
+							<li key={href}>
+								<a href={href} target="__blank" rel="noopener">
+									<code>{title}</code>
+								</a>
+							</li>
+						))}
+					</ul>
+				</div>
 			</Container>
 		</FooterContainer>
 	);

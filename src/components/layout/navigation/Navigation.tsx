@@ -68,7 +68,7 @@ interface NavigationProps extends Openable {
 const Navigation: FunctionComponent<NavigationProps> = ({ open, toggleTheme, setOpen }) => {
 	const links = useStaticQuery(graphql`
 		{
-			all: allPage(filter: { navigatable: { eq: true }}) {
+			all: allPage(filter: { navigatable: { eq: true }}, sort: { fields: title, order: DESC }) {
 				edges {
 					node {
 						title
@@ -79,7 +79,6 @@ const Navigation: FunctionComponent<NavigationProps> = ({ open, toggleTheme, set
 		}
 	`).all.edges.map(({ node }: any) => node);
 
-	const size: WindowSize = useWindowSize();
 
 	return (
 		<nav>

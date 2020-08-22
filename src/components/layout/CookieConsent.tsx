@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import { Link } from 'gatsby';
 import styled from 'styled-components';
 import Cookies from 'js-cookie';
@@ -7,7 +7,7 @@ import { rem } from 'lib/polished';
 import { landscape } from 'lib/media';
 
 import Container from 'components/layout/Container';
-import Button from 'components/ui/Button';
+
 
 const CookieConsentContainer = styled.div`
 	position: fixed;
@@ -26,14 +26,35 @@ const CookieConsentContainer = styled.div`
 `;
 
 const CookieConsent: FunctionComponent<{}> = () => {
-	const [accepted, setAccepted] = useState(() => Cookies.get('cookie-consent') || false);
-	const acceptCookieConsent = (ev: MouseEvent) => {
+	const [answered, setAnswered] = useState(() => !!Cookies.get('cookie-consent') || false);
+
+	const storeAnswer = (answer: boolean) => (ev: MouseEvent) => {
 		ev.preventDefault();
-		Cookies.set('cookie-consent', 'true');
-		setAccepted(true);
+		Cookies.set('cookie-consent', '' + answer, {
+			expires: 365
+		});
+		setAnswered(true);
 	};
 
-	if (accepted) return <></>;
+	useEffect(() => {
+		if (!answered) return;
+
+		const accepted = Cookies.get('cookie-consent') === 'true';
+
+		if (!accepted) {
+			return;
+		}
+
+		(async () => {
+			const {default: withAnalytics} = await import('lib/analytics');
+
+			withAnalytics(analytics => {
+				analytics.page();
+			});
+		})();
+	}, [answered]);
+
+	if (answered) return <></>;
 
 	return (
 		<CookieConsentContainer>
@@ -61,7 +82,8 @@ const CookieConsent: FunctionComponent<{}> = () => {
 							margin-right: 0;
 						}
 					`}>
-					This site is collecting data to enhance your experience and using cookies to save user preferences across browser sessions.
+					This site want's to collect data to enhance your experience and use cookies to save your preferences across browser sessions.
+					If you are curious how and what data get's collected you should checkout <Link to="/data-privacy">this page</Link>.
 				</span>
 				<div
 					css={`
@@ -78,8 +100,8 @@ const CookieConsent: FunctionComponent<{}> = () => {
 							}
 						}
 					`}>
-					<a href="" onClick={acceptCookieConsent as any}><code>accept()</code></a>
-					<Link to='/data-privacy'><code>learn_more()</code></Link>
+					<a href="" onClick={storeAnswer(true) as any}><code>accept()</code></a>
+					<a href="" onClick={storeAnswer(false) as any}><code>deny()</code></a>
 				</div>
 			</Container>
 		</CookieConsentContainer>

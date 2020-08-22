@@ -54,6 +54,10 @@ declare module 'styled-components' {
 		hr: {
 			color: string;
 		},
+		particles: {
+			colors: string[];
+			paths: JSX.Element[];
+		},
 		code: {
 			syntax: PrismTheme;
 			highlight: {

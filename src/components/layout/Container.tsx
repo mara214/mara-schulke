@@ -4,6 +4,21 @@ import { rem } from 'lib/polished';
 
 import { mobile, landscape } from 'lib/media';
 
+export const Unaligned = styled.div`
+	position: relative;
+	z-index: ${props => props.theme.layers.default.content};
+	width: 100vw;
+	margin-left: -${props => rem(props.theme.spacings.large)};
+
+	@media screen and (min-width: ${props => rem(props.theme.layout.maxWidth)}) {
+		margin-left: calc((100vw - ${props => rem(props.theme.layout.maxWidth - (2 * props.theme.spacings.large)) }) * -0.5);
+	}
+
+	${mobile} {
+		margin-left: -${props => rem(props.theme.spacings.medium)};
+	}
+`;
+
 interface ContainerProps {
 	slim?: boolean;
 	flex?: boolean;
@@ -39,10 +54,15 @@ export default styled.div<ContainerProps>`
 			margin-left: ${props => rem(-props.theme.spacings.medium)} !important;
 			margin-right: ${props => rem(-props.theme.spacings.medium)} !important;
 			width: 100vw;
+
 		}
 	}
 
 	${mobile} {
 		padding: ${props => (props.slim ? `0 ${rem(props.theme.spacings.medium)}` : rem(props.theme.spacings.medium))};
+	}
+
+	& > *:last-child {
+		margin-bottom: 0;
 	}
 `;

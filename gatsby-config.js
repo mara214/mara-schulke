@@ -82,25 +82,85 @@ const seo = [
 			icon: 'static/assets/favicon.png',
 		},
 	},
-	{
-		resolve: 'gatsby-plugin-google-analytics',
-		options: {
-			trackingId: 'UA-165957143-1',
-			anonymize: true,
-		}
-	},
 	'gatsby-plugin-offline',
 	'gatsby-plugin-react-helmet',
 ];
 
 module.exports = {
 	siteMetadata: {
-		title: 'Maximilian Schulke',
-		description: 'A place where i post about nerd stuff with a lot of technical details.',
-		author: 'Maximilian Schulke',
-		twitterAuthor: '@schulke-214',
-		liveUrl: 'https://maximilianschulke.com',
-		previewImage: '/static/seo-banner.png'
+		seo: {
+			title: 'Maximilian Schulke',
+			description: 'Hi! This is a place where i share ideas, concepts and thoughts about software related topcis! I write mostly about compiler / language design, linux or frontend topics.',
+			author: 'Maximilian Schulke',
+			twitter: '@schulke-214',
+			url: 'https://maximilianschulke.com',
+			previewImage: '/static/seo-banner.png',
+			keywords: ['Linux', 'Rust', 'Developer Blog', 'Computer Scienece', 'Web Development', 'Math']
+		},
+		categories: [
+			{
+				name: 'Frontend',
+				slug: '/category/frontend',
+				color: '#62d0dd',
+			},
+			{
+				name: 'Backend',
+				slug: '/category/backend',
+				color: '#ff8e21',
+			},
+			{
+				name: 'Compiler',
+				slug: '/category/compiler',
+				color: '#a2d39b',
+			},
+			{
+				name: 'Infrastructure',
+				slug: '/category/infrastructure',
+				color: '#ceb4ff',
+			},
+			{
+				name: 'Security',
+				slug: '/category/security',
+				color: '#a0b7ff',
+			},
+			{
+				name: 'Linux',
+				slug: '/category/linux',
+				color: '#ff708b',
+			},
+		],
+		support: {
+			headline: 'Do you enjoy reading this article?',
+			cta: 'Support me on Patreon!',
+			url: 'https://www.patreon.com/maximilianschulke',
+			description: 'To get access to alot of patron only content, choose the next topics i write about and much more.'
+		},
+		footer: {
+			legal: [
+				{
+					slug: '/legal-notice',
+					title: 'Legal Notice'
+				},
+				{
+					slug: '/data-privacy',
+					title: 'Data Privacy'
+				}
+			],
+			social: [
+				{
+					href: 'https://github.com/schulke-214',
+					title: 'GitHub'
+				},
+				{
+					href: 'https://reddit.com/u/schulke-214',
+					title: 'Reddit'
+				},
+				{
+					href: 'mailto:hello@maximilianschulke.com',
+					title: 'Mail'
+				}
+			],
+		},
 	},
 	plugins: [
 		...dev,

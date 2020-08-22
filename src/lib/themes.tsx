@@ -1,3 +1,4 @@
+import React from 'react';
 import { DefaultTheme } from 'styled-components';
 import { Dark as DarkTheme } from 'lib/syntax';
 import { Light as LightTheme } from 'lib/syntax';
@@ -55,6 +56,34 @@ const shared = {
 	hr: {
 		color: darken(0.5, colors.white)
 	},
+	particles: {
+		colors: [
+			'#62d0dd',
+			'#ff8e21',
+			'#a2d39b',
+			'#ceb4ff',
+			'#a0b7ff',
+			'#ff708b',
+		],
+		paths: [
+			<>&int;</>,
+			<>&Delta;</>,
+			<>&alpha;</>,
+			<>&beta;</>,
+			<>&gt;</>,
+			<>&lt;</>,
+			<>≠</>,
+			<>=</>,
+			<>!</>,
+			<>+</>,
+			<>-</>,
+			<>*</>,
+			<>/</>,
+			<>;</>,
+			<>0</>,
+			<>1</>,
+		].map(char => <text><tspan x="12" y="42">{char}</tspan></text> )
+	}
 };
 
 const BLACK: string = colors.black;

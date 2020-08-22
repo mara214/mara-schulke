@@ -6,42 +6,57 @@ type SEOMetaElement = React.DetailedHTMLProps<React.MetaHTMLAttributes<HTMLMetaE
 
 export interface SEOProps {
 	description?: string;
+	keywords?: string[];
 	image?: string;
 	lang?: string;
 	meta?: SEOMetaElement;
 	title: string;
 }
 
-const SEO: FunctionComponent<SEOProps> = ({ description = '', image = '', lang = 'en', meta = [], title = '' }) => {
+const SEO: FunctionComponent<SEOProps> = ({ description = '', keywords = null, image = '', lang = 'en', meta = [], title = '' }) => {
 	const { site } = useStaticQuery<{ site: any }>(
 		graphql`
 			query SiteMetaData {
 				site {
 					siteMetadata {
-						title
-						description
-						previewImage
-						twitterAuthor
-						liveUrl
-						author
+						seo {
+							title
+							description
+							previewImage
+							twitter
+							url
+							author
+							keywords
+						}
 					}
 				}
 			}
 		`
 	);
 
-	const descr: string = description || site.siteMetadata.description;
-	const previewImage: string = image || site.siteMetadata.previewImage;
+	const { seo } = site.siteMetadata;
+
+	const descr: string = description ?? seo.description;
+	const kwords: string[] = keywords ?? seo.keywords;
+	const preview: string = image ?? seo.previewImage;
 
 	return (
 		<Helmet
 			htmlAttributes={{ lang }}
 			title={title}
-			titleTemplate={`${site.siteMetadata.title} – %s`}
+			titleTemplate={`${seo.title} – %s`}
 			meta={[
+				{
+					name: `robots`,
+					content: `index, follow`
+				},
 				{
 					name: `description`,
 					content: descr
+				},
+				{
+					name: `keywords`,
+					content: kwords.join(', ')
 				},
 				{
 					property: `og:title`,
@@ -57,11 +72,11 @@ const SEO: FunctionComponent<SEOProps> = ({ description = '', image = '', lang =
 				},
 				{
 					property: `og:site_name`,
-					content: site.siteMetadata.title
+					content: seo.title
 				},
 				{
 					property: `og:url`,
-					content: site.siteMetadata.liveUrl
+					content: seo.url
 				},
 				{
 					property: `og:image`,
@@ -73,11 +88,11 @@ const SEO: FunctionComponent<SEOProps> = ({ description = '', image = '', lang =
 				},
 				{
 					name: `twitter:image`,
-					content: image
+					content: preview
 				},
 				{
 					name: `twitter:creator`,
-					content: site.siteMetadata.twitter
+					content: seo.twitter
 				},
 				{
 					name: `twitter:title`,
@@ -90,9 +105,6 @@ const SEO: FunctionComponent<SEOProps> = ({ description = '', image = '', lang =
 				{
 					httpEquiv: 'Content-Type',
 					content: 'text/html; charset=utf-8'
-				},
-				{
-
 				},
 				...meta
 			]}
