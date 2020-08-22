@@ -17,7 +17,9 @@
 		"clean": "rm -rf ./node_modules/.cache && gatsby clean"
 	},
 	"dependencies": {
+		"@analytics/google-analytics": "^0.5.0",
 		"@mdx-js/react": "^1.6.1",
+		"analytics": "^0.5.5",
 		"ayu": "^7.2.1",
 		"core-js": "^3.4.1",
 		"gatsby": "^2.23.11",
