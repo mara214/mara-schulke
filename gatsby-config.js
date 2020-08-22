@@ -90,7 +90,7 @@ module.exports = {
 	siteMetadata: {
 		seo: {
 			title: 'Maximilian Schulke',
-			description: 'A place where i post about nerd stuff with a lot of technical details.',
+			description: 'Hi! This is a place where i share ideas, concepts and thoughts about software related topcis! I write mostly about compiler / language design, linux or frontend topics.',
 			author: 'Maximilian Schulke',
 			twitter: '@schulke-214',
 			url: 'https://maximilianschulke.com',
