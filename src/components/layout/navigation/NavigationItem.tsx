@@ -5,7 +5,6 @@ import { Link } from "gatsby";
 import { rem } from "lib/polished";
 import { landscape } from "lib/media";
 
-console.log("FIX STYLEDLISTITEM")
 const StyledListItem = styled.li`
 	display: block;
 	margin: 0;

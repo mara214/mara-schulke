@@ -6,13 +6,14 @@ type SEOMetaElement = React.DetailedHTMLProps<React.MetaHTMLAttributes<HTMLMetaE
 
 export interface SEOProps {
 	description?: string;
+	keywords?: string[];
 	image?: string;
 	lang?: string;
 	meta?: SEOMetaElement;
 	title: string;
 }
 
-const SEO: FunctionComponent<SEOProps> = ({ description = '', image = '', lang = 'en', meta = [], title = '' }) => {
+const SEO: FunctionComponent<SEOProps> = ({ description = '', keywords = null, image = '', lang = 'en', meta = [], title = '' }) => {
 	const { site } = useStaticQuery<{ site: any }>(
 		graphql`
 			query SiteMetaData {
@@ -25,6 +26,7 @@ const SEO: FunctionComponent<SEOProps> = ({ description = '', image = '', lang =
 							twitter
 							url
 							author
+							keywords
 						}
 					}
 				}
@@ -34,8 +36,9 @@ const SEO: FunctionComponent<SEOProps> = ({ description = '', image = '', lang =
 
 	const { seo } = site.siteMetadata;
 
-	const descr: string = description || seo.description;
-	const preview: string = image || seo.previewImage;
+	const descr: string = description ?? seo.description;
+	const kwords: string[] = keywords ?? seo.keywords;
+	const preview: string = image ?? seo.previewImage;
 
 	return (
 		<Helmet
@@ -44,8 +47,16 @@ const SEO: FunctionComponent<SEOProps> = ({ description = '', image = '', lang =
 			titleTemplate={`${seo.title} – %s`}
 			meta={[
 				{
+					name: `robots`,
+					content: `index, follow`
+				},
+				{
 					name: `description`,
 					content: descr
+				},
+				{
+					name: `keywords`,
+					content: kwords.join(', ')
 				},
 				{
 					property: `og:title`,

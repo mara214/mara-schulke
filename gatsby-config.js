@@ -95,6 +95,7 @@ module.exports = {
 			twitter: '@schulke-214',
 			url: 'https://maximilianschulke.com',
 			previewImage: '/static/seo-banner.png',
+			keywords: ['Linux', 'Rust', 'Developer Blog', 'Computer Scienece', 'Web Development', 'Math']
 		},
 		categories: [
 			{
