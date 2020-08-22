@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Particles from 'components/core/Particles';
 
 import { rem } from 'lib/polished';
+import { mobile } from 'lib/media';
 
 interface SupportProps {
 	className?: string;
@@ -58,5 +59,9 @@ export default styled(Support)<SupportProps>`
 		width: 50%;
 		margin-top: 0.5rem;
 		margin-bottom: 0;
+
+		${mobile} {
+			width: 100%;
+		}
 	}
 `;
