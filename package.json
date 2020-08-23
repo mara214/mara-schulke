@@ -1,6 +1,6 @@
 {
 	"name": "maximilian-schulke",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Personal tech blog",
 	"repository": "git@github.com:schulke-214/maximilian-schulke",
 	"author": "schulke-214 <hello@maximilianschulke.com>",
@@ -64,6 +64,6 @@
 		"lodash.kebabcase": "^4.1.1",
 		"mdx": "^0.3.1",
 		"mkdirp": "^1.0.4",
-		"serialize-javascript": "^2.1.1"
+		"serialize-javascript": "^3.1.0"
 	}
 }
