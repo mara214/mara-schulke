@@ -120,7 +120,7 @@ const seo = [
 			feeds: [
 				{
 					serialize: ({ query: { site, articles } }) => {
-						const seo = site?.siteMetadata?.seo;
+						const seo = site.siteMetadata.seo;
 						return articles.edges.map(({ node }) => ({
 							author: seo.author,
 							title: node.title,
