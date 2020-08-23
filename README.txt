@@ -1,4 +1,4 @@
-https://maximilianschulke.com
+https://blog.maximilianschulke.com
 
 -- Features
 
