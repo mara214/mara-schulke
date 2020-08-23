@@ -10,8 +10,7 @@ interface NotFoundProps {
 const NotFound: FunctionComponent<NotFoundProps> = ({ data }) => {
 	return (
 		<Layout readMode={false}>
-			<h1>404 - Not Found</h1>
-			<img src="/404.gif" alt="will ferell" />
+			<h1 style={{ paddingTop: '65px' }}>404 - Not Found</h1>
 		</Layout>
 	);
 };
