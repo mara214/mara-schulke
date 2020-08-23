@@ -82,18 +82,91 @@ const seo = [
 			icon: 'static/assets/favicon.png',
 		},
 	},
+	{
+		resolve: `gatsby-plugin-feed`,
+		options: {
+			query: `
+				{
+					site {
+						siteMetadata {
+							language
+							categories {
+								name
+								slug
+							}
+							seo {
+								author
+								title
+								description
+								url
+							}
+						}
+					}
+				}
+			`,
+			setup: ({query, ...rest}) => {
+				const {seo, language, categories} = query.site.siteMetadata;
+
+				return {
+					...seo,
+					...rest,
+					site_url: seo.url,
+					copyright: seo.author,
+					generator: seo.author,
+					categories: categories.map(c => c.name),
+					language,
+				}
+			},
+			feeds: [
+				{
+					serialize: ({ query: { site, articles } }) => {
+						const seo = site?.siteMetadata?.seo;
+						return articles.edges.map(({ node }) => ({
+							author: seo.author,
+							title: node.title,
+							description: node.excerpt,
+							date: node.published,
+							url: seo.url + node.slug,
+							link: seo.url + node.slug,
+							guid: seo.url + node.slug,
+							custom_elements: [{ 'content:encoded': node.html }],
+						}));
+					},
+					query: `
+						{
+							articles: allMdxArticle(sort: {fields: published, order: DESC}) {
+								edges {
+									node {
+										slug
+										html
+										excerpt
+										published
+										title
+									}
+								}
+							}
+						}
+					`,
+					output: '/rss.xml',
+					title: 'Maximilian Schulke',
+					link: 'https://blog.maximilianschulke.com',
+				},
+			],
+		},
+	},
 	'gatsby-plugin-offline',
-	'gatsby-plugin-react-helmet',
+	'gatsby-plugin-react-helmet'
 ];
 
 module.exports = {
 	siteMetadata: {
+		language: 'en-us',
 		seo: {
 			title: 'Maximilian Schulke',
 			description: 'Hi! This is a place where i share ideas, concepts and thoughts about software related topcis! I write mostly about compiler / language design, linux or frontend topics.',
 			author: 'Maximilian Schulke',
 			twitter: '@schulke-214',
-			url: 'https://maximilianschulke.com',
+			url: 'https://blog.maximilianschulke.com',
 			previewImage: '/static/seo-banner.png',
 			keywords: ['Linux', 'Rust', 'Developer Blog', 'Computer Scienece', 'Web Development', 'Math']
 		},
