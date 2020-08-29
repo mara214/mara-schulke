@@ -19,7 +19,7 @@ but it definitly played some role in this whole problem. Since I switched to
 once you figured the basic workflow out it's as easy to use as graphical clients.
 (If not even easier)
 
-`bluetoothctl` offers both: an interactive command prompt aswell as a dead simple
+`bluetoothctl` offers both: an interactive command prompt as well as a dead simple
 cli. For the purpose of this tutorial I'll go with the cli since it's easier to
 capture the output of the single commands.
 
@@ -34,7 +34,7 @@ controller is powered on by running:
 bluetoothctl power on
 ```
 
-Otherwise you'd probably get an error which looks like this:
+Otherwise, you'd probably get an error which looks like this:
 
 ```shell
 Failed to start discovery: org.bluez.Error.NotReady
@@ -46,10 +46,10 @@ Failed to start discovery: org.bluez.Error.NotReady
 bluetoothctl scan on
 ```
 
-Once you run this you should see a lot of junk output. A few seconds should be
+Once you run this, you should see a lot of junk output. A few seconds should be
 enough to find most devices near to your system. If you follow along in the
-interactive command prompt you have to enter the command `scan off` to stop the
-scan mode again. Otherwise you will stop it by terminating the
+interactive command prompt, you have to enter the command `scan off` to stop the
+scan mode again. Otherwise, you will stop it by terminating the
 `bluetoothctl scan on` command.
 
 ### 2. List All Devices Near You
@@ -111,7 +111,7 @@ bluetoothctl connect XX:XX:XX:XX:XX:XX
 
 and it should work. Some devices might take a few seconds to be connected.
 
-To disconnect from a already connected device, you just need to run
+To disconnect from an already connected device, you just need to run
 
 ```shell
 bluetoothctl disconnect XX:XX:XX:XX:XX:XX
@@ -122,7 +122,7 @@ As you see: This cli is really intuitive ;)
 ### 5. Removing / Blocking Unwanted Devices
 
 One last thing you might want to do is removing or blocking devices you
-dont know, like or you just want to ignore.
+don't know, like or you just want to ignore.
 
 #### 5.1 Removing
 
@@ -160,7 +160,7 @@ bluetoothctl devices
 bluetoothctl connect XX:XX:XX:XX:XX:XX
 ```
 
-And to connect to a already known device, you can skip the scan step:
+And to connect to an already known device, you can skip the scan step:
 
 ```shell
 bluetoothctl power on
@@ -168,7 +168,7 @@ bluetoothctl devices
 bluetoothctl connect XX:XX:XX:XX:XX:XX
 ```
 
-If your bluetooth controller is already on (which is probably the case if your
+If your bluetooth controller is already on (which is probably the case if you're
 working on your system) you can even skip that step and end up with two simple
 commands to remember:
 
@@ -177,7 +177,7 @@ bluetoothctl devices
 bluetoothctl connect XX:XX:XX:XX:XX:XX
 ```
 
-Being able to control bluetooth via the command line is such a awesome thing:
+Being able to control bluetooth via the command line is such an awesome thing:
 We can define scripts, run them in cron jobs or write a cli to interact with
 our bluetooth devices.
 
