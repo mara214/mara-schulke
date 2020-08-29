@@ -18,7 +18,7 @@ export interface Openable {
 
 const HeaderContainer = styled.header`
 	position: fixed;
-	width: 100%;
+	width: 100vw;
 	top: 0;
 	z-index: ${props => props.theme.layers.overlay.foreground};
 	color: ${props => props.theme.colors.navigationForeground};
