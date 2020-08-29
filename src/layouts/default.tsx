@@ -42,15 +42,25 @@ const Layout: FunctionComponent<{ hasStage: boolean; }> = ({ children, hasStage 
 		<ThemeProvider theme={theme}>
 			<MDXProvider components={MDXComponents}>
 				<GlobalStyles />
-				<Header toggleTheme={toggleTheme} openSearch={() => {}} />
-				<Container
-					style={{
-						paddingTop: hasStage ? '0' : ''
-					}}
+				<div
+					css={`
+						display: flex;
+						flex-direction: column;
+						min-height: 100vh;
+					`}
 				>
-					{children}
-				</Container>
-				<Footer />
+					<Header toggleTheme={toggleTheme} openSearch={() => {}} />
+					<Container
+						as="main"
+						style={{
+							paddingTop: hasStage ? '0' : '',
+							flex: '1 0 0'
+						}}
+					>
+						{children}
+					</Container>
+					<Footer />
+				</div>
 				<CookieConsent />
 			</MDXProvider>
 		</ThemeProvider>
