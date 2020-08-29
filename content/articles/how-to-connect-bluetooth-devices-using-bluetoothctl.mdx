@@ -1,0 +1,93 @@
+---
+title: How To Connect Bluetooth Devices Using bluetoothctl
+published: 2020-08-29
+category: linux
+tags:
+  - bluetooth
+  - logitech
+---
+
+Since using linux I frequently had trouble with properly connecting bluetooth
+devices (especially the logitech mx keys and mx master 3). For quite some time 
+I was using primarily `blueman` to manage my bluetooth devices because it seemed
+utterly complex to use a bluetooth cli.
+
+It turns out that using `blueman` "caused" some of the problems I encountered.
+Pairing devices seemed to be impossible. It might not be only `blueman`s fault
+but it played definitly some role in this whole problem. Since I switched to 
+`bluetoothctl` everything works like a charm. It was a bit daunting at first but 
+once you figured the basic workflow out it's as easy to use as graphical clients.
+(If not even easier)
+
+`bluetoothctl` offers both: an interactive command prompt aswell as a dead simple
+cli. For the purpose of this tutorial I'll go with the cli since it's easier to
+capture the output of the single commands.
+
+> Just as a quick side note: This tutorial was written for `bluetoothctl@5.X.X`
+
+### 0. Turning On Your Bluetooth Controller
+
+Before doing anything bluetooth related, you need to make sure your controller is
+powered on by running:
+
+```shell
+bluetoothctl power on
+```
+
+Otherwise you'd get errors which look like this:
+
+```shell
+Failed to start discovery: org.bluez.Error.NotReady
+```
+
+### 1. Search For Your Target Device
+
+```shell
+bluetoothctl scan on
+```
+
+Once you run this you should see a lot of junk output. A few seconds should be enough
+to find most devices near to your system. If you follow along in the interactive command
+prompt you have to enter the command `scan off` to stop the scan mode again. Otherwise
+you will stop it by terminating the `bluetoothctl scan on` command.
+
+### 2. List All Devices Near You
+
+To do any device specfic operations you need to have the MAC address of your target device
+to reference it. You can find it out easily by running
+
+```shell
+bluetoothctl devices
+```
+
+You should see some output similar to this:
+
+```text
+Device C0:A5:F2:A7:8C:37 MX Keys
+Device FE:EF:40:36:85:0A MX Master 3
+...
+```
+
+If your device doesn't show up: make sure you set the target device to be discoverable go to
+step 1 again.
+
+### 3. Optional: Pair / Trust Your Target Device
+
+If you frequently connect to a device which belongs to you, you can consider trusting
+your device.
+
+#### 3.1 Paring
+
+Pairing devices is often required when trying to connect to keyboards and other input
+devices. You can start the paring process 
+
+```shell
+
+```
+
+### 4.
+### 5.
+### 6.
+### 7.
+### 8.
+### 9.
