@@ -1,0 +1,184 @@
+---
+title: How To Connect Bluetooth Devices Using bluetoothctl
+published: 2020-08-29
+category: linux
+tags:
+  - bluetooth
+  - logitech
+---
+
+Since using linux I frequently had trouble with properly connecting bluetooth
+devices (especially the logitech mx keys and mx master 3). For quite some time 
+I was using primarily `blueman` to manage my bluetooth devices because it seemed
+utterly complex to use a bluetooth cli.
+
+It turns out that using `blueman` "caused" some of the problems I encountered.
+Pairing devices seemed to be impossible. It might not be only `blueman`s fault
+but it definitly played some role in this whole problem. Since I switched to 
+`bluetoothctl` everything works like a charm. It was a bit daunting at first but 
+once you figured the basic workflow out it's as easy to use as graphical clients.
+(If not even easier)
+
+`bluetoothctl` offers both: an interactive command prompt as well as a dead simple
+cli. For the purpose of this tutorial I'll go with the cli since it's easier to
+capture the output of the single commands.
+
+> Just as a quick side note: This tutorial was written for `bluetoothctl@5.X.X`
+
+### 0. Turning On Your Bluetooth Controller
+
+Before doing anything device related, you need to make sure your bluetooth
+controller is powered on by running:
+
+```shell
+bluetoothctl power on
+```
+
+Otherwise, you'd probably get an error which looks like this:
+
+```shell
+Failed to start discovery: org.bluez.Error.NotReady
+```
+
+### 1. Search For Your Target Device
+
+```shell
+bluetoothctl scan on
+```
+
+Once you run this, you should see a lot of junk output. A few seconds should be
+enough to find most devices near to your system. If you follow along in the
+interactive command prompt, you have to enter the command `scan off` to stop the
+scan mode again. Otherwise, you will stop it by terminating the
+`bluetoothctl scan on` command.
+
+### 2. List All Devices Near You
+
+To do any device specfic operations you need to have the MAC address of your
+target device to reference it. You can find it out easily by running
+
+```shell
+bluetoothctl devices
+```
+
+You should see some output similar to this:
+
+```text
+Device C0:A5:F2:A7:8C:37 MX Keys
+Device FE:EF:40:36:85:0A MX Master 3
+...
+```
+
+If your device doesn't show up: make sure you set the target device to be
+discoverable go to step 1 again.
+
+### 3. Optional: Pair / Trust Your Target Device
+
+If you frequently connect to a device which belongs to you, you can consider trusting
+your device.
+
+#### 3.1 Paring
+
+Pairing devices is often required when trying to connect to keyboards and other input
+devices. You can start the paring process by typing
+
+```shell
+bluetoothctl pair XX:XX:XX:XX:XX:XX
+```
+
+You'll probably be asked to perform some kind of authentication (like entering a
+pin code on a keyboard or something similar)
+
+#### 3.2 Trusting
+
+```shell
+bluetoothctl trust XX:XX:XX:XX:XX:XX
+```
+
+If you want to untrust your device later on:
+
+```shell
+bluetoothctl untrust XX:XX:XX:XX:XX:XX
+```
+
+### 4. Connecting To The Target Device
+
+To finally connect to the target device you just need to invoke
+
+```shell
+bluetoothctl connect XX:XX:XX:XX:XX:XX
+```
+
+and it should work. Some devices might take a few seconds to be connected.
+
+To disconnect from an already connected device, you just need to run
+
+```shell
+bluetoothctl disconnect XX:XX:XX:XX:XX:XX
+```
+
+As you see: This cli is really intuitive ;)
+
+### 5. Removing / Blocking Unwanted Devices
+
+One last thing you might want to do is removing or blocking devices you
+don't know, like or you just want to ignore.
+
+#### 5.1 Removing
+
+If you want to remove a device from your device list you can do that with:
+
+```shell
+bluetoothctl remove XX:XX:XX:XX:XX:XX
+```
+
+#### 5.2 Blocking / Unblocking
+
+If you don't want a device to be listed when scanning again in the future
+you can block them:
+
+```shell
+bluetoothctl block XX:XX:XX:XX:XX:XX
+```
+
+Since you might change your mind in the future you can unblock already
+blocked devices by running:
+
+```shell
+bluetoothctl unblock XX:XX:XX:XX:XX:XX
+```
+
+## Quick Summary
+
+Just as a quick recap: To connect to a new device, you'd probably do something
+like this:
+
+```shell
+bluetoothctl power on
+bluetoothctl scan on
+bluetoothctl devices
+bluetoothctl connect XX:XX:XX:XX:XX:XX
+```
+
+And to connect to an already known device, you can skip the scan step:
+
+```shell
+bluetoothctl power on
+bluetoothctl devices
+bluetoothctl connect XX:XX:XX:XX:XX:XX
+```
+
+If your bluetooth controller is already on (which is probably the case if you're
+working on your system) you can even skip that step and end up with two simple
+commands to remember:
+
+```shell
+bluetoothctl devices
+bluetoothctl connect XX:XX:XX:XX:XX:XX
+```
+
+Being able to control bluetooth via the command line is such an awesome thing:
+We can define scripts, run them in cron jobs or write a cli to interact with
+our bluetooth devices.
+
+I hope you enjoyed this quick summary of managing bluetooth devices with `bluetoothctl`!

@@ -1,6 +1,6 @@
 {
 	"name": "maximilian-schulke",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "Personal tech blog",
 	"repository": "git@github.com:schulke-214/maximilian-schulke",
 	"author": "schulke-214 <hello@maximilianschulke.com>",
@@ -42,7 +42,7 @@
 		"prismjs": "^1.19.0",
 		"react": "^16.11.0",
 		"react-dom": "^16.11.0",
-		"react-helmet": "^5.2.1",
+		"react-helmet": "^6.1.0",
 		"styled-components": "^4.4.1",
 		"typography": "^0.16.19",
 		"typography-theme-github": "^0.16.19"

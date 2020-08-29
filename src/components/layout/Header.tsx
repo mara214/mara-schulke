@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Container from 'components/layout/Container';
@@ -18,7 +18,7 @@ export interface Openable {
 
 const HeaderContainer = styled.header`
 	position: fixed;
-	width: 100%;
+	width: 100vw;
 	top: 0;
 	z-index: ${props => props.theme.layers.overlay.foreground};
 	color: ${props => props.theme.colors.navigationForeground};
@@ -55,7 +55,7 @@ const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, openSearch }) => 
 	const [open, setOpen] = useState(false);
 	const toggleOpen = () => setOpen(o => !o);
 
-	const hidden = y > 200 && deltaY > 0;
+	const hidden = y > 200 && deltaY > 0 && deltaY !== y;
 
 	const nav = (
 		<Navigation
