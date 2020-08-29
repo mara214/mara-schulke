@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Container from 'components/layout/Container';
@@ -51,11 +51,11 @@ interface HeaderProps {
 }
 
 const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, openSearch }) => {
-	const { y } = useScrollData(100);
+	const { y, deltaY } = useScrollData(100);
 	const [open, setOpen] = useState(false);
 	const toggleOpen = () => setOpen(o => !o);
 
-	const hidden = y > 200;
+	const hidden = y > 200 && deltaY > 0 && deltaY !== y;
 
 	const nav = (
 		<Navigation
