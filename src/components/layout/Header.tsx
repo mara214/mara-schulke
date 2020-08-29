@@ -51,11 +51,11 @@ interface HeaderProps {
 }
 
 const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, openSearch }) => {
-	const { y, deltaY } = useScrollData(100);
+	const { y } = useScrollData(100);
 	const [open, setOpen] = useState(false);
 	const toggleOpen = () => setOpen(o => !o);
 
-	const hidden = y > 200 && deltaY > 0;
+	const hidden = y > 200;
 
 	const nav = (
 		<Navigation
