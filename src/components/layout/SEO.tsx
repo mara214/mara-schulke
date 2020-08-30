@@ -8,17 +8,27 @@ export interface SEOProps {
 	description?: string;
 	keywords?: string[];
 	image?: string;
-	lang?: string;
+	url?: string;
 	meta?: SEOMetaElement;
+	type?: string;
 	title: string;
 }
 
-const SEO: FunctionComponent<SEOProps> = ({ description = '', keywords = null, image = '', lang = 'en', meta = [], title = '' }) => {
+const SEO: FunctionComponent<SEOProps> = ({
+	description = '',
+	keywords = null,
+	image = '',
+	meta = [],
+	title = '',
+	type = 'website',
+	url = ''
+}) => {
 	const { site } = useStaticQuery<{ site: any }>(
 		graphql`
 			query SiteMetaData {
 				site {
 					siteMetadata {
+						locale
 						seo {
 							title
 							description
@@ -34,8 +44,9 @@ const SEO: FunctionComponent<SEOProps> = ({ description = '', keywords = null, i
 		`
 	);
 
-	const { seo } = site.siteMetadata;
+	const { seo, locale } = site.siteMetadata;
 
+	const lang: string = locale.substring(0, 2);
 	const descr: string = description ?? seo.description;
 	const kwords: string[] = keywords ?? seo.keywords;
 	const preview: string = image ?? seo.previewImage;
@@ -68,7 +79,7 @@ const SEO: FunctionComponent<SEOProps> = ({ description = '', keywords = null, i
 				},
 				{
 					property: `og:type`,
-					content: `website`
+					content: type
 				},
 				{
 					property: `og:site_name`,
@@ -76,11 +87,15 @@ const SEO: FunctionComponent<SEOProps> = ({ description = '', keywords = null, i
 				},
 				{
 					property: `og:url`,
-					content: seo.url
+					content: url
 				},
 				{
 					property: `og:image`,
 					content: image
+				},
+				{
+					property: `og:locale`,
+					content: locale
 				},
 				{
 					name: `twitter:card`,

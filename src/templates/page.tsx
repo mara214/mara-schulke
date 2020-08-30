@@ -9,13 +9,21 @@ import Stage from 'components/core/Stage';
 
 interface PageProps {
 	data: any;
+	location: any;
 }
 
-const Page: FunctionComponent<PageProps> = ({ data }) => {
+const Page: FunctionComponent<PageProps> = ({ data, location }) => {
 	return (
 		<Layout hasStage>
-			<SEO title={data.page.title} description={data.page.excerpt} />
-			<Stage title={data.page.title} particles />
+			<SEO
+				title={data.page.title}
+				description={data.page.excerpt}
+				url={location.href ?? ''}
+			/>
+			<Stage
+				title={data.page.title}
+				particles
+			/>
 			<MDXRenderer>{data.page.body}</MDXRenderer>
 		</Layout>
 	);

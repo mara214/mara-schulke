@@ -9,16 +9,17 @@ import Stage from 'components/core/Stage';
 
 interface ArticleProps {
 	data: any;
+	location: any;
 }
 
-const Article: FunctionComponent<ArticleProps> = ({ data }) => {
+const Article: FunctionComponent<ArticleProps> = ({ data, location }) => {
 	const tags: string[] = [];
 	const { publicURL: image } = data.article.banner || {};
 
 	const meta: object[] = [
 		{
-			property: 'og:type',
-			content: 'article'
+			property: 'article:author',
+			content: data.site.siteMetadata.seo.author
 		},
 		{
 			property: 'article:published_time',
@@ -45,8 +46,10 @@ const Article: FunctionComponent<ArticleProps> = ({ data }) => {
 			<SEO
 				title={data.article.title}
 				description={data.article.excerpt}
-				image={image || ''}
+				image={image ?? ''}
 				meta={meta}
+				url={location.href ?? ''}
+				type="article"
 			/>
 			{/* 
 				<div
@@ -75,6 +78,14 @@ const Article: FunctionComponent<ArticleProps> = ({ data }) => {
 
 export const query = graphql`
 	query ArticleQuery($slug: String!) {
+		site {
+			siteMetadata {
+				seo {
+					author
+				}
+			}
+		}
+
 		article(slug: { eq: $slug }) {
 			slug
 			title
