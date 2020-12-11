@@ -10,7 +10,7 @@ export interface LatexProps {
 
 const Latex: FunctionComponent<LatexProps> = ({ className, children, ...props }) => {
 	return (
-		<div className={className}>
+		<pre className={className}>
 			<Helmet>
 				<link
 					rel="stylesheet"
@@ -20,7 +20,7 @@ const Latex: FunctionComponent<LatexProps> = ({ className, children, ...props })
 				/>
 			</Helmet>
 			<ReactLatex {...props}>{children}</ReactLatex>
-		</div>
+		</pre>
 	);
 };
 
@@ -32,6 +32,8 @@ export default styled(Latex)`
 	border-left: 5px solid ${props => props.theme.latex.border};
 	background-color: ${props => props.theme.latex.background};
 	white-space: nowrap;
+	font-size: 1rem;
+	font-family: unset;
 
 	* {
 		color: inherit;
