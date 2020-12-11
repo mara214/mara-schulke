@@ -43,6 +43,7 @@
 		"react": "^16.11.0",
 		"react-dom": "^16.11.0",
 		"react-helmet": "^6.1.0",
+		"react-latex": "^2.0.0",
 		"styled-components": "^4.4.1",
 		"typography": "^0.16.19",
 		"typography-theme-github": "^0.16.19"
