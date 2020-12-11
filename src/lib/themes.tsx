@@ -5,7 +5,6 @@ import { Light as LightTheme } from 'lib/syntax';
 
 import { colors } from 'lib/colors';
 import { lighten, darken, transparentize } from 'lib/polished';
-import { LinearGradientConfiguration } from 'polished/lib/types/linearGradientConfiguration';
 
 DarkTheme.plain.backgroundColor = 'rgb(20, 20, 20)';
 LightTheme.plain.backgroundColor = 'rgb(248, 249, 250)';
@@ -85,8 +84,8 @@ const shared = {
 		].map(char => <text><tspan x="12" y="42">{char}</tspan></text> )
 	},
 	latex: {
-		border: '#a2d39b',
-		background: transparentize(0.75, '#a2d39b'),
+		border: '#a0b7ff',
+		background: transparentize(0.75, '#a0b7ff'),
 	}
 };
 
