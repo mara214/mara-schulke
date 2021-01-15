@@ -26,6 +26,10 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 		}
 	}
 
+	body.error-not-found {
+		background-color: ${props => props.theme.colors.navigationBackground} !important;
+	}
+
 	blockquote {
 		border-color: ${props => props.theme.colors.state.muted};
 		padding-left: ${props => rem(props.theme.spacings.medium)};
