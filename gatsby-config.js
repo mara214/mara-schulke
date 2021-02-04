@@ -160,7 +160,7 @@ const seo = [
 
 module.exports = {
 	siteMetadata: {
-		language: 'en-us',
+		locale: 'en_US',
 		seo: {
 			title: 'Maximilian Schulke',
 			description: 'Hi! This is a place where i share ideas, concepts and thoughts about software related topcis! I write mostly about compiler / language design, linux or frontend topics.',
