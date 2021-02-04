@@ -18,8 +18,6 @@ const Category: FunctionComponent<CategoryProps> = ({ data, pageContext, locatio
 
 	const category: any = categories.find(({ slug }: any) => slug === pageContext.slug);
 
-	console.log(location.href)
-
 	return (
 		<Layout hasStage>
 			<SEO
