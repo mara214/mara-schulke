@@ -1,0 +1,105 @@
+---
+title: Installing NixOS with Full Disk Encryption
+published: 2021-01-04
+category: security
+tags:
+  - disk-encryption
+  - nixos
+  - linux
+---
+
+# Installing NixOS with Full Disk Encryption
+This is a quick cheatsheet on how to install an encrypted nixos system in a few minutes. I wrote this while doing so to simplify the research process for others since it‘s not directly mentioned in the official manual. If you find anything outdated / wrong in here, please notify me.
+
+## Requirements
+Before we‘re ready to go you should‘ve created an bootable USB Stick with the latest NixOS ISO (at the time writing this the latest NixOS Version is 20.09)
+
+## Partitioning
+So the basic partitioning doesn’t really differ from the official manual:
+```
+$ parted /dev/sda -- mklabel gpt
+$ parted /dev/sda -- mkpart primary 512MiB -8GiB
+$ parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
+$ parted /dev/sda -- mkpart ESP fat32 1MiB 512MiB
+$ parted /dev/sda -- set 3 esp on
+```
+
+> You might need to replace your device id, you can identify your drive by using  `lsblk`   
+
+Now we have a simple layout with 3 partitions:
+* Boot (512MiB)
+* Root (Disk Size - 8704MiB)
+* Swap (8192MiB / 8GiB)
+
+> Note: Depending on your RAM Size you might need to choose a different amount of Swap.  
+
+## Encrypting Your Disk
+Pretty straight forward using LUKS:
+
+> I assume you know this, but anyways: The encryption is only as secure as the passphrase you choose. If you loose the passphrase, you‘ll loose access to your data.  
+
+```
+$ cryptsetup luksFormat /dev/sda1
+$ cryptsetup luksOpen /dev/sda1 cryptroot
+```
+
+> Note that from now on, the device id to reference the decrypted partition is `/dev/mapper/cryptroot`  
+
+## Formatting
+```
+$ mkfs.ext4 -L nixos /dev/mapper/cryptroot
+$ mkswap -L swap /dev/sda2
+$ mkfs.fat -F 32 -n boot /dev/sda3
+```
+
+## Installing
+```
+$ mount /dev/disk/by-label/nixos /mnt
+$ mkdir -p /mnt/boot
+$ mount /dev/disk/by-label/boot /mnt/boot
+$ swapon /dev/sda2
+$ nixos-generate-config --root /mnt
+$ vim /mnt/etc/nixos/configuration.nix
+```
+
+### Validating
+```
+$ grep “luks“ /mnt/etc/nixos/hardware-configuration.nix
+```
+
+If the `nixos-generate-config` command detected your luks partition you should be good to go. Otherwise repeat the steps and check if you forgot something / have a different nixos version (i‘ve only tested this with 20.09)
+
+### Configuring GRUB (Optional)
+This step might be skipped, depending on your preference: I‘ll configure GRUB 2
+
+```
+- boot.loader.systems-boot.enable = true;
++ boot.loader.grub = {
++   enable = true;
++   version = 2;
++   device = "nodev";
++   efiSupport = true;
++ };
+```
+
+### Finishing the Installation
+If you‘ve validated the hardware detection and configured your system to your preferences you can actually install it using
+
+```
+$ nixos-install
+```
+
+> Make sure you‘re connected to the Internet for this step.  
+
+## Reboot
+If the  `nixos-install`  command succeeded, we‘re done. Just reboot with:
+
+```
+$ reboot
+```
+
+> And enjoy your encrypted NixOS installation :)  
+
+## Resources
+* https://nixos.org/manual/nixos/stable/index.html#sec-installation-installing
+* https://nixos.wiki/wiki/Full_Disk_Encryption
