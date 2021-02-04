@@ -84,6 +84,7 @@ const CookieConsent: FunctionComponent<{}> = () => {
 					`}>
 					This site want's to collect data to enhance your experience and use cookies to save your preferences across browser sessions.
 					If you are curious how and what data get's collected you should checkout <Link to="/data-privacy">this page</Link>.
+					Your data may be stored on servers outside of the european union.
 				</span>
 				<div
 					css={`

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Code, { CodeProps } from 'components/core/Code';
+import Latex from 'components/core/Latex';
 import { rem } from 'lib/polished';
 
 const prePropsToCodeProps = (props: any): (React.ComponentProps<'pre'> & CodeProps) | null => {
@@ -28,13 +29,16 @@ export const MDXComponents = {
 		border-bottom: 1px solid hsla(0,0%,0%,0.07);
 	`,
 	pre: (originalProps: any) => {
-
 		const props: CodeProps | null = prePropsToCodeProps(originalProps)
 
-		if (props) {
-			return <Code {...props} />
+		if (!props) {
+			return <pre {...originalProps} />
 		}
 
-		return <pre {...originalProps} />
+		if (props?.language === 'latex') {
+			return <Latex {...props} children={props.code} />
+		}
+
+		return <Code {...props} />
 	},
 };
