@@ -3,6 +3,7 @@ https://blog.maximilianschulke.com
 -- Features
 
 * MDX
+* LaTeX
 * TypeScript
 * Static Export
 * Themes

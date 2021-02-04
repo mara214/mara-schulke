@@ -5,7 +5,6 @@ import { Light as LightTheme } from 'lib/syntax';
 
 import { colors } from 'lib/colors';
 import { lighten, darken, transparentize } from 'lib/polished';
-import { LinearGradientConfiguration } from 'polished/lib/types/linearGradientConfiguration';
 
 DarkTheme.plain.backgroundColor = 'rgb(20, 20, 20)';
 LightTheme.plain.backgroundColor = 'rgb(248, 249, 250)';
@@ -83,6 +82,10 @@ const shared = {
 			<>0</>,
 			<>1</>,
 		].map(char => <text><tspan x="12" y="42">{char}</tspan></text> )
+	},
+	latex: {
+		border: '#a0b7ff',
+		background: transparentize(0.75, '#a0b7ff'),
 	}
 };
 
@@ -90,10 +93,6 @@ const BLACK: string = colors.black;
 const WHITE: string = colors.white;
 
 const HIGHLIGHT: string = colors.orange;
-const HIGHLIGHT_GRADIENT: LinearGradientConfiguration = {
-	colorStops: [colors.orange, colors.orange],
-	toDirection: '-213deg'
-};
 
 // states
 const SUCCESS: string = colors.green;
@@ -111,7 +110,6 @@ export const light: DefaultTheme = {
 		highlightForeground: WHITE,
 		highlightDark: darken(0.075, HIGHLIGHT),
 		highlightLight: transparentize(0.75, HIGHLIGHT),
-		highlightGradient: HIGHLIGHT_GRADIENT,
 		state: {
 			success: SUCCESS,
 			info: INFO,
@@ -140,7 +138,6 @@ export const dark: DefaultTheme = {
 		highlightForeground: WHITE,
 		highlightDark: darken(0.075, HIGHLIGHT),
 		highlightLight: transparentize(0.75, HIGHLIGHT),
-		highlightGradient: HIGHLIGHT_GRADIENT,
 		state: {
 			success: SUCCESS,
 			info: INFO,

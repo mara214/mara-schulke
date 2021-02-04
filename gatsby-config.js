@@ -177,8 +177,8 @@ module.exports = {
 				color: '#62d0dd',
 			},
 			{
-				name: 'Backend',
-				slug: '/category/backend',
+				name: 'Theory',
+				slug: '/category/theory',
 				color: '#ff8e21',
 			},
 			{

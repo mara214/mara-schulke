@@ -1,6 +1,6 @@
 {
 	"name": "maximilian-schulke",
-	"version": "1.0.5",
+	"version": "1.1.1",
 	"description": "Personal tech blog",
 	"repository": "git@github.com:schulke-214/maximilian-schulke",
 	"author": "schulke-214 <hello@maximilianschulke.com>",
@@ -14,10 +14,12 @@
 		"build": "gatsby build",
 		"dev": "gatsby develop",
 		"start": "serve public",
-		"clean": "rm -rf ./node_modules/.cache && gatsby clean"
+		"clean": "rm -rf ./node_modules/.cache && gatsby clean",
+		"test": "echo testing"
 	},
 	"dependencies": {
 		"@analytics/google-analytics": "^0.5.0",
+		"@mdx-js/mdx": "^1.6.22",
 		"@mdx-js/react": "^1.6.1",
 		"analytics": "^0.5.5",
 		"ayu": "^7.2.1",
@@ -43,6 +45,7 @@
 		"react": "^16.11.0",
 		"react-dom": "^16.11.0",
 		"react-helmet": "^6.1.0",
+		"react-latex": "^2.0.0",
 		"styled-components": "^4.4.1",
 		"typography": "^0.16.19",
 		"typography-theme-github": "^0.16.19"
