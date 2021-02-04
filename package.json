@@ -1,6 +1,6 @@
 {
 	"name": "maximilian-schulke",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "Personal tech blog",
 	"repository": "git@github.com:schulke-214/maximilian-schulke",
 	"author": "schulke-214 <hello@maximilianschulke.com>",
@@ -19,6 +19,7 @@
 	},
 	"dependencies": {
 		"@analytics/google-analytics": "^0.5.0",
+		"@mdx-js/mdx": "^1.6.22",
 		"@mdx-js/react": "^1.6.1",
 		"analytics": "^0.5.5",
 		"ayu": "^7.2.1",
