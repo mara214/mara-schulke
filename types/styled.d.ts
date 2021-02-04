@@ -1,5 +1,4 @@
 import 'styled-components';
-import { LinearGradientConfiguration } from 'polished/lib/types/linearGradientConfiguration';
 import { PrismTheme } from 'prism-react-renderer';
 
 declare module 'styled-components' {
@@ -24,7 +23,6 @@ declare module 'styled-components' {
 			highlightForeground: string;
 			highlightDark: string;
 			highlightLight: string;
-			highlightGradient: LinearGradientConfiguration;
 
 			state: {
 				muted: string;
@@ -64,6 +62,10 @@ declare module 'styled-components' {
 				border: string;
 				background: string;
 			};
+		};
+		latex: {
+			border: string;
+			background: string;
 		};
 		layers: {
 			overlay: LayerConfiguration;
