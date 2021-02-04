@@ -89,7 +89,7 @@ const seo = [
 				{
 					site {
 						siteMetadata {
-							language
+							locale
 							categories {
 								name
 								slug
@@ -105,7 +105,7 @@ const seo = [
 				}
 			`,
 			setup: ({query, ...rest}) => {
-				const {seo, language, categories} = query.site.siteMetadata;
+				const {seo, locale, categories} = query.site.siteMetadata;
 
 				return {
 					...seo,
@@ -114,7 +114,7 @@ const seo = [
 					copyright: seo.author,
 					generator: seo.author,
 					categories: categories.map(c => c.name),
-					language,
+					language: locale,
 				}
 			},
 			feeds: [
