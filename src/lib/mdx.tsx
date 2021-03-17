@@ -5,6 +5,7 @@ import Code, { CodeProps } from 'components/core/Code';
 import Latex from 'components/core/Latex';
 import { rem } from 'lib/polished';
 
+
 const prePropsToCodeProps = (props: any): (React.ComponentProps<'pre'> & CodeProps) | null => {
 	if (!props.children || !props.children.props || props.children.props.mdxType !== 'code')
 		return null;

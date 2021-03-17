@@ -54,7 +54,6 @@ export default styled.div<ContainerProps>`
 			margin-left: ${props => rem(-props.theme.spacings.medium)} !important;
 			margin-right: ${props => rem(-props.theme.spacings.medium)} !important;
 			width: 100vw;
-
 		}
 	}
 
