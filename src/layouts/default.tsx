@@ -61,7 +61,7 @@ const Layout: FunctionComponent<{ hasStage: boolean; }> = ({ children, hasStage 
 					</Container>
 					<Footer />
 				</div>
-				<CookieConsent />
+				{ typeof window !== 'undefined' && <CookieConsent /> }
 			</MDXProvider>
 		</ThemeProvider>
 	);
