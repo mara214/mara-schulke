@@ -203,10 +203,10 @@ module.exports = {
 			},
 		],
 		support: {
-			headline: 'Do you enjoy reading this article?',
-			cta: 'Support me on Patreon!',
-			url: 'https://www.patreon.com/maximilianschulke',
-			description: 'To get access to alot of patron only content, choose the next topics i write about and much more.'
+			headline: 'Did you enjoy reading this article?',
+			cta: 'Give this project a star!',
+			url: 'https://github.com/schulke-214/maximilian-schulke',
+			description: 'Writing articles takes time and i\'d be happy to know if they are useful for you :)'
 		},
 		footer: {
 			legal: [
