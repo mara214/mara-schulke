@@ -21,7 +21,7 @@ interface ArticleListItemProps {
 const ArticleListItem: FunctionComponent<ArticleListItemProps> = ({ className, title, published, slug, category, withCategory, timeToRead }) => (
 	<li className={className} key={slug}>
 		<Link to={slug}><h3>{title}</h3></Link>
-		<code>-- {published} • {timeToRead} min{withCategory ? <> • <Link to={category.slug}>{category.name}</Link></> : null }</code>
+		<code>-- {published} • {Math.ceil(timeToRead * 1.5)} min{withCategory ? <> • <Link to={category.slug}>{category.name}</Link></> : null }</code>
 	</li>
 );
 
