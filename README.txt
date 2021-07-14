@@ -12,6 +12,5 @@ https://blog.maximilianschulke.com
 
 * `git clone git@github.com:schulke-214/maximilian-schulke.git`
 * `cd maximilian-schulke`
-* `yarn`
-* `gatsby develop`
+* `docker-compose up`
 * visit http://localhost:8000
