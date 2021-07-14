@@ -1,0 +1,11 @@
+FROM node:buster
+
+WORKDIR '/app'
+
+RUN apt-get update -y && apt-get install -y libvips
+
+COPY package.json .
+
+RUN yarn -s
+
+CMD ["yarn", "dev"]
