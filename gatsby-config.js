@@ -172,8 +172,8 @@ module.exports = {
 		},
 		categories: [
 			{
-				name: 'Frontend',
-				slug: '/category/frontend',
+				name: 'Notes',
+				slug: '/category/notes',
 				color: '#62d0dd',
 			},
 			{
