@@ -98,6 +98,11 @@ export const GlobalStyles: GlobalStyleComponent<{}, DefaultTheme> = createGlobal
 	.prism-code {
 		border-radius: ${props => rem(props.theme.border.radius.rounded)};
 
+		code ~ & {
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+
 		* {
 			color: inherit;
 		}

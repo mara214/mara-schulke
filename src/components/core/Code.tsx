@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState, useContext } from 'react';
 import Highlight, { Language } from 'prism-react-renderer';
 import { ThemeContext, css } from 'styled-components';
 import Prism from 'utils/prism';
+import styled from 'styled-components';
 
 import { rem, transparentize } from 'lib/polished';
 
@@ -68,18 +69,33 @@ const Copy: FunctionComponent<CopyProps> = ({ text, className }) => {
 	);
 };
 
+interface FileNameProps {
+	children: string;
+}
+
+const FileName: FunctionComponent<FileNameProps> = styled.code`
+	border-top-left-radius: ${props => rem(props.theme.border.radius.rounded)};
+	border-top-right-radius: ${props => rem(props.theme.border.radius.rounded)};
+	display: block;
+	padding: 1rem 2rem;
+	line-height: 1;
+	color: ${props => props.theme.code.syntax.plain.color};
+	border-bottom: 1px solid ${props => transparentize(0.9, props.theme.code.syntax.plain.color)};
+	background-color: ${props => props.theme.code.syntax.plain.backgroundColor};
+`;
+
 export interface CodeProps {
 	language: string;
 	code: string;
-	highlightStart?: number;
-	highlightEnd?: number;
+	file?: string;
+	highlight?: number[];
 }
 
-const Code: FunctionComponent<CodeProps> = ({ language, code, highlightStart, highlightEnd }) => {
+const Code: FunctionComponent<CodeProps> = ({ language, code, file, highlight = [] }) => {
 	const styledTheme = useContext(ThemeContext);
 
 	const isHighlighted = (lineNumber: number) => {
-		const [start, end] = [highlightStart, highlightEnd];
+		const [start, end] = highlight;
 
 		if (typeof start !== 'number' || typeof end !== 'number') return false;
 
@@ -90,7 +106,9 @@ const Code: FunctionComponent<CodeProps> = ({ language, code, highlightStart, hi
 		<div
 			css={`
 				position: relative;
-			`}>
+			`}
+		>
+			{ file && <FileName>{file}</FileName> }
 			<Copy
 				text={code}
 				css={`
