@@ -19,15 +19,17 @@ const Stage: FunctionComponent<StageProps> = ({ className, particles, title }) =
 			<Container slim css={`pointer-events: none;`}>
 				<h1>{title}</h1>
 			</Container>
-			{ particles && <Particles amount={12} interactive /> }
+			{ particles && <Particles amount={2} interactive /> }
 		</Unaligned>
 	)
 }
 
 export default styled(Stage)<StageProps>`
 	position: relative;
-	height: ${props => rem(6 * props.theme.spacings.xlarge)};
-	background-color: ${props => props.theme.colors.navigationBackground};
+	display: flex;
+	align-items: center;
+	min-height: ${props => rem(2 * props.theme.spacings.xlarge)};
+	padding: ${props => rem(props.theme.spacings.large)} 0;
 
 	&::before {
 		display: block;
@@ -37,14 +39,11 @@ export default styled(Stage)<StageProps>`
 		top: -100%;
 		height: 100%;
 		width: 100%;
-		background-color: ${props => props.theme.colors.navigationBackground};
 	}
 
 	${Container} {
-		color: ${props => props.theme.colors.navigationForeground};
 		height: 100%;
 		display: flex;
-		justify-content: center;
 		align-items: center;
 
 		h1 {
@@ -76,6 +75,6 @@ export default styled(Stage)<StageProps>`
 	}
 
 	${landscape} {
-		height: ${props => rem(5 * props.theme.spacings.xlarge)};
+		min-height: ${props => rem(2 * props.theme.spacings.xlarge)};
 	}
 `;

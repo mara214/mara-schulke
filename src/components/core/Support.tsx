@@ -34,7 +34,6 @@ const Support: FunctionComponent<SupportProps> = ({ className }) => {
 			<h3>{support.headline}</h3>
 			<a href={support.url} target="_blank">{support.cta}</a>
 			<p>{support.description}</p>
-			<Particles amount={4}/>
 		</div>
 	)
 }
@@ -50,6 +49,8 @@ export default styled(Support)<SupportProps>`
 	> * {
 		text-align: center;
 	}
+
+	h3 { margin-top: 0; }
 
 	a {
 		text-decoration: underline;

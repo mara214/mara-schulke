@@ -104,8 +104,8 @@ export const light: DefaultTheme = {
 	colors: {
 		foreground: BLACK,
 		background: WHITE,
-		navigationForeground: WHITE,
-		navigationBackground: BLACK,
+		navigationForeground: BLACK,
+		navigationBackground: WHITE,
 		highlight: HIGHLIGHT,
 		highlightForeground: WHITE,
 		highlightDark: darken(0.075, HIGHLIGHT),

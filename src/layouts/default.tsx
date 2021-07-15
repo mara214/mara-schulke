@@ -54,6 +54,7 @@ const Layout: FunctionComponent<{ hasStage: boolean; }> = ({ children, hasStage 
 						as="main"
 						style={{
 							paddingTop: hasStage ? '0' : '',
+							paddingBottom: '0',
 							flex: '1 0 0'
 						}}
 					>

@@ -11,12 +11,6 @@ import { graphql } from 'gatsby';
 
 
 const FooterContainer = styled.div`
-	background-color: ${props => props.theme.colors.navigationBackground};
-
-	&, * {
-		color: ${props => props.theme.colors.navigationForeground};
-	}
-
 	${Container} {
 		display: flex;
 		justify-content: space-between;
@@ -32,8 +26,8 @@ const FooterContainer = styled.div`
 	}
 
 	ul {
-		display: grid;
-		grid-gap: ${props => rem(props.theme.spacings.xsmall)};
+		display: flex;
+		gap: ${props => rem(props.theme.spacings.medium)};
 		margin: 0;
 
 		li {
@@ -80,7 +74,6 @@ const Footer: FunctionComponent<FooterProps> = () => {
 		}
 	`).site.siteMetadata.footer;
 
-	const binaryYear = (new Date().getFullYear() >>> 0).toString(2);
 	const clearCookies = () => {
 		Object.keys(Cookies.getJSON())
 			.filter(name => name !== 'theme')
@@ -91,7 +84,6 @@ const Footer: FunctionComponent<FooterProps> = () => {
 	return (
 		<FooterContainer>
 			<Container>
-				<pre>{binaryYear}</pre>
 				<div
 					css={`
 						width: min-content;
@@ -112,13 +104,11 @@ const Footer: FunctionComponent<FooterProps> = () => {
 								</Link>
 							</li>
 						))}
-						<li>
+						<li key="consent">
 							<button type="button" onClick={clearCookies}>
 								<code>Revoke Consent</code>
 							</button>
 						</li>
-					</ul>
-					<ul>
 						{social.map(({title, href}: any) => (
 							<li key={href}>
 								<a href={href} target="__blank" rel="noopener">

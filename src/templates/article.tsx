@@ -51,25 +51,7 @@ const Article: FunctionComponent<ArticleProps> = ({ data, location }) => {
 				url={location.href ?? ''}
 				type="article"
 			/>
-			{/* 
-				<div
-				css={`
-					height: 300px;
-					
-					img {
-						display: block;
-						height: 100%;
-						width: 100%;
-						object-fit: cover;
-						margin: 0;
-					}
-				`}
-			>
-				<img src={image}></img>
-			</div> */}
-			<Stage
-				title={data.article.title}
-			/>
+			<Stage title={data.article.title} />
 			<MDXRenderer>{data.article.body}</MDXRenderer>
 			<Support />
 		</Layout>

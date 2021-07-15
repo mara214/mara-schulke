@@ -20,10 +20,7 @@ const Page: FunctionComponent<PageProps> = ({ data, location }) => {
 				description={data.page.excerpt}
 				url={location.href ?? ''}
 			/>
-			<Stage
-				title={data.page.title}
-				particles
-			/>
+			<Stage title={data.page.title} />
 			<MDXRenderer>{data.page.body}</MDXRenderer>
 		</Layout>
 	);

@@ -17,7 +17,6 @@ export interface Openable {
 }
 
 const HeaderContainer = styled.header`
-	position: fixed;
 	width: 100vw;
 	top: 0;
 	z-index: ${props => props.theme.layers.overlay.foreground};
@@ -51,11 +50,9 @@ interface HeaderProps {
 }
 
 const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, openSearch }) => {
-	const { y, deltaY } = useScrollData(100);
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState<boolean>(false);
 	const toggleOpen = () => setOpen(o => !o);
 
-	const hidden = y > 200 && deltaY > 0 && deltaY !== y;
 
 	const nav = (
 		<Navigation
@@ -67,12 +64,7 @@ const Header: FunctionComponent<HeaderProps> = ({ toggleTheme, openSearch }) => 
 	);
 
 	return (
-		<HeaderContainer
-			css={`
-				${hidden ? `transform: translateY(-100%);` : ''}
-				transition: transform ${(props: any) => props.theme.animation.duration.smooth}s ease-out;
-			`}
-		>
+		<HeaderContainer>
 			<Container
 				css={`
 					padding-top: ${(props: any) => rem(props.theme.spacings.medium)};
