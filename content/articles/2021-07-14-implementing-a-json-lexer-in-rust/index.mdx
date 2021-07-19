@@ -1,0 +1,593 @@
+---
+title: Implementing A JSON Lexer In Rust
+published: 2021-07-14
+category: compiler
+tags:
+  - tutorial
+  - lexer
+  - rust
+---
+
+So.. you're wondering how to easily do lexical analysis on a stream of text? I
+got you. We will cover simple tokenization, sufficient to handle small DSLs,
+config files etc.
+
+## What Is Lexical Analysis?
+
+If you're new to language design and compiler / interpreter development you may
+ask yourself what lexing (or lexical analysis) is; The answer is quite simple -
+basically every language implementation is (or at least should be) split up
+into multiple stages of processing. Lexing all comes down to really split
+up a stream of meaningless characters into small logical units called tokens.
+What these are heavily depends on your context. For example in rust a token
+could be an identifier, a number, a keyword or a parenthesis.
+
+Lexical analysis is usually the first thing to do, no matter what we want to
+accomplish afterwards.
+
+## Syntax Rules
+
+So now that we know that a lexer tries to cut the stream into tokens, we
+need to define a set of valid tokens and syntax rules for these tokens right?
+This part usually is a part of the "grammar" of your language, but thats a
+thing we wont further dig into in this post.
+
+Before we can start hacking on the implementation we should carefully think
+about what we want to accomplish and how our syntax looks like.
+
+### JSON
+
+For the sake of simplicity we'll use the JSON specification, since nearly
+everyone has already worked with it and it's quite easy to do in a single post.
+
+The next question should be: What makes up valid JSON? We have only 6 elements
+in the language which you can combine in arbitrary ways to get a valid JSON
+blob:
+
+- Null
+- Booleans
+- Numbers
+- Strings
+- Arrays
+- Objects
+
+**But apparently these syntax elements do not resolve 1 to 1 into tokens!**
+Remember: Lexing is happening on a stream of chars and we have very
+little knowledge about the context of our chars. So "wrapping types" like
+arrays, objects (or for other languages: anything that has a beginning and an
+ending) is resolved to the smallest unit we can inspect: The opening and
+closing parenthesis. So our array parens are `[` and `]` and for objects they
+are `{` and `}`. Furthermore we have the element delimiter symbol (used both in
+arrays and objects) `,` and the object key delimiter `:`.
+
+> Lexing is not about inspecting the relation between the occurence of
+> the single tokens at all! So an invalid stream may be tokenized very well.
+> The occurence order is validated by another step in the compiler pipeline
+> called a parser.
+
+So we've already got 6 Tokens to handle the two complex composition types, what
+more do we have?
+
+##### Null
+Obviously a fixed sequence of chars.
+
+##### Booleans
+Same as above.
+
+##### Numbers
+A series of digits (without leading zeros!) optionally prefixed by a `-`,
+optionally delimited by a `.`.  At the end of a number literal we can specify
+an exponent with `e` or `E` followed by an optional sign `+` or `-` and  a
+series of digits (may contain leading zeros).
+
+##### Strings
+With dynamic content which is enclosed by `"` and can contain escaped
+chars (e.g. `\"`).
+
+### JSON Tokens
+
+To keep an overview of what we have found so far i'll list all tokens up down
+below:
+
+```
+OpeningBracket
+ClosingBracket
+OpeningCurlyBracket
+OpeningCurlyBracket
+ElementDelimiter
+KeyDelimiter
+Null
+Boolean
+Number
+String
+```
+
+Since all of these hold a bit of data about the thing they contain (e.g. a
+boolean must hold the information if it is `true` / `false`) we can start
+writing a bit of rust to make that as clear as possible:
+
+
+```rust {"file": "src/token.rs"}
+use crate::types::*;
+
+#[derive(Clone, Debug, PartialEq)]
+pub enum Token {
+    Bracket(ParenthesisType),
+    CurlyBracket(ParenthesisType),
+    ElementDelimiter,
+    KeyDelimiter,
+    Null,
+    Boolean(JSONBoolean),
+    Number(JSONNumber),
+    String(JSONString),
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub enum ParenthesisType {
+    Open,
+    Close,
+}
+```
+
+```rust {"file": "src/types.rs"}
+pub type JSONBoolean = bool;
+pub type JSONString = String;
+
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct JSONNumber {
+    mantissa: f64,
+    exponent: Option<i16>,
+}
+```
+
+Note: For the sake of simplicity we will display all numbers in the same
+internal datatype and ignore some edge cases (e.g. for very large / very
+percise numbers)
+
+### Boilerplate & Test Setup
+
+Fine - we have looked deep enough into the JSON spec for right now. But how
+should our code behave? Which input should produce what output? Let's write
+some tests for this.
+
+I'll introduce a struct called `Lexer` which will later be reponsible to work
+on the stream of chars.
+
+```rust {"file": "src/lexer.rs"}
+use crate::types::*;
+use crate::tokens::*;
+
+#[derive(Debug)]
+pub struct Lexer { ... } // Fields omitted for now
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::types::*;
+
+    macro_rules! lexer_tests { ... }
+}
+```
+
+> Note that we will use the `lexer_tests` macro later to easily introduce a lot
+> of new tests without the syntax garbage that normally would come along with
+> that.
+
+Now we start laying out the basic io of our `Lexer` struct; Which types /
+traits do we need and what do we want to output? We clearly need some kind of
+char stream. Due to the complexity of async code i wont go into the details
+of the [stream](https://doc.rust-lang.org/std/stream/index.html) trait now but
+they would probably be a great option when implementing something which is
+more advanced (like reading from a file or network socket and processing the
+input in the same moment).
+
+For now we will just use an peekable iterator of chars - these allow us to look
+at the next element of an iterator without directly consuming it.
+
+So we need to provide something which can be turned in an iterator of chars -
+like a `String` or a `Vec<char>` etc. and we want to turn it into a
+`Vec<Token>` for now.
+
+```rust {"file": "src/lexer.rs", "highlight": [10, 19]}
+use std::iter::Peekable;
+
+// omitted
+
+#[derive(Debug)]
+pub struct Lexer<I: Iterator<Item = char>> {
+    source: Peekable<I>,
+}
+
+impl<I> From<I> for Lexer<I>
+where
+    I: Iterator<Item = char>,
+{
+    fn from(source: I) -> Self {
+        Lexer {
+            source: source.peekable(),
+        }
+    }
+}
+```
+
+So the implementation of from for our `Lexer` lets us easily create them from
+other datatypes such as String through using the `.chars()` method - but mor on
+that in a minute. What is still left open is the retrival of tokens. The
+smallest step in which we can give out a useful information is by reading a
+single token from the input stream.
+
+We can smoothly implement this behavior by using the `Iterator` trait for our
+Lexer.
+
+```rust
+impl<I> Iterator for Lexer<I>
+where
+    I: Iterator<Item = char>,
+{
+    type Item = Token;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        None
+    }
+}
+```
+
+One last thing that is holding us back from start implementing the actual lexer
+is error handling.. what if we have a completly invalid sequence of chars? We
+should notify the person using this that something went wrong - so what error
+cases do we have?
+
+- Unexpected EOF
+- UnknownChar
+- ... // we will expand this list as we proceed handling the 
+
+So lets introduce a enum for our error types. In a more complex environment you
+might want to store spans about where the error occured to print out nice error
+messages, but for now we will just store that an error occured; not where it was.
+
+```rust {"file": "src/lexer.rs"}
+#[derive(Clone, Debug, PartialEq)]
+pub enum Error {
+    UnexpectedEOF,
+    UnknownChar,
+}
+
+type Result<T> = std::result::Result<T, Error>;
+```
+
+And we will need to update the iterator implementation to yield back results
+
+```rust {"file": "src/lexer.rs", "highlight": [5, 5]}
+impl<I> Iterator for Lexer<I>
+where
+    I: Iterator<Item = char>,
+{
+    type Item = Result<Token>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        None
+    }
+}
+```
+
+Now we are able to write code that utilizes the iterator behavior; For example
+we could just collect into a `Result<Vec<Token>>` instead of inspecting each
+token result by itself.
+
+```rust {"file": "src/lexer.rs"}
+pub fn lex(source: &String) -> Result<Vec<Token>> {
+    Lexer::from(source.chars()).collect()
+}
+```
+
+We will be primarily using this function to implement our tests for now.  Now
+we only need to update our test generation macro to make use of the `lex`
+function.
+
+```rust {"file": "src/lexer.rs"}
+mod tests {
+    ...
+
+    macro_rules! lexer_tests {
+        ($($name:ident: $value:expr,)*) => {
+            $(
+                #[test]
+                fn $name() {
+                    let (input, expected) = $value;
+                    assert_eq!(lex(&input.to_string()).unwrap(), expected);
+                }
+            )*
+        }
+    }
+
+    ...
+}
+```
+
+## Implementing Brackets
+
+So we've got to the point where we can start writing tests and then implement
+the `next` function for our `Lexer` struct to pass these. So we start by
+writing the most basic tests we could think of when parsing brackets -> single
+opening / closing brackets – then we move on to nested brackets to make sure we
+do not take the context of a bracket into account when reading it. And finally
+we move on to mixed nested combinations. In reality you'd probably want to
+write many more tests but to keep the length of thi post somewhat reasonable
+we just leave them out for now.
+
+```rust {"file": "src/lexer.rs"}
+mod test {
+    ...
+
+    mod brackets {
+        lexer_tests! {
+            bracket_open: (
+                "[",
+                [Token::Bracket(ParenthesisType::Open)]
+            ),
+            bracket_close: (
+                "]",
+                [Token::Bracket(ParenthesisType::Close)]
+            ),
+            bracket_pair: (
+                "[]",
+                [Token::Bracket(ParenthesisType::Open), Token::Bracket(ParenthesisType::Close)]
+            ),
+            bracket_nested: (
+                "[[]]",
+                [
+                    Token::Bracket(ParenthesisType::Open),
+                    Token::Bracket(ParenthesisType::Open),
+                    Token::Bracket(ParenthesisType::Close),
+                    Token::Bracket(ParenthesisType::Close)
+                ]
+            ),
+            bracket_mixed: (
+                "[[][",
+                [
+                    Token::Bracket(ParenthesisType::Open),
+                    Token::Bracket(ParenthesisType::Open),
+                    Token::Bracket(ParenthesisType::Close),
+                    Token::Bracket(ParenthesisType::Open),
+                ]
+            ),
+        }
+    }
+}
+```
+
+Ok.. all tests are red now.. how do we fix this? As always when developing in
+a test driven way, we would want to do the minimum work needed to accomplish
+our goal. So i guess, let's read the next char from our source and check if
+it is an opening / closing bracket, if yes we can categorize them accordingly,
+otherwise we just return an error.
+
+```rust {"file": "src/lexer.rs"}
+    fn next(&mut self) -> Option<Self::Item> {
+        match self.source.peek() {
+            Some(c) => match c {
+                '[' => Some(Ok(Token::Bracket(ParenthesisType::Open))),
+                ']' => Some(Ok(Token::Bracket(ParenthesisType::Close))),
+                _ => Some(Err(Error::UnknownChar)),
+            },
+            None => None,
+        }
+    }
+```
+
+This looks pretty easy right? Perfect. Then we can move on to the next pair of tokens.
+
+## Implementing Curly Brackets
+
+So more tokens means more tests. Remember that when writing any kind of lexer,
+parser etc. tests must be the heart of your project. The actual code is not
+that long most of the time, but unfortunately it is easy to walk into pitfalls
+which you might not notice at first. So always always always write **a lot**
+of tests.
+
+```rust {"file": "src/lexer.rs"}
+mod test {
+    ...
+
+    mod curly_brackets {
+        use super::*;
+
+        lexer_tests! {
+            curly_open: (
+                "{",
+                [Token::CurlyBracket(ParenthesisType::Open)]
+            ),
+            curly_close: (
+                "}",
+                [Token::CurlyBracket(ParenthesisType::Close)]
+            ),
+            curly_pair: (
+                "{}",
+                [Token::CurlyBracket(ParenthesisType::Open), Token::CurlyBracket(ParenthesisType::Close)]
+            ),
+            curly_nested: (
+                "{{}}",
+                [
+                    Token::CurlyBracket(ParenthesisType::Open),
+                    Token::CurlyBracket(ParenthesisType::Open),
+                    Token::CurlyBracket(ParenthesisType::Close),
+                    Token::CurlyBracket(ParenthesisType::Close),
+                ]
+            ),
+            curly_mixed: (
+                "}}{}",
+                [
+                    Token::CurlyBracket(ParenthesisType::Close),
+                    Token::CurlyBracket(ParenthesisType::Close),
+                    Token::CurlyBracket(ParenthesisType::Open),
+                    Token::CurlyBracket(ParenthesisType::Close),
+                ]
+            ),
+        }
+    }
+
+    mod curly_and_normal {
+        use super::*;
+
+        lexer_tests! {
+            curly_and_normal_mixed: (
+                "[}}{[]]}]",
+                [
+                    Token::Bracket(ParenthesisType::Open),
+                    Token::CurlyBracket(ParenthesisType::Close),
+                    Token::CurlyBracket(ParenthesisType::Close),
+                    Token::CurlyBracket(ParenthesisType::Open),
+                    Token::Bracket(ParenthesisType::Open),
+                    Token::Bracket(ParenthesisType::Close),
+                    Token::Bracket(ParenthesisType::Close),
+                    Token::CurlyBracket(ParenthesisType::Close),
+                    Token::Bracket(ParenthesisType::Close),
+                ]
+             ),
+        }
+    }
+}
+```
+
+So to pass 80 lines of tests we need only two more lines of actual code.
+
+```rust {"file": "src/lexer.rs", "highlight": [6, 7]}
+    fn next(&mut self) -> Option<Self::Item> {
+        match self.source.peek() {
+            Some(c) => match c {
+                '[' => Some(Ok(Token::Bracket(ParenthesisType::Open))),
+                ']' => Some(Ok(Token::Bracket(ParenthesisType::Close))),
+                '{' => Some(Ok(Token::CurlyBracket(ParenthesisType::Open))),
+                '}' => Some(Ok(Token::CurlyBracket(ParenthesisType::Close))),
+                _ => Some(Err(Error::UnknownChar)),
+            },
+            None => None,
+        }
+    }
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```rust {"file": "src/lexer.rs"}
+mod test {
+    ...
+
+    mod delimiter {
+        lexer_tests! {
+            element_delimiter: (
+                ",",
+                [Token::ElementDelimiter]
+            ),
+            element_delimiter_multiple: (
+                ",,,,",
+                [
+                    Token::ElementDelimiter,
+                    Token::ElementDelimiter,
+                    Token::ElementDelimiter,
+                    Token::ElementDelimiter,
+                ]
+            ),
+            key_delimiter: (
+                ":",
+                [Token::KeyDelimiter]
+            ),
+            key_delimiter_multiple: (
+                ":::",
+                [
+                    Token::KeyDelimiter,
+                    Token::KeyDelimiter,
+                    Token::KeyDelimiter,
+                ]
+            ),
+        }
+    }
+}
+```
+
+```rust {"file": "src/lexer.rs"}
+mod test {
+    ...
+
+    mod number {
+        lexer_tests! {
+            number_no_exponent: (
+                "4",
+                [Token::Number(Number { mantissa: 4.0, exponent: None })]
+            ),
+            number_unsigned_exponent: (
+                "4E2",
+                [Token::Number(Number { mantissa: 4.0, exponent: Some(2) })]
+            ),
+            number_unsigned_long_exponent: (
+                "4E200",
+                [Token::Number(Number { mantissa: 4.0, exponent: Some(200) })]
+            ),
+            number_unsigned_padded_exponent: (
+                "4E-000002",
+                [Token::Number(Number { mantissa: 4.0, exponent: Some(2) })]
+            ),
+            number_signed_exponent: (
+                "4E-2",
+                [Token::Number(Number { mantissa: 4.0, exponent: Some(-2) })]
+            ),
+            number_signed_padded_exponent: (
+                "4E-000002",
+                [Token::Number(Number { mantissa: 4.0, exponent: Some(-2) })]
+            ),
+            float: (
+                "214.0",
+                [Token::Number(Number { mantissa: 214.0, exponent: None })]
+            ),
+            float_complex: (
+                "214.12498",
+                [Token::Number(Number { mantissa: 214.12498, exponent: None })]
+            ),
+        }
+    }
+}
+```
+
+
+```rust {"file": "src/lexer.rs"}
+mod test {
+    ...
+
+    mod strings {
+        lexer_tests! {
+            string: (
+                r#""foo""#,
+                [Token::String("foo")]
+            ),
+            string_with_spaces: (
+                r#"" foo   ""#,
+                [Token::String(" foo   ")]
+            ),
+            string_multiple: (
+                r#"" foo   " "bar" " baz\n" "#,
+                [
+                    Token::String(" foo   "),
+                    Token::String("bar"),
+                    Token::String(" baz\n")
+                ]
+            ),
+        }
+    }
+}
+```
