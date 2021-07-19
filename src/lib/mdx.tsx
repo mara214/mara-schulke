@@ -21,7 +21,7 @@ const prePropsToCodeProps = (props: any): (React.ComponentProps<'pre'> & CodePro
 
 	return {
 		language: match ? match[1] : '',
-		code: props.children.props.children.trim(),
+		code: props.children.props.children.trimRight(),
 		className,
 		...options,
 		...props.children.props
