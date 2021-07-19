@@ -48,6 +48,7 @@ const sources = [
 		options: {
 			name: 'articles',
 			path: path.join(CONTENT_DIR, 'articles'),
+			ignore: [`**/code/**`],
 		},
 	},
 	{

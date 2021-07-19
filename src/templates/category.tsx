@@ -5,7 +5,6 @@ import Layout from 'layouts/default';
 import SEO from 'components/layout/SEO';
 import ArticleList from 'components/core/ArticleList';
 import Stage from 'components/core/Stage';
-import Particles from 'components/core/Particles';
 
 interface CategoryProps {
 	data: any;
@@ -25,23 +24,7 @@ const Category: FunctionComponent<CategoryProps> = ({ data, pageContext, locatio
 				description={`A list of all articles which are related to ${category.name.toLowerCase()}`}
 				url={location.href ?? ''}
 			/>
-			<Stage
-				title={category.name}
-				particles
-				css={`
-					${Particles} svg {
-						fill: ${category.color};
-
-						&:nth-child(even) {
-							opacity: 0;
-						}
-					}
-
-					h1 {
-						color: ${(props: any) => props.theme.colors.navigationForeground};
-					}
-				`}
-			/>
+			<Stage title={category.name} />
 			<ArticleList filter={article => article.category.slug === category.slug} />
 		</Layout>
 	);
