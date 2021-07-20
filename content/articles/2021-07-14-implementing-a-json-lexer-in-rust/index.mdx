@@ -138,6 +138,12 @@ pub struct JSONNumber {
     mantissa: f64,
     exponent: Option<i16>,
 }
+
+impl JSONNumber {
+    pub fn new(mantissa: f64, exponent: Option<i16>) -> Self {
+        Self { mantissa, exponent }
+    }
+}
 ```
 
 Note: For the sake of simplicity we will display all numbers in the same
@@ -294,7 +300,7 @@ mod tests {
                 #[test]
                 fn $name() {
                     let (input, expected) = $value;
-                    assert_eq!(lex(&input.to_string()).unwrap(), expected);
+                    assert_eq!(lex(&input.to_string()), expected);
                 }
             )*
         }
@@ -320,36 +326,38 @@ mod test {
     ...
 
     mod brackets {
+        use super::*;
+
         lexer_tests! {
             bracket_open: (
                 "[",
-                [Token::Bracket(ParenthesisType::Open)]
+                Ok(vec![Token::Bracket(ParenthesisType::Open)])
             ),
             bracket_close: (
                 "]",
-                [Token::Bracket(ParenthesisType::Close)]
+                Ok(vec![Token::Bracket(ParenthesisType::Close)].to_vec())
             ),
             bracket_pair: (
                 "[]",
-                [Token::Bracket(ParenthesisType::Open), Token::Bracket(ParenthesisType::Close)]
+                Ok(vec![Token::Bracket(ParenthesisType::Open), Token::Bracket(ParenthesisType::Close)])
             ),
             bracket_nested: (
                 "[[]]",
-                [
+                Ok(vec![
                     Token::Bracket(ParenthesisType::Open),
                     Token::Bracket(ParenthesisType::Open),
                     Token::Bracket(ParenthesisType::Close),
                     Token::Bracket(ParenthesisType::Close)
-                ]
+                ])
             ),
             bracket_mixed: (
                 "[[][",
-                [
+                Ok(vec![
                     Token::Bracket(ParenthesisType::Open),
                     Token::Bracket(ParenthesisType::Open),
                     Token::Bracket(ParenthesisType::Close),
                     Token::Bracket(ParenthesisType::Open),
-                ]
+                ])
             ),
         }
     }
@@ -362,12 +370,18 @@ our goal. So i guess, let's read the next char from our source and check if
 it is an opening / closing bracket, if yes we can categorize them accordingly,
 otherwise we just return an error.
 
+> Note that on line 6 we just skip this run if we saw a whitespace. This is an
+> important detail, since we want to ignore indentation and formatting of our
+> input in general. Languages such as python need to keep track of them but we
+> dont.
+
 ```rust {"file": "src/lexer.rs"}
     fn next(&mut self) -> Option<Self::Item> {
         match self.source.peek() {
             Some(c) => match c {
                 '[' => Some(Ok(Token::Bracket(ParenthesisType::Open))),
                 ']' => Some(Ok(Token::Bracket(ParenthesisType::Close))),
+                c if c.is_ascii_whitespace() => self.next(),
                 _ => Some(Err(Error::UnknownChar)),
             },
             None => None,
@@ -375,7 +389,8 @@ otherwise we just return an error.
     }
 ```
 
-This looks pretty easy right? Perfect. Then we can move on to the next pair of tokens.
+This looks pretty easy right? Perfect. Then we can move on to the next pair of
+tokens.
 
 ## Implementing Curly Brackets
 
@@ -395,33 +410,36 @@ mod test {
         lexer_tests! {
             curly_open: (
                 "{",
-                [Token::CurlyBracket(ParenthesisType::Open)]
+                Ok(vec![Token::CurlyBracket(ParenthesisType::Open)])
             ),
             curly_close: (
                 "}",
-                [Token::CurlyBracket(ParenthesisType::Close)]
+                Ok(vec![Token::CurlyBracket(ParenthesisType::Close)])
             ),
             curly_pair: (
                 "{}",
-                [Token::CurlyBracket(ParenthesisType::Open), Token::CurlyBracket(ParenthesisType::Close)]
+                Ok(vec![
+                    Token::CurlyBracket(ParenthesisType::Open),
+                    Token::CurlyBracket(ParenthesisType::Close),
+                ])
             ),
             curly_nested: (
                 "{{}}",
-                [
+                Ok(vec![
                     Token::CurlyBracket(ParenthesisType::Open),
                     Token::CurlyBracket(ParenthesisType::Open),
                     Token::CurlyBracket(ParenthesisType::Close),
                     Token::CurlyBracket(ParenthesisType::Close),
-                ]
+                ])
             ),
             curly_mixed: (
                 "}}{}",
-                [
+                Ok(vec![
                     Token::CurlyBracket(ParenthesisType::Close),
                     Token::CurlyBracket(ParenthesisType::Close),
                     Token::CurlyBracket(ParenthesisType::Open),
                     Token::CurlyBracket(ParenthesisType::Close),
-                ]
+                ])
             ),
         }
     }
@@ -432,7 +450,7 @@ mod test {
         lexer_tests! {
             curly_and_normal_mixed: (
                 "[}}{[]]}]",
-                [
+                Ok(vec![
                     Token::Bracket(ParenthesisType::Open),
                     Token::CurlyBracket(ParenthesisType::Close),
                     Token::CurlyBracket(ParenthesisType::Close),
@@ -442,7 +460,7 @@ mod test {
                     Token::Bracket(ParenthesisType::Close),
                     Token::CurlyBracket(ParenthesisType::Close),
                     Token::Bracket(ParenthesisType::Close),
-                ]
+                ])
              ),
         }
     }
@@ -459,6 +477,7 @@ So to pass 80 lines of tests we need only two more lines of actual code.
                 ']' => Some(Ok(Token::Bracket(ParenthesisType::Close))),
                 '{' => Some(Ok(Token::CurlyBracket(ParenthesisType::Open))),
                 '}' => Some(Ok(Token::CurlyBracket(ParenthesisType::Close))),
+                c if c.is_ascii_whitespace() => self.next(),
                 _ => Some(Err(Error::UnknownChar)),
             },
             None => None,
@@ -466,103 +485,387 @@ So to pass 80 lines of tests we need only two more lines of actual code.
     }
 ```
 
+## Implementing Delimiters
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+And again add more tests to handle new tokens:
 
 ```rust {"file": "src/lexer.rs"}
 mod test {
     ...
 
     mod delimiter {
+        use super::*;
+
         lexer_tests! {
             element_delimiter: (
                 ",",
-                [Token::ElementDelimiter]
+                Ok(vec![Token::ElementDelimiter])
             ),
             element_delimiter_multiple: (
                 ",,,,",
-                [
+                Ok(vec![
                     Token::ElementDelimiter,
                     Token::ElementDelimiter,
                     Token::ElementDelimiter,
                     Token::ElementDelimiter,
-                ]
+                ])
             ),
             key_delimiter: (
                 ":",
-                [Token::KeyDelimiter]
+                Ok(vec![Token::KeyDelimiter])
             ),
             key_delimiter_multiple: (
                 ":::",
-                [
+                Ok(vec![
                     Token::KeyDelimiter,
                     Token::KeyDelimiter,
                     Token::KeyDelimiter,
-                ]
+                ])
             ),
         }
     }
 }
 ```
+
+And we'll add their mapping to the `next` function.
+
+```rust {"file": "src/lexer.rs", "highlight": [8, 9]}
+    fn next(&mut self) -> Option<Self::Item> {
+        match self.source.peek() {
+            Some(c) => match c {
+                '[' => Some(Ok(Token::Bracket(ParenthesisType::Open))),
+                ']' => Some(Ok(Token::Bracket(ParenthesisType::Close))),
+                '{' => Some(Ok(Token::CurlyBracket(ParenthesisType::Open))),
+                '}' => Some(Ok(Token::CurlyBracket(ParenthesisType::Close))),
+                ',' => Some(Ok(Token::ElementDelimiter)),
+                ':' => Some(Ok(Token::KeyDelimiter)),
+                c if c.is_ascii_whitespace() => self.next(),
+                _ => Some(Err(Error::UnknownChar)),
+            },
+            None => None,
+        }
+    }
+```
+
+Everything is green again? Alright; Lets move on!
+
+## Implementing Numbers
+
+So this is where it starts to get a little more complicated than just reading a
+single char from our source and map it into a token symbol. Remember the rules
+mentioned in the JSON spec?
+
+> A series of digits (without leading zeros!) optionally prefixed by a `-`,
+> optionally delimited by a `.`.  At the end of a number literal we can specify
+> an exponent with `e` or `E` followed by an optional sign `+` or `-` and  a
+> series of digits (may contain leading zeros).
+
+So this sounds like a lot of work to do, but it turns out this is fairly
+managable aswell. But first things first – the tests will show us how our code
+should behave:
 
 ```rust {"file": "src/lexer.rs"}
 mod test {
     ...
 
     mod number {
+        use super::*;
+
         lexer_tests! {
+            number_zero: (
+                "0",
+                Ok(vec![Token::Number(JSONNumber::new(0.0, None))])
+            ),
+            number_multiple: (
+                "0 1 2",
+                Ok(vec![
+                    Token::Number(JSONNumber::new(0.0, None)),
+                    Token::Number(JSONNumber::new(1.0, None)),
+                    Token::Number(JSONNumber::new(2.0, None)),
+                ])
+            ),
+            number_long: (
+                "1000000",
+                Ok(vec![Token::Number(JSONNumber::new(1000000.0, None))])
+            ),
             number_no_exponent: (
                 "4",
-                [Token::Number(Number { mantissa: 4.0, exponent: None })]
+                Ok(vec![Token::Number(JSONNumber::new(4.0, None))])
             ),
             number_unsigned_exponent: (
                 "4E2",
-                [Token::Number(Number { mantissa: 4.0, exponent: Some(2) })]
+                Ok(vec![Token::Number(JSONNumber::new(4.0, Some(2)))])
             ),
             number_unsigned_long_exponent: (
                 "4E200",
-                [Token::Number(Number { mantissa: 4.0, exponent: Some(200) })]
+                Ok(vec![Token::Number(JSONNumber::new(4.0, Some(200)))])
             ),
             number_unsigned_padded_exponent: (
-                "4E-000002",
-                [Token::Number(Number { mantissa: 4.0, exponent: Some(2) })]
+                "4E000002",
+                Ok(vec![Token::Number(JSONNumber::new(4.0, Some(2)))])
+            ),
+            number_pos_signed_padded_exponent: (
+                "4E+000002",
+                Ok(vec![Token::Number(JSONNumber::new(4.0, Some(2)))])
             ),
             number_signed_exponent: (
                 "4E-2",
-                [Token::Number(Number { mantissa: 4.0, exponent: Some(-2) })]
+                Ok(vec![Token::Number(JSONNumber::new(4.0, Some(-2)))])
             ),
             number_signed_padded_exponent: (
                 "4E-000002",
-                [Token::Number(Number { mantissa: 4.0, exponent: Some(-2) })]
+                Ok(vec![Token::Number(JSONNumber::new(4.0, Some(-2)))])
             ),
             float: (
-                "214.0",
-                [Token::Number(Number { mantissa: 214.0, exponent: None })]
+                "14.0",
+                Ok(vec![Token::Number(JSONNumber::new(14.0, None))])
+            ),
+            float_multiple: (
+                "0.1 12.5 2.12",
+                Ok(vec![
+                    Token::Number(JSONNumber::new(0.1, None)),
+                    Token::Number(JSONNumber::new(12.5, None)),
+                    Token::Number(JSONNumber::new(2.12, None)),
+                ])
+            ),
+            float_multiple_exp: (
+                "0.1E1 12.5E-0002 2.12E213",
+                Ok(vec![
+                    Token::Number(JSONNumber::new(0.1, Some(1))),
+                    Token::Number(JSONNumber::new(12.5, Some(-0002))),
+                    Token::Number(JSONNumber::new(2.12, Some(213))),
+                ])
+            ),
+            float_long: (
+                "10000000000000000.0",
+                Ok(vec![Token::Number(JSONNumber::new(10000000000000000.0, None))])
             ),
             float_complex: (
                 "214.12498",
-                [Token::Number(Number { mantissa: 214.12498, exponent: None })]
+                Ok(vec![Token::Number(JSONNumber::new(214.12498, None))])
+            ),
+            float_signed_complex: (
+                "-214.12498",
+                Ok(vec![Token::Number(JSONNumber::new(-214.12498, None))])
+            ),
+            float_signed_exp: (
+                "-214.12498E+001",
+                Ok(vec![Token::Number(JSONNumber::new(-214.12498, Some(1)))])
+            ),
+            float_signed_negative_exp: (
+                "-214.12498E-200",
+                Ok(vec![Token::Number(JSONNumber::new(-214.12498, Some(-200)))])
+            ),
+            float_unsigned_exp: (
+                "2.0E2",
+                Ok(vec![Token::Number(JSONNumber::new(2.0, Some(2)))])
+            ),
+            invalid_float_many_decimal_points: (
+                "20.0.0.0",
+                Err(Error::InvalidNumberFormat)
+            ),
+            invalid_number: (
+                "+2",
+                Err(Error::InvalidNumberFormat)
             ),
         }
     }
 }
 ```
+
+Ok we should have a lot of tests that are red now. So lets start changing that
+by introducing a generic helper function called `read_while` to read all
+characters of a certain type. We will need to create a seperate impl block for
+this function since it is not a member of the `Iterator` trait.
+
+So how can we come up with the function signature for this one? We need a
+mutable reference to the lexer since we want to modify the underlying iterator
+(hence the `&mut self`) and we want to take a generic predicate function which
+indicates if a char should be read or if we can stop. This one needs to be
+callabe with a `char` and should return a `bool` (hence the `P: Fn(char) ->
+bool`) and finally we want to return the string we have read from our source.
+
+```rust {"file": "src/lexer.rs"}
+impl<I> Lexer<I>
+where
+    I: Iterator<Item = char>,
+{
+    fn read_while<P>(&mut self, predicate: P) -> String
+    where
+        P: Fn(char) -> bool,
+    {
+        None
+    }
+}
+```
+
+But unfortunately we have no implementation at the moment; So we want to move
+all characters which fulfill the predicate in a string and stop if one doesn't.
+It is important for us to not consume any chars that we don't want to read now,
+so we will need to make use of `peek()` to look ahead.
+
+
+```rust {"file": "src/lexer.rs"}
+impl<I> Lexer<I>
+where
+    I: Iterator<Item = char>,
+{
+    fn read_while<P>(&mut self, predicate: P) -> String
+    where
+        P: Fn(char) -> bool,
+    {
+        let mut res = String::new();
+
+        while let Some(next) = self.source.peek() {
+            match *next {
+                next if predicate(next) => {
+                    res.push(self.source.next().unwrap());
+                }
+                _ => break,
+            }
+        }
+
+        res
+    }
+}
+```
+
+This one should work for now. One last thing we need to do is we need to add 2
+new error types to our error enum:
+
+```rust {"file": "src/lexer.rs", "highlight": [5, 6]}
+#[derive(Clone, Debug, PartialEq)]
+pub enum Error {
+    UnexpectedEOF,
+    UnknownChar,
+    InvalidNumberFormat,
+    InvalidExponentFormat,
+}
+```
+Now we can focus again on implementing the number detection; We know that a
+number starts either with `0-9` or a `-` hence we can add this to our match
+statement in `Iterator::next`. Note that we also match a `+` sign to notify the
+caller about an invalid number.
+
+```rust {"file": "src/lexer.rs"}
+                c if c.is_ascii_digit() || c == '-' || c == '+' => {
+```
+
+The very first thing which we want to do in this branch is do a simple check for leading zeros or a leading `+` sign. Both cause the error `InvalidNumberFormat` for now.
+
+```rust {"file": "src/lexer.rs"}
+                    {
+                        let err = match c {
+                            '0' => match self.source.peek() {
+                                Some(n) if n.is_ascii_digit() => Some(Error::InvalidNumberFormat),
+                                _ => None,
+                            },
+                            '+' => Some(Error::InvalidNumberFormat),
+                            _ => None,
+                        };
+
+                        if let Some(e) = err {
+                            self.read_while(|next| match next {
+                                ',' | ']' | '}' => false,
+                                _ => true,
+                            });
+
+                            return Some(Err(e));
+                        }
+                    }
+```
+
+Now that we know that we know that we are in the context of consuming a number;
+So lets read anything which is an ascii digit or a `.` as the mantissa. We do
+not need to care about when or how often the `.` occurs because rust has
+already a nice implementation for that in `std::string` called `parse`.
+
+So the mantissa part is kind of simple to do using our `read_while` helper:
+
+```rust {"file": "src/lexer.rs"}
+                    let mantissa = {
+                        let mut rest = self.read_while(|next| next.is_ascii_digit() || next == '.');
+                        rest.insert(0, c);
+                        rest
+                    };
+```
+
+Now we are left with the question if we have an exponent and if yes, we need to
+read it accordingly. So we remember from the spec that either `e` or `E`
+denotes the start of an exponent. If we saw one, we can skip that char since it
+was nothing more than a hint. Now we again read up everything that is either a
+digit, a `+` or a `-` (remember that the exponent is allowed to have the prefix
+`+`). If we have read everything and we have an empty exponent we are in an
+invalid state and want to mark this token as failed. Otherwise we can return
+it.
+
+```rust {"file": "src/lexer.rs"}
+                    let exponent: Option<String> = match self.source.peek() {
+                        Some('e') | Some('E') => {
+                            self.source.next();
+
+                            let exp = self.read_while(|next| {
+                                next.is_ascii_digit() || next == '+' || next == '-'
+                            });
+
+                            if exp == "+" || exp == "-" || exp.is_empty() {
+                                return Some(Err(Error::InvalidExponentFormat));
+                            }
+
+                            Some(exp)
+                        }
+                        _ => None,
+                    };
+```
+
+Now the core actions are happening in the `parse` method and we will
+just need to evaluate the results of that call:
+
+```rust {"file": "src/lexer.rs"}
+                    let parsed_mantissa = match mantissa.parse::<f64>() {
+                        Ok(num) => num,
+                        Err(_) => return Some(Err(Error::InvalidNumberFormat)),
+                    };
+
+                    let parsed_exponent = match exponent.map(|e| e.parse::<i16>()) {
+                        Some(Err(_)) => return Some(Err(Error::InvalidNumberFormat)),
+                        Some(Ok(exponent)) => Some(exponent),
+                        None => None,
+                    };
+```
+
+Finally if everything was valid we can simply construct our number token from
+the variables above.
+
+```rust {"file": "src/lexer.rs"}
+                    Some(Ok(Token::Number(JSONNumber::new(
+                        parsed_mantissa,
+                        parsed_exponent,
+                    ))))
+                }
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ```rust {"file": "src/lexer.rs"}
@@ -570,6 +873,8 @@ mod test {
     ...
 
     mod strings {
+        use super::*;
+
         lexer_tests! {
             string: (
                 r#""foo""#,
