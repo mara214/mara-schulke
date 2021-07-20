@@ -6,3 +6,9 @@ pub struct JSONNumber {
     mantissa: f64,
     exponent: Option<i16>,
 }
+
+impl JSONNumber {
+    pub fn new(mantissa: f64, exponent: Option<i16>) -> Self {
+        Self { mantissa, exponent }
+    }
+}
