@@ -105,7 +105,7 @@ where
                     };
 
                     let parsed_exponent = match exponent.map(|e| e.parse::<i16>()) {
-                        Some(Err(_)) => return Some(Err(Error::InvalidNumberFormat)),
+                        Some(Err(_)) => return Some(Err(Error::InvalidExponentFormat)),
                         Some(Ok(exponent)) => Some(exponent),
                         None => None,
                     };
@@ -408,6 +408,10 @@ mod tests {
             invalid_number: (
                 "+2",
                 Err(Error::InvalidNumberFormat)
+            ),
+            invalid_exponent: (
+                "2.0E00+00",
+                Err(Error::InvalidExponentFormat)
             ),
         }
     }
