@@ -7,7 +7,7 @@ import { colors } from 'lib/colors';
 import { lighten, darken, transparentize } from 'lib/polished';
 
 DarkTheme.plain.backgroundColor = 'rgb(20, 20, 20)';
-LightTheme.plain.backgroundColor = 'rgb(248, 249, 250)';
+LightTheme.plain.backgroundColor = 'rgb(20, 20, 20)';
 
 const shared = {
 	layout: {

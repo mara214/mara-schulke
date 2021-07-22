@@ -47,7 +47,6 @@ function getPrismThemeFromAyu(variant: AyuThemeVariant): PrismTheme {
 				}
 			},
 			{
-				// check this later
 				types: ['variable', 'number', 'boolean', 'property'],
 				style: {
 					color: schema.syntax.entity.hex()
@@ -108,4 +107,4 @@ function getPrismThemeFromAyu(variant: AyuThemeVariant): PrismTheme {
 }
 
 export const Dark: PrismTheme = getPrismThemeFromAyu('dark');
-export const Light: PrismTheme = getPrismThemeFromAyu('light');
+export const Light: PrismTheme = getPrismThemeFromAyu('mirage');

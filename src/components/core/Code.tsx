@@ -40,9 +40,13 @@ const Copy: FunctionComponent<CopyProps> = ({ text, className }) => {
 				justify-content: center;
 				align-items: center;
 
+				svg * {
+					fill: ${(props: any) => transparentize(0.25, props.theme.code.syntax.plain.color)};
+				}
+
 				:hover {
 					svg * {
-						fill: ${(props: any) => props.theme.colors.foreground};
+						fill: ${(props: any) => props.theme.code.syntax.plain.color};
 					}
 				}
 			`}>
