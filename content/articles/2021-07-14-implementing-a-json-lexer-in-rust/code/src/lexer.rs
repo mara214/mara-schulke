@@ -7,6 +7,8 @@ use crate::types::*;
 pub enum Error {
     UnexpectedEOF,
     UnknownChar,
+    UnkownKeyword,
+    UnclosedString,
     InvalidNumberFormat,
     InvalidExponentFormat,
 }
@@ -44,9 +46,16 @@ where
                 '}' => Some(Ok(Token::CurlyBracket(ParenthesisType::Close))),
                 ',' => Some(Ok(Token::ElementDelimiter)),
                 ':' => Some(Ok(Token::KeyDelimiter)),
+                '"' => {
+                    let string = self.read_while(|next| next != '"');
+
+                    match self.source.next() {
+                        Some('"') => Some(Ok(Token::String(string))),
+                        _ => Some(Err(Error::UnclosedString)),
+                    }
+                }
                 c if c.is_ascii_whitespace() => self.next(),
                 c if c.is_ascii_digit() || c == '-' || c == '+' => {
-                    // prevent leading zeros and useless signs
                     {
                         let err = match c {
                             '0' => match self.source.peek() {
@@ -105,6 +114,20 @@ where
                         parsed_mantissa,
                         parsed_exponent,
                     ))))
+                }
+                c if c.is_ascii_alphabetic() => {
+                    let keyword = {
+                        let mut rest = self.read_while(|next| next.is_ascii_alphabetic());
+                        rest.insert(0, c);
+                        rest
+                    };
+
+                    match keyword.as_str() {
+                        "true" => Some(Ok(Token::Boolean(true))),
+                        "false" => Some(Ok(Token::Boolean(false))),
+                        "null" => Some(Ok(Token::Null)),
+                        _ => Some(Err(Error::UnkownKeyword)),
+                    }
                 }
                 _ => Some(Err(Error::UnknownChar)),
             },
@@ -385,6 +408,178 @@ mod tests {
             invalid_number: (
                 "+2",
                 Err(Error::InvalidNumberFormat)
+            ),
+        }
+    }
+
+    mod null {
+        use super::*;
+
+        lexer_tests! {
+            null: (
+                "null",
+                Ok(vec![Token::Null])
+            ),
+            null_multiple: (
+                "null null null",
+                Ok(vec![
+                    Token::Null,
+                    Token::Null,
+                    Token::Null
+                ])
+            ),
+            null_typo: (
+                "nulll",
+                Err(Error::UnkownKeyword)
+            ),
+        }
+    }
+
+    mod boolean {
+        use super::*;
+
+        lexer_tests! {
+            true_single: (
+                "true",
+                Ok(vec![Token::Boolean(true)])
+            ),
+            true_multiple: (
+                "true true true",
+                Ok(vec![
+                    Token::Boolean(true),
+                    Token::Boolean(true),
+                    Token::Boolean(true),
+                ])
+            ),
+            true_typo: (
+                "treu",
+                Err(Error::UnkownKeyword)
+            ),
+            false_single: (
+                "false",
+                Ok(vec![Token::Boolean(false)])
+            ),
+            false_multiple: (
+                "false false false",
+                Ok(vec![
+                    Token::Boolean(false),
+                    Token::Boolean(false),
+                    Token::Boolean(false),
+                ])
+            ),
+            false_typo: (
+                "fales",
+                Err(Error::UnkownKeyword)
+            ),
+            mixed_easy: (
+                "false true",
+                Ok(vec![
+                    Token::Boolean(false),
+                    Token::Boolean(true),
+                ])
+            ),
+            mixed_complex: (
+                "false true false true false",
+                Ok(vec![
+                    Token::Boolean(false),
+                    Token::Boolean(true),
+                    Token::Boolean(false),
+                    Token::Boolean(true),
+                    Token::Boolean(false),
+                ])
+            ),
+            mixed_typo: (
+                "false treu false true false",
+                Err(Error::UnkownKeyword)
+            ),
+        }
+    }
+
+    mod strings {
+        use super::*;
+
+        lexer_tests! {
+            string: (
+                r#""foo""#,
+                Ok(vec![Token::String("foo".to_string())])
+            ),
+            string_unclosed: (
+                r#""foo"#,
+                Err(Error::UnclosedString)
+            ),
+            string_contains_control_chars: (
+                r#""a',b;c""#,
+                Ok(vec![Token::String("a',b;c".to_string())])
+            ),
+            string_multiple: (
+                r#""foo" "bar""#,
+                Ok(vec![
+                    Token::String("foo".to_string()),
+                    Token::String("bar".to_string())
+                ])
+            ),
+            string_with_spaces: (
+                r#"" foo   ""#,
+                Ok(vec![Token::String(" foo   ".to_string())])
+            ),
+            string_multiple_with_spaces: (
+                r#"" foo   " "bar" " baz" "#,
+                Ok(vec![
+                    Token::String(" foo   ".to_string()),
+                    Token::String("bar".to_string()),
+                    Token::String(" baz".to_string())
+                ])
+            ),
+        }
+    }
+
+    mod blobs {
+        use super::*;
+
+        lexer_tests! {
+            simple: (
+                r#"{"foo": "bar"}"#,
+                Ok(vec![
+                    Token::CurlyBracket(ParenthesisType::Open),
+                    Token::String("foo".to_string()),
+                    Token::KeyDelimiter,
+                    Token::String("bar".to_string()),
+                    Token::CurlyBracket(ParenthesisType::Close),
+                ])
+            ),
+            single_nested: (
+                r#"{"foo": "bar", "baz": [2.0, true, false, null]}"#,
+                Ok(vec![
+                    Token::CurlyBracket(ParenthesisType::Open),
+                    Token::String("foo".to_string()),
+                    Token::KeyDelimiter,
+                    Token::String("bar".to_string()),
+                    Token::ElementDelimiter,
+                    Token::String("baz".to_string()),
+                    Token::KeyDelimiter,
+                    Token::Bracket(ParenthesisType::Open),
+                    Token::Number(JSONNumber::new(2.0, None)),
+                    Token::ElementDelimiter,
+                    Token::Boolean(true),
+                    Token::ElementDelimiter,
+                    Token::Boolean(false),
+                    Token::ElementDelimiter,
+                    Token::Null,
+                    Token::Bracket(ParenthesisType::Close),
+                    Token::CurlyBracket(ParenthesisType::Close),
+                ])
+            ),
+            array: (
+                r#"["foo", "bar", "baz"]"#,
+                Ok(vec![
+                    Token::Bracket(ParenthesisType::Open),
+                    Token::String("foo".to_string()),
+                    Token::ElementDelimiter,
+                    Token::String("bar".to_string()),
+                    Token::ElementDelimiter,
+                    Token::String("baz".to_string()),
+                    Token::Bracket(ParenthesisType::Close),
+                ])
             ),
         }
     }
