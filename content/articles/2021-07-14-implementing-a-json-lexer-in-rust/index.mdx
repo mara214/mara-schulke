@@ -193,10 +193,11 @@ So we need to provide something which can be turned in an iterator of chars -
 like a `String` or a `Vec<char>` etc. and we want to turn it into a
 `Vec<Token>` for now.
 
-```rust {"file": "src/lexer.rs", "highlight": [10, 19]}
+```rust {"file": "src/lexer.rs", "highlight": [11, 20]}
 use std::iter::Peekable;
 
-// omitted
+use crate::tokens::*;
+use crate::types::*;
 
 #[derive(Debug)]
 pub struct Lexer<I: Iterator<Item = char>> {
@@ -224,7 +225,7 @@ single token from the input stream.
 We can smoothly implement this behavior by using the `Iterator` trait for our
 Lexer.
 
-```rust
+```rust {"file": "src/lexer.rs", "start": 22}
 impl<I> Iterator for Lexer<I>
 where
     I: Iterator<Item = char>,
@@ -251,7 +252,7 @@ might want to store spans about where the error occurred to print out nice
 error messages, but for now we will just store that an error occurred; not
 where it was.
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 6}
 #[derive(Clone, Debug, PartialEq)]
 pub enum Error {
     UnexpectedEOF,
@@ -263,7 +264,7 @@ type Result<T> = std::result::Result<T, Error>;
 
 And we will need to update the iterator implementation to yield back results
 
-```rust {"file": "src/lexer.rs", "highlight": [5, 5]}
+```rust {"file": "src/lexer.rs", "highlight": [5, 5], "start": 34}
 impl<I> Iterator for Lexer<I>
 where
     I: Iterator<Item = char>,
@@ -280,7 +281,7 @@ Now we are able to write code that utilizes the iterator behavior; For example,
 we could just collect into a `Result<Vec<Token>>` instead of inspecting each
 token result by itself.
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 45}
 pub fn lex(source: &String) -> Result<Vec<Token>> {
     Lexer::from(source.chars()).collect()
 }
@@ -290,7 +291,8 @@ We will be primarily using this function to implement our tests for now.  Now
 we only need to update our test generation macro to make use of the `lex`
 function.
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 49}
+#[cfg(test)]
 mod tests {
     ...
 
@@ -321,7 +323,8 @@ we move on to mixed nested combinations. In reality you'd probably want to
 write many more tests but to keep the length of this post somewhat reasonable
 we just leave them out for now.
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 49}
+#[cfg(test)]
 mod test {
     ...
 
@@ -361,6 +364,8 @@ mod test {
             ),
         }
     }
+
+    ...
 }
 ```
 
@@ -375,9 +380,9 @@ otherwise we just return an error.
 > input in general. Languages such as python need to keep track of them but we
 > dont.
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 40}
     fn next(&mut self) -> Option<Self::Item> {
-        match self.source.peek() {
+        match self.source.next() {
             Some(c) => match c {
                 '[' => Some(Ok(Token::Bracket(ParenthesisType::Open))),
                 ']' => Some(Ok(Token::Bracket(ParenthesisType::Close))),
@@ -400,7 +405,8 @@ that long most of the time, but unfortunately it is easy to walk into pitfalls
 which you might not notice at first. So always always always write **a lot**
 of tests.
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 56}
+#[cfg(test)]
 mod test {
     ...
 
@@ -469,9 +475,9 @@ mod test {
 
 So to pass 60 lines of tests we need only two more lines of actual code.
 
-```rust {"file": "src/lexer.rs", "highlight": [6, 7]}
+```rust {"file": "src/lexer.rs", "highlight": [6, 7], "start": 40}
     fn next(&mut self) -> Option<Self::Item> {
-        match self.source.peek() {
+        match self.source.next() {
             Some(c) => match c {
                 '[' => Some(Ok(Token::Bracket(ParenthesisType::Open))),
                 ']' => Some(Ok(Token::Bracket(ParenthesisType::Close))),
@@ -489,7 +495,8 @@ So to pass 60 lines of tests we need only two more lines of actual code.
 
 And again add more tests to handle new tokens:
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 58}
+#[cfg(test)]
 mod test {
     ...
 
@@ -529,9 +536,9 @@ mod test {
 
 And we'll add their mapping to the `next` function.
 
-```rust {"file": "src/lexer.rs", "highlight": [8, 9]}
+```rust {"file": "src/lexer.rs", "highlight": [8, 9], "start": 40}
     fn next(&mut self) -> Option<Self::Item> {
-        match self.source.peek() {
+        match self.source.next() {
             Some(c) => match c {
                 '[' => Some(Ok(Token::Bracket(ParenthesisType::Open))),
                 ']' => Some(Ok(Token::Bracket(ParenthesisType::Close))),
@@ -564,7 +571,8 @@ So this sounds like a lot of work to do, but it turns out this is fairly
 managable aswell. But first things first – the tests will show us how our code
 should behave:
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 60}
+#[cfg(test)]
 mod test {
     ...
 
@@ -689,7 +697,7 @@ indicates if a char should be read or if we can stop. This one needs to be
 callabe with a `char` and should return a `bool` (hence the `P: Fn(char) ->
 bool`) and finally we want to return the string we have read from our source.
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 60}
 impl<I> Lexer<I>
 where
     I: Iterator<Item = char>,
@@ -709,7 +717,7 @@ It is important for us to not consume any chars that we don't want to read now,
 so we will need to make use of `peek()` to look ahead.
 
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 60}
 impl<I> Lexer<I>
 where
     I: Iterator<Item = char>,
@@ -737,7 +745,7 @@ where
 This one should work for now. One last thing we need to do is we need to add 2
 new error types to our error enum:
 
-```rust {"file": "src/lexer.rs", "highlight": [5, 6]}
+```rust {"file": "src/lexer.rs", "highlight": [5, 6], "start": 5}
 #[derive(Clone, Debug, PartialEq)]
 pub enum Error {
     UnexpectedEOF,
@@ -751,13 +759,13 @@ number starts either with `0-9` or a `-` hence we can add this to our match
 statement in `Iterator::next`. Note that we also match a `+` sign to notify the
 caller about an invalid number.
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 50}
                 c if c.is_ascii_digit() || c == '-' || c == '+' => {
 ```
 
 The very first thing which we want to do in this branch is do a simple check for leading zeros or a leading `+` sign. Both cause the error `InvalidNumberFormat` for now.
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 51}
                     {
                         let err = match c {
                             '0' => match self.source.peek() {
@@ -786,7 +794,7 @@ already a nice implementation for that in `std::string` called `parse`.
 
 So the mantissa part is kind of simple to do using our `read_while` helper:
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 72}
                     let mantissa = {
                         let mut rest = self.read_while(|next| next.is_ascii_digit() || next == '.');
                         rest.insert(0, c);
@@ -803,7 +811,7 @@ digit, a `+` or a `-` (remember that the exponent is allowed to have the prefix
 invalid state and want to mark this token as failed. Otherwise we can return
 it.
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 78}
                     let exponent: Option<String> = match self.source.peek() {
                         Some('e') | Some('E') => {
                             self.source.next();
@@ -825,7 +833,7 @@ it.
 Now the core actions are happening in the `parse` method and we will
 just need to evaluate the results of that call:
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 96}
                     let parsed_mantissa = match mantissa.parse::<f64>() {
                         Ok(num) => num,
                         Err(_) => return Some(Err(Error::InvalidNumberFormat)),
@@ -841,7 +849,7 @@ just need to evaluate the results of that call:
 Finally if everything was valid we can simply construct our number token from
 the variables above.
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 107}
                     Some(Ok(Token::Number(JSONNumber::new(
                         parsed_mantissa,
                         parsed_exponent,
@@ -856,7 +864,7 @@ tokens only consists of keywords (`null` / `true` / `false`). This means that
 we can read a whole keyword and just check if we know it, otherwise we notify
 the user through a new error `UnkownKeyword`.
 
-```rust {"file": "src/lexer.rs", "highlight": [5, 5]}
+```rust {"file": "src/lexer.rs", "highlight": [5, 5], "start": 6}
 #[derive(Clone, Debug, PartialEq)]
 pub enum Error {
     UnexpectedEOF,
@@ -869,7 +877,8 @@ pub enum Error {
 
 So lets write some tests for these tokens:
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 144}
+#[cfg(test)]
 mod test {
     ...
     mod null {
@@ -962,7 +971,7 @@ Through using the builtin method `is_ascii_alphabetic` and our own helper
 pattern to our match statement to check if we have a alphabetic char - if yes
 we can read all following and match them:
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 114}
                 c if c.is_ascii_alphabetic() => {
                     let keyword = {
                         let mut rest = self.read_while(|next| next.is_ascii_alphabetic());
@@ -973,7 +982,7 @@ we can read all following and match them:
 
 After reading the whole keyword we just transform it into its according token.
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 121}
                     match keyword.as_str() {
                         "true" => Some(Ok(Token::Boolean(true))),
                         "false" => Some(Ok(Token::Boolean(false))),
@@ -991,7 +1000,7 @@ now.
 So one last time we need to adjust our error type since we need to mark strings
 as unclosed now:
 
-```rust {"file": "src/lexer.rs", "highlight": [6, 6]}
+```rust {"file": "src/lexer.rs", "highlight": [6, 6], "start": 6}
 #[derive(Clone, Debug, PartialEq)]
 pub enum Error {
     UnexpectedEOF,
@@ -1005,7 +1014,8 @@ pub enum Error {
 
 Then we can write a bunch of tests for strings:
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 160}
+#[cfg(test)]
 mod test {
     ...
 
@@ -1064,7 +1074,7 @@ we see the next `"`.
 
 By ignoring the escaping, our code becomes really simple and straight forward:
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 128}
                 '"' => {
                     let string = self.read_while(|next| next != '"');
 
@@ -1089,7 +1099,8 @@ real usecase we'd want to detect a bunch of different tokens in a complex
 order. So lets write some tests where we will tokenize whole json blobs to see
 if everything is correct.
 
-```rust {"file": "src/lexer.rs"}
+```rust {"file": "src/lexer.rs", "start": 166}
+#[cfg(test)]
 mod tests {
     ...
 
