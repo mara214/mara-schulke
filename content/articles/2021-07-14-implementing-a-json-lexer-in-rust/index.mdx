@@ -8,7 +8,7 @@ tags:
   - rust
 ---
 
-So.. you're wondering how to easily do lexical analysis on a stream of text? I
+So.. you're wondering how to easily do lexical analysis of a stream of text? I
 got you. We will cover simple tokenization, sufficient to handle small DSLs,
 config files etc.
 
@@ -19,7 +19,7 @@ ask yourself what lexing (or lexical analysis) is; The answer is quite simple -
 basically every language implementation is (or at least should be) split up
 into multiple stages of processing. Lexing all comes down to really split
 up a stream of meaningless characters into small logical units called tokens.
-What these are heavily depends on your context. For example in rust a token
+What these are heavily depends on your context. For example, in rust a token
 could be an identifier, a number, a keyword or a parenthesis.
 
 Lexical analysis is usually the first thing to do, no matter what we want to
@@ -29,7 +29,7 @@ accomplish afterwards.
 
 So now that we know that a lexer tries to cut the stream into tokens, we
 need to define a set of valid tokens and syntax rules for these tokens right?
-This part usually is a part of the "grammar" of your language, but thats a
+This part usually is a part of the "grammar" of your language, but that's a
 thing we wont further dig into in this post.
 
 Before we can start hacking on the implementation we should carefully think
@@ -37,7 +37,7 @@ about what we want to accomplish and how our syntax looks like.
 
 ### JSON
 
-For the sake of simplicity we'll use the JSON specification, since nearly
+For the sake of simplicity, we'll use the JSON specification, since nearly
 everyone has already worked with it and it's quite easy to do in a single post.
 
 The next question should be: What makes up valid JSON? We have only 6 elements
@@ -57,12 +57,12 @@ little knowledge about the context of our chars. So "wrapping types" like
 arrays, objects (or for other languages: anything that has a beginning and an
 ending) is resolved to the smallest unit we can inspect: The opening and
 closing parenthesis. So our array parens are `[` and `]` and for objects they
-are `{` and `}`. Furthermore we have the element delimiter symbol (used both in
+are `{` and `}`. Furthermore, we have the element delimiter symbol (used both in
 arrays and objects) `,` and the object key delimiter `:`.
 
-> Lexing is not about inspecting the relation between the occurence of
+> Lexing is not about inspecting the relation between the occurrence of
 > the single tokens at all! So an invalid stream may be tokenized very well.
-> The occurence order is validated by another step in the compiler pipeline
+> The occurrence order is validated by another step in the compiler pipeline
 > called a parser.
 
 So we've already got 6 Tokens to handle the two complex composition types, what
@@ -106,7 +106,6 @@ Since all of these hold a bit of data about the thing they contain (e.g. a
 boolean must hold the information if it is `true` / `false`) we can start
 writing a bit of rust to make that as clear as possible:
 
-
 ```rust {"file": "src/token.rs"}
 use crate::types::*;
 
@@ -146,9 +145,9 @@ impl JSONNumber {
 }
 ```
 
-Note: For the sake of simplicity we will display all numbers in the same
+Note: For the sake of simplicity, we will display all numbers in the same
 internal datatype and ignore some edge cases (e.g. for very large / very
-percise numbers)
+precise numbers)
 
 ### Boilerplate & Test Setup
 
@@ -181,8 +180,8 @@ mod tests {
 
 Now we start laying out the basic io of our `Lexer` struct; Which types /
 traits do we need and what do we want to output? We clearly need some kind of
-char stream. Due to the complexity of async code i wont go into the details
-of the [stream](https://doc.rust-lang.org/std/stream/index.html) trait now but
+char stream. Due to the complexity of async code i won't go into the details
+of the [stream](https://doc.rust-lang.org/std/stream/index.html) trait now, but
 they would probably be a great option when implementing something which is
 more advanced (like reading from a file or network socket and processing the
 input in the same moment).
@@ -217,8 +216,8 @@ where
 ```
 
 So the implementation of from for our `Lexer` lets us easily create them from
-other datatypes such as String through using the `.chars()` method - but mor on
-that in a minute. What is still left open is the retrival of tokens. The
+other datatypes such as String through using the `.chars()` method - but more
+on that in a minute. What is still left open is the retrieval of tokens. The
 smallest step in which we can give out a useful information is by reading a
 single token from the input stream.
 
@@ -239,7 +238,7 @@ where
 ```
 
 One last thing that is holding us back from start implementing the actual lexer
-is error handling.. what if we have a completly invalid sequence of chars? We
+is error handling.. what if we have a completely invalid sequence of chars? We
 should notify the person using this that something went wrong - so what error
 cases do we have?
 
@@ -248,8 +247,9 @@ cases do we have?
 - ... // we will expand this list as we proceed handling the 
 
 So lets introduce a enum for our error types. In a more complex environment you
-might want to store spans about where the error occured to print out nice error
-messages, but for now we will just store that an error occured; not where it was.
+might want to store spans about where the error occurred to print out nice
+error messages, but for now we will just store that an error occurred; not
+where it was.
 
 ```rust {"file": "src/lexer.rs"}
 #[derive(Clone, Debug, PartialEq)]
@@ -276,7 +276,7 @@ where
 }
 ```
 
-Now we are able to write code that utilizes the iterator behavior; For example
+Now we are able to write code that utilizes the iterator behavior; For example,
 we could just collect into a `Result<Vec<Token>>` instead of inspecting each
 token result by itself.
 
@@ -318,7 +318,7 @@ writing the most basic tests we could think of when parsing brackets -> single
 opening / closing brackets – then we move on to nested brackets to make sure we
 do not take the context of a bracket into account when reading it. And finally
 we move on to mixed nested combinations. In reality you'd probably want to
-write many more tests but to keep the length of thi post somewhat reasonable
+write many more tests but to keep the length of this post somewhat reasonable
 we just leave them out for now.
 
 ```rust {"file": "src/lexer.rs"}
@@ -467,7 +467,7 @@ mod test {
 }
 ```
 
-So to pass 80 lines of tests we need only two more lines of actual code.
+So to pass 60 lines of tests we need only two more lines of actual code.
 
 ```rust {"file": "src/lexer.rs", "highlight": [6, 7]}
     fn next(&mut self) -> Option<Self::Item> {
