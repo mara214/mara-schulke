@@ -93,9 +93,11 @@ export interface CodeProps {
 	code: string;
 	file?: string;
 	highlight?: number[];
+	start?: number;
+
 }
 
-const Code: FunctionComponent<CodeProps> = ({ language, code, file, highlight = [] }) => {
+const Code: FunctionComponent<CodeProps> = ({ language, code, file, highlight = [], start = 1 }) => {
 	const styledTheme = useContext(ThemeContext);
 
 	const isHighlighted = (lineNumber: number) => {
@@ -143,7 +145,7 @@ const Code: FunctionComponent<CodeProps> = ({ language, code, file, highlight = 
 											user-select: none;
 											opacity: 0.3;
 										`}>
-										{i + 1}
+										{start + i}
 									</span>
 									{line.map((token: any, key: number) => (
 										<span {...getTokenProps({ token, key })} />

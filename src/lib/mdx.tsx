@@ -9,6 +9,7 @@ import { rem } from 'lib/polished';
 type CodeOptions = {
 	file?: string;
 	highlight?: number[];
+	start?: number;
 }
 
 const prePropsToCodeProps = (props: any): (React.ComponentProps<'pre'> & CodeProps) | null => {
