@@ -4,7 +4,7 @@ import { Link, useStaticQuery } from 'gatsby';
 import Cookies from 'js-cookie';
 
 import { rem } from 'lib/polished';
-import { mobile } from 'lib/media';
+import { mobile, tablet } from 'lib/media';
 
 import Container from 'components/layout/Container';
 import { graphql } from 'gatsby';
@@ -52,6 +52,16 @@ const FooterContainer = styled.div`
 					text-decoration: underline;
 				}
 			}
+
+
+			&.flag {
+				cursor: default;
+				margin-left: auto;
+
+				${mobile} {
+					margin-left: unset;
+				}
+			}
 		}
 	}
 `;
@@ -92,6 +102,7 @@ const Footer: FunctionComponent<FooterProps> = () => {
 		<FooterContainer>
 			<Container>
 				<hr />
+
 				<ul>
 					{legal.map(({title, slug}: any) => (
 						<li key={slug}>
@@ -112,6 +123,7 @@ const Footer: FunctionComponent<FooterProps> = () => {
 							</a>
 						</li>
 					))}
+					<li key="flag" className="flag">{'🏳️‍🌈'}</li>
 				</ul>
 			</Container>
 		</FooterContainer>
