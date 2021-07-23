@@ -44,7 +44,7 @@ export default styled(Support)<SupportProps>`
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	padding: ${props => rem(props.theme.spacings.large)} 0;
+	padding: ${props => rem(props.theme.spacings.large)} 0 0;
 
 	> * {
 		text-align: center;
