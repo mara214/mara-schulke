@@ -1,4 +1,4 @@
-https://blog.maximilianschulke.com
+https://blog.schulke.xyz
 
 -- Features
 
@@ -10,7 +10,7 @@ https://blog.maximilianschulke.com
 
 -- Setup
 
-* `git clone git@github.com:schulke-214/maximilian-schulke.git`
-* `cd maximilian-schulke`
+* `git clone git@github.com:schulke-214/mara-schulke.git`
+* `cd mara-schulke`
 * `docker-compose up`
 * visit http://localhost:8000
