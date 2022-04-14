@@ -74,8 +74,8 @@ const seo = [
 	{
 		resolve: 'gatsby-plugin-manifest',
 		options: {
-			name: 'Maximilian Schulke',
-			short_name: 'Maximilian Schulke',
+			name: 'Mara Schulke',
+			short_name: 'Mara Schulke',
 			start_url: '/',
 			background_color: '#000000',
 			theme_color: '#ffffff',
@@ -149,8 +149,8 @@ const seo = [
 						}
 					`,
 					output: '/rss.xml',
-					title: 'Maximilian Schulke',
-					link: 'https://blog.maximilianschulke.com',
+					title: 'Mara Schulke',
+					link: 'https://blog.schulke.xyz',
 				},
 			],
 		},
@@ -163,11 +163,11 @@ module.exports = {
 	siteMetadata: {
 		locale: 'en_US',
 		seo: {
-			title: 'Maximilian Schulke',
+			title: 'Mara Schulke',
 			description: 'Hi! This is a place where i share ideas, concepts and thoughts about software related topcis! I write mostly about compiler / language design, linux or frontend topics.',
-			author: 'Maximilian Schulke',
+			author: 'Mara Schulke',
 			twitter: '@schulke-214',
-			url: 'https://blog.maximilianschulke.com',
+			url: 'https://blog.schulke.xyz',
 			previewImage: '/static/seo-banner.png',
 			keywords: ['Linux', 'Rust', 'Developer Blog', 'Computer Scienece', 'Web Development', 'Math']
 		},
@@ -206,7 +206,7 @@ module.exports = {
 		support: {
 			headline: 'Did you enjoy reading this article?',
 			cta: 'Give this project a star!',
-			url: 'https://github.com/schulke-214/maximilian-schulke',
+			url: 'https://github.com/schulke-214/mara-schulke',
 			description: 'Writing articles takes time and i\'d be happy to know if they are useful for you :)'
 		},
 		footer: {
@@ -230,7 +230,7 @@ module.exports = {
 					title: 'Reddit'
 				},
 				{
-					href: 'mailto:hello@maximilianschulke.com',
+					href: 'mailto:mara@schulke.xyz',
 					title: 'Mail'
 				}
 			],
