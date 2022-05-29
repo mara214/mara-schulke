@@ -2,8 +2,8 @@
 	"name": "mara-schulke",
 	"version": "1.1.4",
 	"description": "Personal tech blog",
-	"repository": "git@github.com:schulke-214/mara-schulke",
-	"author": "schulke-214 <mara@schulke.xyz>",
+	"repository": "git@github.com:mara214/mara-schulke",
+	"author": "Mara Schulke <mara@schulke.xyz>",
 	"license": "MIT",
 	"private": true,
 	"browserslist": [

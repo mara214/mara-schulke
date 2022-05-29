@@ -166,7 +166,7 @@ module.exports = {
 			title: 'Mara Schulke',
 			description: 'Hi! This is a place where i share ideas, concepts and thoughts about software related topcis! I write mostly about compiler / language design, linux or frontend topics.',
 			author: 'Mara Schulke',
-			twitter: '@schulke-214',
+			twitter: '@mara214',
 			url: 'https://blog.schulke.xyz',
 			previewImage: '/static/seo-banner.png',
 			keywords: ['Linux', 'Rust', 'Developer Blog', 'Computer Scienece', 'Web Development', 'Math']
@@ -206,7 +206,7 @@ module.exports = {
 		support: {
 			headline: 'Did you enjoy reading this article?',
 			cta: 'Give this project a star!',
-			url: 'https://github.com/schulke-214/mara-schulke',
+			url: 'https://github.com/mara214/mara-schulke',
 			description: 'Writing articles takes time and i\'d be happy to know if they are useful for you :)'
 		},
 		footer: {
@@ -222,11 +222,11 @@ module.exports = {
 			],
 			social: [
 				{
-					href: 'https://github.com/schulke-214',
+					href: 'https://github.com/mara214',
 					title: 'GitHub'
 				},
 				{
-					href: 'https://reddit.com/u/schulke-214',
+					href: 'https://reddit.com/u/mara214',
 					title: 'Reddit'
 				},
 				{
