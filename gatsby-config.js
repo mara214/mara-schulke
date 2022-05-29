@@ -226,7 +226,7 @@ module.exports = {
 					title: 'GitHub'
 				},
 				{
-					href: 'https://reddit.com/u/mara214',
+					href: 'https://reddit.com/u/schulke-214',
 					title: 'Reddit'
 				},
 				{
